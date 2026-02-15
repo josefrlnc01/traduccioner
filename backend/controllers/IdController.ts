@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import { isSecureLink } from "../utils/secureLink.ts";
 import fs from 'node:fs/promises'
-import { obtainSubtitles } from "../services/obtainSubtitles.ts";
-import { getSubtitlesFromVideo } from "../utils/getSubtitles.ts";
+
+import { getSubtitlesFromVideo } from "../services/getSubtitles.ts";
 type VideoLink = {
     videoLink : string
 }
