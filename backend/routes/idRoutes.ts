@@ -4,5 +4,5 @@ import { IdController } from "../controllers/IdController.ts";
 
 export const idRoutes = Router()
 
-idRoutes.post('/', IdController.obtainId)
+idRoutes.post('/', IdController.obtainLink)
 
