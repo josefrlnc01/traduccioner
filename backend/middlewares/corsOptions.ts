@@ -6,7 +6,7 @@ export const corsMiddleware = () => cors({
         'http://localhost:8000',
         'http://localhost:5173'
     ]
-
+    if (!origin) return callback(null, true)
     if (ACCEPTED_ORIGINS.includes(origin as string)) {
         callback(null, true)
     } else {

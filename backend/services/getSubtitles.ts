@@ -4,6 +4,7 @@ import axios from 'axios'
 import fs from 'node:fs/promises'
 
 import { downloadAudio } from '../services/audioDownloader.ts'
+import { transcribeWhisperAudio } from '../transcription/whisperTranscribe.ts'
 
 export async function getSubtitlesFromVideo (link:string): Promise<Object>{
 
@@ -22,8 +23,9 @@ export async function getSubtitlesFromVideo (link:string): Promise<Object>{
             const videoLink: string | null = (links.key as string) || null
             
             if (videoLink) {
-                const audio = await downloadAudio(videoLink)
-                return { message: 'Audio downloaded', audio }
+                await downloadAudio(videoLink)
+                const text = await transcribeWhisperAudio(videoLink)
+                return { message: 'Audio downloaded', text }
             }
             return {}
         }
