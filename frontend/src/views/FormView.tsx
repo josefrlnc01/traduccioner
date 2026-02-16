@@ -27,7 +27,7 @@ export default function FormView() {
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
         <input onChange={handleInput} placeholder="Copia tu enlace aqui" type='text' className='w-full min-w-full p-3 text-gray-300 rounded-md bg-slate-900'/>
         <div className="w-full flex justify-between">
-            <select className="bg-slate-900 rounded-xl pb-1 pt-1 pr-2 pl-2">
+            <select className="bg-slate-900 rounded-xl pb-1 pt-1 pr-2 pl-2 text-gray-500">
                 <option className="text-gray-500" value="">Lenguaje</option>
                     {Object.entries(languages).map(([label, code]) => (
                         <option key={code} value={code}>{label}</option>
