@@ -1,4 +1,5 @@
 
+
 export async function sendLink(link:string) {
     try {
         const response = await fetch('http://localhost:8000/link', {
@@ -17,7 +18,8 @@ export async function sendLink(link:string) {
         
         const data = await response.json()
         if (data) {
-            console.log(data)
+            const message:string = data.subtitles
+            return {message}
         }
     } catch (error) {
         console.error(error)

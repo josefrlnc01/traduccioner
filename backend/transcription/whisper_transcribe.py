@@ -9,5 +9,5 @@ def transcribe(audio_path,lang):
 
 if __name__ == "__main__":
     audio_path= sys.argv[1]
-    result= transcribe(audio_path, lang="es")
+    result= transcribe(audio_path, "es")
     print(json.dumps(audio_path, ensure_ascii=False))

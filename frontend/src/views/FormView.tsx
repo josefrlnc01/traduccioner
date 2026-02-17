@@ -4,23 +4,27 @@ import { sendLink } from "../services/sendLink";
 
 export default function FormView() {
     const [inputValue, setInputValue] = useState('')
+    const [message, setMessage] = useState('')
     const languages = {
         Español: "es",
         Ingles: "en",
         Frances: "fr",
         Italiano: "it"
     }
-  
+
     const handleInput = (e:React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
 
-    const handleSubmit = (e:React.ChangeEvent<HTMLFormElement, HTMLFormElement>) => {
+    const handleSubmit = async (e:React.ChangeEvent<HTMLFormElement, HTMLFormElement>) => {
         e.preventDefault()
-        sendLink(inputValue)
+        const result = await sendLink(inputValue)
+        if (result) {
+            const { message} = result
+            setMessage(message)
+        }
     }
 
-    console.log(inputValue)
   return (
     <>
     <aside className="mx-auto w-full min-w-full p-5 flex flex-col  ">
