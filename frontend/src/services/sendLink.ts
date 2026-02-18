@@ -19,6 +19,7 @@ export async function sendLink(link:string) {
         const data = await response.json()
         if (data) {
             const message:string = data.subtitles
+            console.log(data)
             return {message}
         }
     } catch (error) {
