@@ -1,9 +1,11 @@
-import whisper
+
 import sys
 import json
 import os
+from faster_whisper import WhisperModel
 
 sys.stdout.reconfigure(encoding='utf-8')
+
 def transcribe(audio_path,lang):
     ffmpeg_path= 'C:\\ffmpeg\\bin'
     if not os.path.exists(ffmpeg_path):
@@ -11,14 +13,13 @@ def transcribe(audio_path,lang):
     
     ffmpeg_dir = 'C:\\ffmpeg\\bin'
     os.environ['PATH'] = ffmpeg_dir + os.pathsep + os.environ['PATH']
-    model= whisper.load_model('large')
-    result= model.transcribe(audio_path,
-        language=lang,
-        temperature=0,
-        verbose=True,
-        beam_size=5,
-        patience=0.5
-    )
+    model = WhisperModel("medium", device="cpu", compute_type="int8")
+    segments, info = model.transcribe(audio_path, language=lang, beam_size=5, vad_filter=True)
+    segments_list = list(segments)
+    if not segments_list:
+        return "No se detectó audio"
+    
+    result = " ".join([segment.text for segment in segments_list])
     return result
 
 if __name__ == "__main__":

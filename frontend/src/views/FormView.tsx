@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { sendLink } from "../services/sendLink";
+import { SelectLanguage } from "@/components/SelectLanguage";
 
 
 export default function FormView() {
@@ -27,16 +28,14 @@ export default function FormView() {
 
   return (
     <>
-    <aside className="mx-auto w-full min-w-full p-5 flex flex-col  ">
-        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
-        <input onChange={handleInput} placeholder="Copia tu enlace aqui" type='text' className='w-full min-w-full p-3 text-gray-300 rounded-md bg-slate-900'/>
+    <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96  p-5 flex flex-col">
+        <form onSubmit={handleSubmit} className="w-96 md:w-full flex flex-col gap-4">
+        <input onChange={handleInput} 
+        placeholder="Copia tu enlace aqui" 
+        type='text' 
+        className='w-full min-w-full lg:w-6/12 p-3 text-gray-300 rounded-md bg-slate-900'/>
         <div className="w-full flex justify-between">
-            <select className="bg-slate-900 rounded-xl pb-1 pt-1 pr-2 pl-2 text-gray-500">
-                <option className="text-gray-500" value="">Lenguaje</option>
-                    {Object.entries(languages).map(([label, code]) => (
-                        <option key={code} value={code}>{label}</option>
-                    ))}
-            </select>
+            <SelectLanguage/>
         <button type="submit" className="w-2/4 grow-0 bg-blue-600 pb-2 pt-2 rounded-xl font-semibold text-white">Traducir</button>
         </div>
         
