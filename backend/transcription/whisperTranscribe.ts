@@ -3,18 +3,17 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { promisify }from 'util'
 import fs from 'node:fs/promises'
-import fsSync from 'node:fs'
 
 const execPromise = promisify(exec)
 const __fileName = fileURLToPath(import.meta.url)
 const __dirname = dirname(__fileName)
-export async function transcribeWhisperAudio(language:string) {
+export async function transcribeWhisperAudio() {
     try {
         const scriptPath = path.join(__dirname, "whisper_transcribe.py")
         
         const audioPath = path.join(__dirname, "..", "audio.mp3")
         console.log(audioPath)
-        const {stdout, stderr} = await execPromise(`python "${scriptPath}" "${audioPath}" "${language}"`)
+        const {stdout, stderr} = await execPromise(`python "${scriptPath}" "${audioPath}"`)
         if (stderr) {
             console.log(stderr)
         }
@@ -24,7 +23,7 @@ export async function transcribeWhisperAudio(language:string) {
         throw new Error('Python no devolvió ningún resultado');
         }
         const result = JSON.parse(jsonLine)
-        await fs.writeFile("song.json", JSON.stringify(result),{encoding : 'utf8'})
+        await fs.writeFile("song.json", JSON.stringify(result.text),{encoding : 'utf-8'})
         console.log(result)
         return result
     } catch (error) {
