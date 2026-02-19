@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sendLink } from "../services/sendLink";
-import { SelectLanguage } from "@/components/SelectLanguage";
+import { ComboboxMultiple } from "@/components/ComboboxMultiple";
 
 
 export default function FormView() {
@@ -34,8 +34,8 @@ export default function FormView() {
         placeholder="Copia tu enlace aqui" 
         type='text' 
         className='w-full min-w-full lg:w-6/12 p-3 text-gray-300 rounded-md bg-slate-900'/>
-        <div className="w-full flex justify-between">
-            <SelectLanguage/>
+        <div className="w-full flex gap-2 justify-between items-center">
+            <ComboboxMultiple/>
         <button type="submit" className="w-2/4 grow-0 bg-blue-600 pb-2 pt-2 rounded-xl font-semibold text-white">Traducir</button>
         </div>
         

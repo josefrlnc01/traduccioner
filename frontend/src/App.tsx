@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './App.css'
-import FormView from './views/FormView'
 import MainView from './views/MainView'
 
 function App() {
