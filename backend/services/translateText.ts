@@ -15,3 +15,4 @@ export async function translateText(lang:string, text:string) {
     console.log(translation)
     return translation
 }
+

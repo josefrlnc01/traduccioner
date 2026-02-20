@@ -12,7 +12,6 @@ export async function transcribeWhisperAudio() {
         const scriptPath = path.join(__dirname, "whisper_transcribe.py")
         
         const audioPath = path.join(__dirname, "..", "audio.mp3")
-        console.log(audioPath)
         const {stdout, stderr} = await execPromise(`python "${scriptPath}" "${audioPath}"`)
         if (stderr) {
             console.log(stderr)
@@ -24,7 +23,7 @@ export async function transcribeWhisperAudio() {
         }
         const result = JSON.parse(jsonLine)
         await fs.writeFile("song.json", JSON.stringify(result.text),{encoding : 'utf-8'})
-       
+        console.log("transcribiendo")
         return result.text
     } catch (error) {
         console.error(error)
