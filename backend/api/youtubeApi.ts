@@ -20,7 +20,7 @@ export async function getTitle (id:string) {
         const apiKey = process.env.GOOGLE_API_KEY
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${apiKey}&part=snippet`
         const response = await fetch(url)
-        if (!response.ok) return {}
+        if (!response.ok) return ''
 
         const data = await response.json()
         const videoInfo = data.items[0].snippet

@@ -24,8 +24,8 @@ export async function transcribeWhisperAudio() {
         }
         const result = JSON.parse(jsonLine)
         await fs.writeFile("song.json", JSON.stringify(result.text),{encoding : 'utf-8'})
-        console.log(result)
-        return result
+       
+        return result.text
     } catch (error) {
         console.error(error)
         return null

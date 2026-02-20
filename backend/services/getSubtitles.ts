@@ -2,10 +2,12 @@ import fs from 'node:fs/promises'
 import { downloadAudio } from '../services/audioDownloader.ts'
 import { transcribeWhisperAudio } from '../transcription/whisperTranscribe.ts'
 import { getTitle } from '../api/youtubeApi.ts'
+import { translateText } from './translateText.ts'
 
 
 
-export async function getSubtitlesFromVideo (link:string, id:string): Promise<Object>{
+
+export async function getSubtitlesFromVideo (link:string, id:string, lang:string): Promise<string>{
     try {
         const data = await getTitle(id)
         if (!data) {
@@ -18,11 +20,12 @@ export async function getSubtitlesFromVideo (link:string, id:string): Promise<Ob
             if (videoLink) {
                 await downloadAudio(videoLink)
                 const text = await transcribeWhisperAudio()
-                return { message: 'Audio downloaded', text }
+                console.log(text)
+                return text 
             }
-            return {}
+            return ''
     } catch (err) {
         console.error(err)
-        return {}
+        return ''
     }
 }

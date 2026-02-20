@@ -5,13 +5,15 @@ import getVideoId from 'get-video-id'
 import { getSubtitlesFromVideo } from "../services/getSubtitles.ts";
 import { getVideoLength } from "../api/youtubeApi.ts";
 import { getVideoMinutes } from "../utils/getVideoMinutes.ts";
-type VideoLink = {
+import { translateText } from "../services/translateText.ts";
+type RequestProps = {
     videoLink : string
+    lang : string
 }
 
 export class IdController {
     static obtainLink = async (req : Request, res : Response) => {
-    const {videoLink}:VideoLink = req.body
+    const {videoLink, lang}:RequestProps = req.body
     if (!videoLink) {
         const error = new Error('Debes introducir un link')
         return res.status(400).json({error : error.message})
@@ -35,7 +37,6 @@ export class IdController {
     }
     const videoInfo = await getVideoLength(id.id)
     const videoItems = videoInfo.items
-    console.log(videoItems)
     const videoDuration = videoItems[0].contentDetails.duration
     const minutes:string = getVideoMinutes(videoDuration)
     if (parseInt(minutes) >= 8) {
@@ -44,8 +45,11 @@ export class IdController {
     }
 
     try {
-        const subtitles = await getSubtitlesFromVideo(videoLink, id.id)
-        return res.json({subtitles, id})
+        const subtitles = await getSubtitlesFromVideo(videoLink, id.id, lang)
+       
+        const translate = await translateText(lang, subtitles)
+        console.log(translate)
+        return res.json({translate, id})
     } catch (err) {
         console.error('Error processing video:', err)
         return res.status(500).json({ error: 'Failed to process video' })

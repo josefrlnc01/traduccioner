@@ -1,10 +1,11 @@
 
 
-export async function sendLink(link:string) {
+
+export async function sendLink(link:string, lang:string) {
     try {
         const response = await fetch('http://localhost:8000/link', {
             method:'POST',
-            body: JSON.stringify({videoLink: link}),
+            body: JSON.stringify({videoLink: link, lang}),
             headers : {
                 'Content-Type': 'application/json'
             }
@@ -19,10 +20,13 @@ export async function sendLink(link:string) {
         const data = await response.json()
         if (data) {
             const message:string = data.subtitles
-            console.log(data)
+
             return {message}
         }
     } catch (error) {
         console.error(error)
     }
 }
+
+
+

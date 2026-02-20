@@ -9,36 +9,32 @@ import {
   ComboboxList,
   useComboboxAnchor,
 } from "@/components/ui/combobox"
+import type { BaseUIEvent } from "node_modules/@base-ui/react/esm/utils/types"
 
+type ComboboxMultipleProps = {
+  language : string | null
+  setLanguage :  React.Dispatch<React.SetStateAction<string | null>>
+}
 
 const languages = ["Español", "Ingles", "Frances", "Italiano"] as const
-export function ComboboxMultiple() {
-  const anchor = useComboboxAnchor()
+export function ComboboxMultiple({language, setLanguage}:ComboboxMultipleProps) {
 
   
-    function getAbbreviateLanguage(lang: string) {
-        switch (lang) {
-            case "Español":
-                return "es"
-            case "Ingles":
-                return "en"
-            case "Frances":
-                return "fr"
-            case "Italiano":
-                return "it"
-            default:
-                return ""
-        }
-    }
 
-   return (
-    <Combobox items={languages}>
-      <ComboboxInput className={"bg-slate-900 border-none text-gray-200"} placeholder="Selecciona un lenguaje" />
+  return (
+    <Combobox
+    items={languages}
+    value={language}
+    onValueChange={setLanguage} 
+    >
+      <ComboboxInput
+      className={"bg-slate-900 border-none text-gray-200"} 
+      placeholder="Selecciona un lenguaje" />
       <ComboboxContent >
         <ComboboxEmpty>No items found.</ComboboxEmpty>
         <ComboboxList>
           {(item) => (
-            <ComboboxItem key={item} value={item}>
+            <ComboboxItem  key={item} value={item}>
               {item}
             </ComboboxItem>
           )}
