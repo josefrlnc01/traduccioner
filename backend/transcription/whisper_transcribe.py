@@ -14,12 +14,13 @@ if not os.path.exists(ffmpeg_dir):
 model = whisper.load_model('base')
 
 
-def transcribe(audio_path):
+def transcribe(audio_path, lang):
     print(f"Transcribiendo {audio_path}...", file=sys.stderr)
-    result = model.transcribe(audio_path)
+    result = model.transcribe(audio_path, language=lang)
     return result
 
 if __name__ == "__main__":
     audio_path= sys.argv[1]
-    result= transcribe(audio_path)
+    language=sys.argv[2]
+    result= transcribe(audio_path, lang=language)
     print(json.dumps(result, ensure_ascii=False))

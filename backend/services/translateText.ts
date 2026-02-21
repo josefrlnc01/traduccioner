@@ -12,7 +12,6 @@ export async function translateText(lang:string, text:string) {
     const [translation] = await translate.translate(text, lang)
 
     if (!translation) return "Hubo un error durante la traducción"
-    console.log(translation)
     return translation
 }
 

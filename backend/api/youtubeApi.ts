@@ -15,7 +15,7 @@ export async function getVideoLength (id:string) {
 }
 
 
-export async function getTitle (id:string) {
+export async function getTitleAndLanguage (id:string) {
     try {
         const apiKey = process.env.GOOGLE_API_KEY
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${apiKey}&part=snippet`
@@ -26,7 +26,8 @@ export async function getTitle (id:string) {
         const videoInfo = data.items[0].snippet
         if (videoInfo) {
             const title:string = videoInfo.title
-            return title
+            const language: string = videoInfo.defaultLanguage
+            return {title,language}
         }
     } catch (error) {
         console.error(error)

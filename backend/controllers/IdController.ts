@@ -46,9 +46,10 @@ export class IdController {
 
     try {
         const subtitles = await getSubtitlesFromVideo(videoLink, id.id, lang)
-        const translate = await translateText(lang, subtitles)
-        
-        return res.json({translate, id})
+        const translatedText = await translateText(lang, subtitles)
+        console.log(subtitles)
+        console.log(translatedText)
+        return res.json({ id})
     } catch (err) {
         console.error('Error processing video:', err)
         return res.status(500).json({ error: 'Failed to process video' })
