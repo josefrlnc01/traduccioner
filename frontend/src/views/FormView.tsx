@@ -5,7 +5,12 @@ import SubtitlesView from "./SubtitlesView";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { getAbbreviateLanguage } from "@/components/utils/getAbbreviateLang";
+import { useMutation } from "@tanstack/react-query";
 
+export type MutationProps = {
+    link: string
+    lang: string | null
+}
 export default function FormView() {
     const [inputValue, setInputValue] = useState('')
     const [message, setMessage] = useState('')
@@ -15,21 +20,24 @@ export default function FormView() {
     console.log(language)
     const lang = getAbbreviateLanguage(language)
     console.log(lang)
-
-    const queryClient = useQueryClient()
-    const { data, isError, isLoading } = useQuery({
-        queryKey: ['subtitles', inputValue],
-        retry: 1,
-        enabled: !!inputValue,
-        queryFn: () => sendLink(inputValue, lang)
+    
+    const mutation = useMutation<
+    {message:string} | undefined,
+    Error,
+    MutationProps
+    >({
+        mutationFn : ({link, lang}) => sendLink(link,lang)
     })
-
+   
     const handleInput = (e:React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-        queryClient.invalidateQueries({queryKey:['subtitles', inputValue]})
+       
         setInputValue(e.target.value)
     }
 
-
+    const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        mutation.mutate({link:inputValue, lang:language})
+    }
   return (
     <>
     <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96  p-5 flex flex-col">
@@ -43,16 +51,17 @@ export default function FormView() {
             language={language}
             setLanguage={setLanguage}
             />
-        <button type="submit" className="w-2/4 grow-0 bg-blue-600 pb-2 pt-2 rounded-xl font-semibold text-white">Traducir</button>
+        <button 
+        type="submit" 
+        onClick={handleForm}
+        className="w-2/4 grow-0 bg-blue-600 pb-2 pt-2 rounded-xl font-semibold text-white">Traducir</button>
         </div>
         
     </form>
     
     </aside>
     <SubtitlesView
-    data={data}
-    isError={isError}
-    isLoading={isLoading}
+    mutation={mutation}
     />
     </>
   )

@@ -1,7 +1,7 @@
 
 
 
-export async function sendLink(link:string, lang:string) {
+export async function sendLink(link:string, lang:string | null) {
     try {
         const response = await fetch('http://localhost:8000/link', {
             method:'POST',

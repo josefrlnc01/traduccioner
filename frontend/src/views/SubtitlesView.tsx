@@ -1,18 +1,17 @@
 import { sendLink } from "@/services/sendLink"
 import { useQuery } from "@tanstack/react-query"
-
+import type { UseMutationResult} from "@tanstack/react-query";
+import type { MutationProps } from "./FormView";
 type SubtitlesViewProps = {
-    data:  {
+    mutation:  UseMutationResult<{
     message: string;
-} | undefined
-    isError: boolean
-    isLoading: boolean
+} | undefined, Error, MutationProps, unknown>
 }
-export default function SubtitlesView({ data, isError, isLoading }: SubtitlesViewProps) {
+export default function SubtitlesView({ mutation}: SubtitlesViewProps) {
 
     
 
-    if (isLoading) {
+    if (mutation.isPending) {
     return (
       <div className="p-4 text-white">
         Cargando subtítulos...
@@ -20,7 +19,7 @@ export default function SubtitlesView({ data, isError, isLoading }: SubtitlesVie
     )
   }
 
-    if (isError) {
+    if (mutation.isError) {
         return (
             <div className="p-4 text-red-500">
                 Error al cargar los subtítulos
@@ -28,7 +27,7 @@ export default function SubtitlesView({ data, isError, isLoading }: SubtitlesVie
         )
     }
 
-    if (!data) {
+    if (!mutation.isSuccess) {
         return (
             <div className="p-4 text-gray-400">
                 Pega un enlace para ver los subtítulos
@@ -37,7 +36,7 @@ export default function SubtitlesView({ data, isError, isLoading }: SubtitlesVie
     }
 
 
-    console.log(data)
+   
     return (
 
         <section className='flex flex-col lg:items-center  p-4 rounded-xl  overflow-y-scroll'>
