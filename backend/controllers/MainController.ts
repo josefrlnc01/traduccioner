@@ -14,8 +14,8 @@ type RequestProps = {
 export class MainController {
     static init = async (req : Request, res : Response) => {
     const {videoLink, lang}:RequestProps = req.body
-    if (!videoLink) {
-        const error = new Error('Debes introducir un link')
+    if (!videoLink || !lang) {
+        const error = new Error('Debes introducir un link y un idioma para la traducción')
         return res.status(400).json({error : error.message})
     }
     

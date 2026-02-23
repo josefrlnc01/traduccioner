@@ -45,12 +45,12 @@ export default function FormView() {
     
   return (
     <>
-    <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96  p-5 flex flex-col">
-        <form className="w-96 md:w-full flex flex-col gap-4">
+    <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96  p-2 flex flex-col">
+        <form className="w-96 md:w-full flex flex-col gap-6">
         <input onChange={handleInput} 
         placeholder="Copia tu enlace aqui" 
         type='text' 
-        className='w-full min-w-full lg:w-6/12 p-3 text-gray-300 rounded-md bg-slate-900'/>
+        className='min-w-full w-full lg:w-6/12 p-3 text-gray-300 rounded-md bg-slate-900'/>
         <div className="w-full flex gap-2 justify-between items-center">
             <ComboboxMultiple
             language={language}
@@ -59,7 +59,7 @@ export default function FormView() {
         <button 
         type="submit" 
         onClick={handleForm}
-        className="w-2/4 grow-0 bg-blue-600 pb-2 pt-2 rounded-xl font-semibold text-white">Traducir</button>
+        className="bg-blue-600 pl-6 pr-6 pb-2 pt-2 rounded-xl font-semibold text-white">Traducir</button>
         </div>
         
     </form>

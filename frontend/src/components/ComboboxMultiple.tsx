@@ -19,10 +19,9 @@ type ComboboxMultipleProps = {
 const languages = ["Español", "Ingles", "Frances", "Italiano"] as const
 export function ComboboxMultiple({language, setLanguage}:ComboboxMultipleProps) {
 
-  
-
   return (
     <Combobox
+    
     items={languages}
     value={language}
     onValueChange={setLanguage} 

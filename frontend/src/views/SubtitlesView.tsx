@@ -18,13 +18,22 @@ type SubtitlesViewProps = {
 
 export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
-    
+    const [index, setIndex] = useState(0)
 
     const awaitPhrases = ['Cargando traducción, puede tardar un poco...', 'Procesando audio...', 'Extrayendo texto...']
+    
+    useEffect(() => {
+        setIndex(0)
+        if (index === awaitPhrases.length) return
+        const interval = setInterval(() => {
+            setIndex(prev => prev + 1)
+            setPhrase(awaitPhrases[index])
+            return clearInterval(interval)
+        }, 6000)
+    }, [index, awaitPhrases.length])
+
 
     if (mutation.isPending) {
-        
-        
         return (
             <section className="p-4 flex flex-col gap-3 items-center text-white justify-center">
                 <Spinner

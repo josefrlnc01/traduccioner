@@ -2,7 +2,7 @@
 
 export default function Header() {
   return (
-    <section className='w-vw min-w-vw border-b border-solid border-gray-800'>
+    <header className='text-center py-4'>
         <div className='w-full p-6 flex justify-between'>
             <div>
                 <p className='font-bold text-md text-white text-shadow-white'>Traductioner</p>
@@ -11,6 +11,6 @@ export default function Header() {
                 <span>User</span>
             </div>
         </div>
-    </section>
+    </header>
   )
 }
