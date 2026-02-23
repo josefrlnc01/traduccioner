@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { idRoutes } from '../routes/idRoutes.ts'
+import { mainRoute } from '../routes/MainRoute.ts'
 
 import { corsMiddleware } from '../middlewares/corsOptions.ts'
 
@@ -12,7 +12,7 @@ app.use(corsMiddleware())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
 
-app.use('/link', idRoutes)
+app.use('/link', mainRoute)
 
 
 app.listen(port, () => {

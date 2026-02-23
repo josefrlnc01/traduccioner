@@ -11,7 +11,7 @@ os.environ['PATH'] = ffmpeg_dir + os.pathsep + os.environ['PATH']
 if not os.path.exists(ffmpeg_dir):
         raise FileNotFoundError(f"FFmpeg no encontrado en {ffmpeg_dir}")
 
-model = whisper.load_model('base')
+model = whisper.load_model('small')
 
 
 def transcribe(audio_path, lang):

@@ -18,11 +18,13 @@ export default function FormView() {
     
 
     console.log(language)
-    const lang = getAbbreviateLanguage(language)
-    console.log(lang)
+    const langForTranslate = getAbbreviateLanguage(language)
     
     const mutation = useMutation<
-    {message:string} | undefined,
+    {subtitles: string
+    translatedText: string
+    title: string
+    } | undefined,
     Error,
     MutationProps
     >({
@@ -30,14 +32,17 @@ export default function FormView() {
     })
    
     const handleInput = (e:React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-       
         setInputValue(e.target.value)
     }
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        mutation.mutate({link:inputValue, lang:language})
+        mutation.mutate({link:inputValue, lang:langForTranslate})
     }
+
+    
+
+    
   return (
     <>
     <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96  p-5 flex flex-col">

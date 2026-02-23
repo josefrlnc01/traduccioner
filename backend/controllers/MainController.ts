@@ -11,8 +11,8 @@ type RequestProps = {
     lang : string
 }
 
-export class IdController {
-    static obtainLink = async (req : Request, res : Response) => {
+export class MainController {
+    static init = async (req : Request, res : Response) => {
     const {videoLink, lang}:RequestProps = req.body
     if (!videoLink) {
         const error = new Error('Debes introducir un link')
@@ -45,11 +45,14 @@ export class IdController {
     }
 
     try {
-        const subtitles = await getSubtitlesFromVideo(videoLink, id.id, lang)
+        const data = await getSubtitlesFromVideo(id.id)
+        if (!data) return "Error al obtener datos del video"
+        const {subtitles, title} = data
         const translatedText = await translateText(lang, subtitles)
         console.log(subtitles)
+        console.log("\n")
         console.log(translatedText)
-        return res.json({ id})
+        return res.json({title, subtitles, translatedText})
     } catch (err) {
         console.error('Error processing video:', err)
         return res.status(500).json({ error: 'Failed to process video' })
