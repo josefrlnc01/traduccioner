@@ -13,6 +13,7 @@ type SubtitlesViewProps = {
         subtitles: string
         translatedText: string
         title: string
+        id: string
     } | undefined, Error, MutationProps, unknown>
 }
 
@@ -54,15 +55,15 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
 
     if (!mutation.isSuccess) {
         return (
-            <div className="p-4 text-gray-400">
+            <div className="flex flex-col lg:items-center p-4 text-gray-400">
                 Pega un enlace de Youtube y selecciona un idioma para ver la traducción
             </div>
         )
     }
 
     if (!mutation.data) return null
-    const { subtitles, translatedText, title } = mutation.data
-
+    const { translatedText, title, id } = mutation.data
+    console.log(id)
     const chunksArray = (words: string[], size: number) => {
         return words.reduce((acc, _, i) => {
             if (i % size === 0) acc.push(words.slice(i, i + size).join(' '))
@@ -75,6 +76,14 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
 
         <section className='flex flex-col lg:items-center  p-4 rounded-xl  overflow-y-scroll'>
             <aside className='rounded-xl bg-slate-900'>
+                <div className="aspect-video w-full rounded-lg flex justify-center items-center">
+                    <iframe
+                        src={`https://www.youtube.com/embed/${id}`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="rounded-xl"
+                    />
+                </div>
                 <div className='flex flex-col justify-start items-start p-6'>
                     <h2 className='scroll-m-20 text-2xl font-semibold tracking-tight text-gray-200 self-end'>{title}</h2>
                 </div>

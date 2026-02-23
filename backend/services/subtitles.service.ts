@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises'
-import { downloadAudio } from '../services/audioDownloader.ts'
+import { downloadAudio } from './audio.service.ts'
 import { transcribeWhisperAudio } from '../transcription/whisperTranscribe.ts'
 import { getTitleAndLanguage } from '../api/youtubeApi.ts'
 

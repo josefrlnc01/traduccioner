@@ -24,6 +24,7 @@ export default function FormView() {
     {subtitles: string
     translatedText: string
     title: string
+    id: string
     } | undefined,
     Error,
     MutationProps
@@ -45,8 +46,8 @@ export default function FormView() {
     
   return (
     <>
-    <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96  p-2 flex flex-col">
-        <form className="w-96 md:w-full flex flex-col gap-6">
+    <aside className="w-full lg:w-96 lg:mx-auto lg:max-w-96 flex flex-col justify-center items-center">
+        <form className="w-96 md:w-full flex flex-col p-2 gap-6">
         <input onChange={handleInput} 
         placeholder="Copia tu enlace aqui" 
         type='text' 

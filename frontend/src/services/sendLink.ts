@@ -1,7 +1,7 @@
 
 
 
-export async function sendLink(link:string, lang:string | null):Promise<{subtitles: string, translatedText:string, title:string} | undefined> {
+export async function sendLink(link:string, lang:string | null):Promise<{subtitles: string, translatedText:string, title:string, id: string} | undefined> {
     try {
         const response = await fetch('http://localhost:8000/link', {
             method:'POST',
@@ -19,8 +19,8 @@ export async function sendLink(link:string, lang:string | null):Promise<{subtitl
         
         const data = await response.json()
         if (data) {
-            const {subtitles, translatedText, title} = data
-            return {title, subtitles, translatedText}
+            const {subtitles, translatedText, title, id} = data
+            return {title, subtitles, translatedText, id}
         }
     } catch (error) {
         console.error(error)
