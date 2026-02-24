@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { MainController } from "../controllers/MainController.ts";
+import { init } from "../controllers/MainController";
 
 export const mainRoute = Router()
 
-mainRoute.post('/', MainController.init)
+mainRoute.post('/', init)
 
