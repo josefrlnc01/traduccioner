@@ -6,6 +6,7 @@ import { getVideoMinutes } from '../utils/getVideoMinutes'
 import type { VideoSubtitles } from '../types'
 import { getTitleAndLanguage } from '../api/youtube'
 import { transcribeWhisperAudio } from '../transcription/whisperTranscribe'
+
 export class VideoService {
     static downloadAudio = async (link: string | null): Promise<string | null> => {
         try {
