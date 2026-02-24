@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
-import { isSecureLink } from "../utils/secureLink.ts";
+import { isSecureLink } from "../utils/secureLink.js";
 import fs from 'node:fs/promises'
 import getVideoId from 'get-video-id'
-import { translateText } from "../utils/translateText.ts";
+import { translateText } from "../utils/translateText.js";
 import type { DataOfId, RequestProps } from "../types/index.ts";
-import { VideoService } from "../services/video.service.ts";
+import { VideoService } from "../services/video.service.js";
 
 
 export async function init(req: Request, res: Response) {

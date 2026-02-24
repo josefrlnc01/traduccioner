@@ -1,11 +1,11 @@
 import ytDlp from 'yt-dlp-exec'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { getVideoLength } from '../api/youtube'
-import { getVideoMinutes } from '../utils/getVideoMinutes'
-import type { VideoSubtitles } from '../types'
-import { getTitleAndLanguage } from '../api/youtube'
-import { transcribeWhisperAudio } from '../transcription/whisperTranscribe'
+import { getVideoLength } from '../apis/youtube.js'
+import { getVideoMinutes } from '../utils/getVideoMinutes.js'
+import type { VideoSubtitles } from '../types/index.js'
+import { getTitleAndLanguage } from '../apis/youtube.js'
+import { transcribeWhisperAudio } from '../transcription/whisperTranscribe.js'
 
 export class VideoService {
     static downloadAudio = async (link: string | null): Promise<string | null> => {

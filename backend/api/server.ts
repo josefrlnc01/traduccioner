@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { mainRoute } from '../routes/MainRoute.ts'
-import { corsMiddleware } from '../middlewares/corsOptions.ts'
+import { mainRoute } from '../routes/mainRoute.js'
+import { corsMiddleware } from '../middlewares/corsOptions.js'
 
 dotenv.config()
 const port = process.env.PORT 
@@ -13,8 +13,5 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/link', mainRoute)
 
-
-app.listen(port, () => {
-    console.log(`listening on ${port}`)
-})
+export default app
 
