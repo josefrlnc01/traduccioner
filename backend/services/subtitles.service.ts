@@ -1,14 +1,11 @@
 import fs from 'node:fs/promises'
 import { downloadAudio } from './audio.service.ts'
 import { transcribeWhisperAudio } from '../transcription/whisperTranscribe.ts'
-import { getTitleAndLanguage } from '../api/youtubeApi.ts'
+import { getTitleAndLanguage } from '../api/youtube.ts'
+import type { VideoSubtitles } from '../types/index.ts'
 
 
 
-type VideoSubtitles = {
-    subtitles: string
-    title: string
-}
 
 export async function getSubtitlesFromVideo(id: string): Promise<VideoSubtitles> {
     const data = await getTitleAndLanguage(id)

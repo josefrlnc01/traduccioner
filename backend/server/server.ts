@@ -1,7 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { mainRoute } from '../routes/MainRoute.ts'
-
 import { corsMiddleware } from '../middlewares/corsOptions.ts'
 
 dotenv.config()

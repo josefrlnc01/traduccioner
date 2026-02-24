@@ -7,6 +7,8 @@ import fs from 'node:fs/promises'
 const execPromise = promisify(exec)
 const __fileName = fileURLToPath(import.meta.url)
 const __dirname = dirname(__fileName)
+
+
 export async function transcribeWhisperAudio(lang:string) {
     try {
         const scriptPath = path.join(__dirname, "whisper_transcribe.py")
