@@ -2,9 +2,9 @@ import type { UseMutationResult } from "@tanstack/react-query";
 import type { MutationProps } from "./FormView";
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { AArrowDown } from "lucide-react";
+
 
 gsap.registerPlugin(ScrollTrigger)
 
