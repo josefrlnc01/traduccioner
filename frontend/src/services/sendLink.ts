@@ -1,9 +1,9 @@
 
 
-
+const urlBackend = import.meta.env.VITE_API_URL
 export async function sendLink(link:string, lang:string | null):Promise<{subtitles: string, translatedText:string, title:string, id: string} | undefined> {
     try {
-        const response = await fetch('http://localhost:8000/link', {
+        const response = await fetch(`${urlBackend}/link`, {
             method:'POST',
             body: JSON.stringify({videoLink: link, lang}),
             headers : {
