@@ -1,9 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
+dotenv.config()
 import { mainRoute } from '../routes/mainRoute.js'
 import { corsMiddleware } from '../middlewares/corsOptions.js'
 
-dotenv.config()
+
 const port = process.env.PORT 
 
 const app = express()

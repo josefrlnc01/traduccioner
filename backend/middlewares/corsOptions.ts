@@ -10,10 +10,13 @@ function getRequiredEnv(key:string): string {
 }
 
 
-const frontendUrl = isProd 
-    ? getRequiredEnv('PROD_FRONTEND_URL')
-    : getRequiredEnv('LOCAL_FRONTEND_URL')
+let frontendUrl: string | undefined
 
+if (isProd) {
+    frontendUrl = getRequiredEnv('VERCEL_URL')
+} else {
+    frontendUrl = 'http://localhost:5173'
+}
 
 export const corsMiddleware = () => cors({
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
