@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { isSecureLink } from "../utils/secureLink.js";
 import fs from 'node:fs/promises'
 import getVideoId from 'get-video-id'
 import { translateText } from "../utils/translateText.js";
@@ -9,17 +8,6 @@ import { VideoService } from "../services/video.service.js";
 
 export async function init(req: Request, res: Response) {
     const { videoLink, lang }: RequestProps = req.body
-
-    if (!videoLink || !lang) {
-        const error = new Error('Debes introducir un link y un idioma para la traducción')
-        return res.status(400).json({ error: error.message })
-    }
-
-
-    if (typeof videoLink !== 'string' || !isSecureLink(videoLink)) {
-        const error = new Error('Debes introducir un link válido')
-        return res.status(400).json({ error: error.message })
-    }
 
     await fs.writeFile('link.json', JSON.stringify({ key: videoLink }))
 
