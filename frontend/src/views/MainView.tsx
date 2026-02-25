@@ -1,7 +1,7 @@
-import React from 'react'
+
 import FormView from './FormView'
 import Header from '../components/Header'
-import SubtitlesView from './SubtitlesView'
+
 
 export default function MainView() {
   return (

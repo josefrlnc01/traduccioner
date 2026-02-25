@@ -2,8 +2,7 @@ import { useState } from "react";
 import { sendLink } from "../services/sendLink";
 import { ComboboxMultiple } from "@/components/ComboboxMultiple";
 import SubtitlesView from "./SubtitlesView";
-import { useQueryClient } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+
 import { getAbbreviateLanguage } from "@/components/utils/getAbbreviateLang";
 import { useMutation } from "@tanstack/react-query";
 
@@ -13,7 +12,6 @@ export type MutationProps = {
 }
 export default function FormView() {
     const [inputValue, setInputValue] = useState('')
-    const [message, setMessage] = useState('')
     const [language, setLanguage] = useState<string | null>(null)
     
 
@@ -31,7 +29,6 @@ export default function FormView() {
     >({
         mutationFn : ({link, lang}) => sendLink(link,lang)
     })
-   
     const handleInput = (e:React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
