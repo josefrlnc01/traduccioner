@@ -13,7 +13,7 @@ function getRequiredEnv(key:string): string {
 let frontendUrl: string | undefined
 
 if (isProd) {
-    frontendUrl = getRequiredEnv('VERCEL_URL')
+    frontendUrl = getRequiredEnv('FRONTEND_URL')
 } else {
     frontendUrl = 'http://localhost:5173'
 }
