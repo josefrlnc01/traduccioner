@@ -102,8 +102,8 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
                 </div>
 
                 {/* Lyrics Section */}
-                <div className='px-8 py-6 space-y-6'>
-                    {chunksArray(translatedText.split(' '), 6).map((chunk, i) => (
+                <div className='px-6 py-3 space-y-6'>
+                    {chunksArray(translatedText.toLowerCase().split(' '), 6).map((chunk, i) => (
                         <div
                             key={i}
                             className='group hover:bg-slate-800/40 -mx-2 px-2 py-2 rounded-lg transition-all duration-200'
