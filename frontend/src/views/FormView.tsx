@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { sendLink } from "../services/sendLink";
+import { sendLink } from "../services/video.service";
 import { ComboboxMultiple } from "@/components/ComboboxMultiple";
 import SubtitlesView from "./SubtitlesView";
 
-import { getAbbreviateLanguage } from "@/components/utils/getAbbreviateLang";
+import { getAbbreviateLanguage } from "@/utils/getAbbreviateLang";
 import { useMutation } from "@tanstack/react-query";
 
 export type MutationProps = {
@@ -67,5 +67,6 @@ export default function FormView() {
     mutation={mutation}
     />
     </>
-  )
+    )
+    
 }

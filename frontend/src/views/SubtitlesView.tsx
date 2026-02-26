@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 
 
+
 gsap.registerPlugin(ScrollTrigger)
 
 type SubtitlesViewProps = {
@@ -21,6 +22,7 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)
+    
     const awaitPhrases = ['Cargando traducción, puede tardar un poco...', 'Procesando audio...', 'Extrayendo texto...']
 
     useEffect(() => {
@@ -36,6 +38,8 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
 
         return () => clearTimeout(timeOut)
     }, [index, awaitPhrases.length])
+
+   
 
 
     if (mutation.isPending) {
@@ -71,12 +75,16 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
 
 
     const { translatedText, title, id } = mutation.data
+    
     const chunksArray = (words: string[], size: number) => {
         return words.reduce((acc, _, i) => {
             if (i % size === 0) acc.push(words.slice(i, i + size).join(' '))
             return acc
         }, [] as string[])
     }
+
+    
+   
 
 
     return (
@@ -102,8 +110,8 @@ export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
                 </div>
 
                 {/* Lyrics Section */}
-                <div className='px-6 py-3 space-y-6'>
-                    {chunksArray(translatedText.toLowerCase().split(' '), 6).map((chunk, i) => (
+                <div className='px-4 py-3 space-y-2'>
+                    {chunksArray(translatedText.toLowerCase().split(' '), 5).map((chunk, i) => (
                         <div
                             key={i}
                             className='group hover:bg-slate-800/40 -mx-2 px-2 py-2 rounded-lg transition-all duration-200'
