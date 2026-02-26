@@ -62,7 +62,8 @@ export class VideoService {
         if (!videoLink) throw new Error("No se encontró el link del video")
 
         await this.downloadAudio(videoLink)
-        const subtitles = await transcribeWhisperAudio(language)
+        const subtitles = await transcribeWhisperAudio()
+        if (!subtitles) throw new Error('No se pudo transcribir el audio')
         return { subtitles, title }
     }
 
