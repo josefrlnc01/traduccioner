@@ -3,6 +3,7 @@ import User, { IUser } from "../models/User.js"
 import { hashPassword } from "../utils/auth.js"
 import Token from "../models/Token.js"
 import { generate6DigitsToken } from "../utils/token.js"
+import { AuthEmail } from "../emails/AuthEmail.js"
 
 declare global {
     namespace Express {
@@ -30,10 +31,13 @@ export class AuthController {
         token.user = user._id
         user.password = await hashPassword(password)
 
+        AuthEmail.sendEmail({
+            email: user.email,
+            token: token.token,
+            name: user.name
+        })
         await Promise.allSettled([user.save(), token.save()])
         return res.status(200).send('Usuario creado correctamente')
     }
-
-
 
 }
