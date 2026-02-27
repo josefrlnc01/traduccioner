@@ -1,4 +1,4 @@
-import { transporter } from "../config/NODEMAILER.js"
+import transport from "../config/NODEMAILER.js"
 
 interface IEmail {
     email: string
@@ -8,7 +8,7 @@ interface IEmail {
 
 export class AuthEmail {
     static sendEmail = async (user : IEmail ) => {
-        await transporter.sendMail({
+        await transport.sendMail({
                 from: 'Traduccioner <admin@uptask.com>',
                 to : user.email,
                 subject : 'Uptask-- Confirma tu cuenta',

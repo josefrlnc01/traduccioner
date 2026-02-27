@@ -4,7 +4,9 @@ dotenv.config()
 import { mainRoute } from '../routes/mainRoute.js'
 import { corsMiddleware } from '../middlewares/corsOptions.js'
 import { authRoute } from '../routes/auth.js'
+import { connectToDb } from '../config/db.js'
 
+await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT 
 
