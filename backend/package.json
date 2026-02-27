@@ -2,8 +2,10 @@
   "dependencies": {
     "@google-cloud/translate": "^9.3.0",
     "@tailwindcss/vite": "^4.1.18",
+    "@types/bcrypt": "^6.0.0",
     "@types/gapi": "^0.0.47",
     "axios": "^1.13.5",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
@@ -17,7 +19,7 @@
     "yt-dlp-exec": "^1.0.2",
     "yt-dlp-wrap": "^2.3.12",
     "ytdl-core": "^4.11.5",
-    "zod": "^4.3.6"   
+    "zod": "^4.3.6"
   },
   "type": "module",
   "scripts": {
