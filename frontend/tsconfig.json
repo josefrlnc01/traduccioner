@@ -6,8 +6,15 @@
   ],
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+     "paths": {
+      "@/components/*" : ["components/*"],
+      "@/api/*":["src/api/*"],
+      "@/views/*" : ["views/*"],
+      "@/layouts/*" : ["layouts/*"],
+
+      "@/lib/*" : ["lib/*"],
+      "@/utils/*" : ["utils/*"],
+      
+    },
   }
 }

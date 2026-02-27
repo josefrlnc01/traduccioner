@@ -7,7 +7,7 @@ export default function Router() {
     <BrowserRouter>
         <Routes>
             <Route element={<AppLayout/>}>
-                <Route path="/" element={<MainView/>}></Route>
+                <Route path="/" element={<MainView/>} index></Route>
             </Route>
         </Routes>
     </BrowserRouter>
