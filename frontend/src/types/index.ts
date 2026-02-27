@@ -6,3 +6,8 @@ export const userSchema = z.object({
     password: z.string(),
     confirmed: z.boolean()
 })
+
+
+export type TokenConfirmation = {
+    token: string
+}
