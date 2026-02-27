@@ -40,4 +40,36 @@ export class AuthController {
         return res.status(200).send('Usuario creado correctamente')
     }
 
+
+    static confirmAccount = async (req: Request, res: Response) => {
+        try {
+            const {token} = req.body
+            const tokenExists = await Token.findOne({token})
+            if (!tokenExists) {
+                const error = new Error('Token no válido')
+                return res.status(401).json({error : error.message})
+            }
+            
+            //Confirmamos el usuario
+            const user = await User.findById(tokenExists.user)
+            if (!user) {
+            throw new Error('Usuario no encontrado')
+            }
+
+            user.confirmed = true
+            await user.save()
+            await Promise.allSettled([user.save(), tokenExists.deleteOne()])
+
+            res.send('Cuenta confirmada correctamente')
+
+        } catch(error) {
+            return res.status(500).json({error: 'Hubo un error en la confirmación de la cuenta'})
+        }
+    }
+
+
+    static user = (req: Request, res: Response) => {
+        return res.status(200).json(req.user)
+    }
+
 }
