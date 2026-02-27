@@ -1,6 +1,8 @@
 import { Request, Response } from "express"
 import User, { IUser } from "../models/User.js"
 import { hashPassword } from "../utils/auth.js"
+import Token from "../models/Token.js"
+import { generate6DigitsToken } from "../utils/token.js"
 
 declare global {
     namespace Express {
@@ -23,10 +25,15 @@ export class AuthController {
             return res.status(400).json({error: error.message})
         }
 
-
+        const token = new Token()
+        token.token = generate6DigitsToken()
+        token.user = user._id
         user.password = await hashPassword(password)
 
-        await user.save()
+        await Promise.allSettled([user.save(), token.save()])
         return res.status(200).send('Usuario creado correctamente')
     }
+
+
+
 }
