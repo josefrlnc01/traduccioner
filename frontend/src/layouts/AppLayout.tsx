@@ -1,7 +1,9 @@
-
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from '@/hooks/useAuth'
 import { Link, Navigate } from 'react-router'
 import { Outlet } from 'react-router'
+
 export default function AppLayout() {
   const {data, isError, isLoading} = useAuth()
 
@@ -38,7 +40,10 @@ export default function AppLayout() {
     <footer className='py-5'>
         <p className='text-center'>Derechos reservados</p>
     </footer>
-    
+    <ToastContainer
+    pauseOnHover={false}
+    pauseOnFocusLoss={false}
+    />
     
     </>
 )

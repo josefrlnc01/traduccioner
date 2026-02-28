@@ -1,7 +1,7 @@
 import { confirmAccount } from "@/api/AuthApi"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-
+import {toast} from 'react-toastify'
 import {
   InputOTP,
   InputOTPGroup,
@@ -16,10 +16,10 @@ export default function ConfirmAccountView() {
     const {mutate} = useMutation({
         mutationFn: confirmAccount,
         onError : (error) => {
-            console.log(error)
+            toast.error(error.message)
         },
         onSuccess : (data) => {
-            console.log(data)
+            toast.success(data)
         }
     })
 
