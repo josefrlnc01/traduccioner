@@ -1,5 +1,5 @@
 import axios, { isAxiosError } from 'axios'
-import { userSchema } from '@/types'
+import { userSchema, type UserLoginForm } from '@/types'
 
 type UserRegistrationForm = {
     name: string,
@@ -53,3 +53,16 @@ export async function confirmAccount (formData:string) {
         }
     }
 }
+
+
+
+export async function authenticateAccount (formData: UserLoginForm) {
+    try {
+        const {data} = await axios.post(`${baseUrl}/auth/login`, formData)
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+} 

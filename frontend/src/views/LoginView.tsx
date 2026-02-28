@@ -1,6 +1,9 @@
+import { authenticateAccount } from '@/api/AuthApi'
 import ErrorMessage from '@/components/ErrorMessage'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import {useForm} from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 type UserLoginForm = {
     email: string
@@ -12,13 +15,23 @@ export default function LoginView() {
         email: '',
         password: ''
     }
+    const {mutate} = useMutation({
+        mutationFn: authenticateAccount,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
 
     const {register, handleSubmit, formState : {errors} } = useForm({defaultValues: initialValues})
 
+    const handleLogin = (formData: UserLoginForm) => mutate(formData)
 
   return (
     <>
-        <form className='space-y-3 p-8 bg-black '>
+        <form className='space-y-3 p-8 bg-black' onSubmit={handleSubmit(handleLogin)}>
             <div className='flex flex-col gap-5'>
                 <label className='text-2xl'>Email</label>
                 <input
@@ -48,7 +61,7 @@ export default function LoginView() {
             </div>
 
             <input type='submit'
-            placeholder='Iniciar sesión'
+            value='Iniciar sesión'
             className='w-full p-2 cursor-pointer bg-white text-black'
             />
             {errors && (
