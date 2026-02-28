@@ -11,3 +11,9 @@ export const userSchema = z.object({
 export type TokenConfirmation = {
     token: string
 }
+
+
+export type UserLoginForm = {
+    email: string
+    password: string
+}
