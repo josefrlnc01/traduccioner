@@ -57,11 +57,8 @@ export class AuthController {
             }
 
             user.confirmed = true
-            await user.save()
             await Promise.allSettled([user.save(), tokenExists.deleteOne()])
-
             res.send('Cuenta confirmada correctamente')
-
         } catch(error) {
             return res.status(500).json({error: 'Hubo un error en la confirmación de la cuenta'})
         }

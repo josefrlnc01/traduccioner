@@ -7,10 +7,10 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-import type { TokenConfirmation } from "src/types"
+import type { TokenConfirmation } from "@/types"
 
 export default function ConfirmAccountView() {
-    const [token, setToken] = useState<TokenConfirmation['token']>('1234')
+    const [token, setToken] = useState<TokenConfirmation['token']>('')
 
 
     const {mutate} = useMutation({

@@ -44,7 +44,8 @@ export async function getUser () {
 
 export async function confirmAccount (formData:string) {
     try {
-        const {data} = await axios.post<string>('/auth/confirm-account', formData)
+        const {data} = await axios.post<string>(`${baseUrl}{/auth/confirm-account`, formData)
+        console.log(data)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
