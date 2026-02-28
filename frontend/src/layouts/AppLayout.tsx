@@ -1,5 +1,5 @@
 
-import { useAuth } from 'src/hooks/useAuth'
+import { useAuth } from '@/hooks/useAuth'
 import { Link, Navigate } from 'react-router'
 import { Outlet } from 'react-router'
 export default function AppLayout() {

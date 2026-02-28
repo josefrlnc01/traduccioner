@@ -3,6 +3,7 @@ import AppLayout from "./layouts/AppLayout"
 import MainView from "./views/MainView"
 import AuthLayout from "./layouts/AuthLayout"
 import ConfirmAccountView from "./views/ConfirmAccountView"
+import LoginView from "./views/LoginView"
 
 export default function Router() {
   return (
@@ -13,6 +14,7 @@ export default function Router() {
             </Route>
             <Route element={<AuthLayout/>}>
               <Route path="/auth/confirm-account" element={<ConfirmAccountView/>}/>
+              <Route path="/auth/login" element={<LoginView/>}/>
             </Route>
         </Routes>
     </BrowserRouter>

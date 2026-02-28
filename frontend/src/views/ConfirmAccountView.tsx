@@ -1,6 +1,7 @@
 import { confirmAccount } from "@/api/AuthApi"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
+
 import {
   InputOTP,
   InputOTPGroup,
@@ -31,7 +32,7 @@ export default function ConfirmAccountView() {
     }
 
    return (
-    <InputOTP value={token} maxLength={6} onChange={handleChange} onComplete={handleComplete} defaultValue="">
+    <InputOTP value={token} maxLength={6} onChange={handleChange} onComplete={handleComplete}>
       <InputOTPGroup>
         <InputOTPSlot index={0} />
         <InputOTPSlot index={1} />

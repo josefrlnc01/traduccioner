@@ -1,5 +1,5 @@
 import axios, { isAxiosError } from 'axios'
-import { userSchema } from 'src/types'
+import { userSchema } from '@/types'
 
 type UserRegistrationForm = {
     name: string,
