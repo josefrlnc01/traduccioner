@@ -6,7 +6,7 @@ import { generate6DigitsToken } from "../utils/token.js"
 import { AuthEmail } from "../emails/AuthEmail.js"
 import jwt from 'jsonwebtoken'
 import RefreshToken from "../models/RefreshToken.js"
-
+import { getRequiredEnv } from "../utils/auth.js"
 declare global {
     namespace Express {
         interface Request {
@@ -15,11 +15,7 @@ declare global {
     }
 }
 
-const getRequiredEnv = (key: string) => {
-    const value = process.env[key]
-    if (!value) throw new Error('Valor indefinido')
-    return value
-}
+
 
 const accessTokenKey = getRequiredEnv('ACCESS_JWT_KEY')
 const refreshTokenKey = getRequiredEnv('REFRESH_JWT_KEY')
@@ -88,7 +84,6 @@ export class AuthController {
 
     static authenticateAndLogin = async (req: Request, res: Response) => {
         try {
-            console.log(req.body)
             const {email, password} = req.body
 
             const user = await User.findOne({email})
@@ -99,36 +94,55 @@ export class AuthController {
             }
 
             if (!user.confirmed) {
-                const error = new Error('La cuenta no está confirmada')
+                const error = new Error('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación')
+                const token = new Token()
+                token.token = generate6DigitsToken()
+                AuthEmail.sendEmail({
+                    email: user.email,
+                    name: user.name,
+                    token: token.token
+                })
                 return res.status(400).json({ error: error.message })
             }
 
 
-            const isValidPassword = await checkPassword(user.password, password)
+            const isValidPassword = await checkPassword(password, user.password)
 
             if (!isValidPassword) {
                 const error = new Error('Contraseña incorrecta')
-                return res.status(400).json({error: error.message})
+                return res.status(401).json({error: error.message})
             }
 
 
-            req.user = user
-
             const accessToken = jwt.sign({
-                email
+                id:user._id
             }, accessTokenKey,
                 { expiresIn: '10m' })
 
 
             const refreshToken = jwt.sign({
-                email 
+                id:user._id 
             }, refreshTokenKey, {
                 expiresIn: '90d'
             })
 
-            const refreshTokenDB = new RefreshToken(refreshToken)
+            const refreshTokenDB = new RefreshToken({token: refreshToken})
 
             refreshTokenDB.user = user._id
+
+            try {
+                const decoded = jwt.verify(accessToken, accessTokenKey)
+
+                if (typeof decoded === 'object' && decoded.id) {
+                    const user = await User.findById(decoded.id).select('name email')
+                    if (user) {
+                        req.user = user
+                    }
+                }
+            } catch {
+                const error = new Error('No se pudo obtener el token')
+                return res.status(400).json({error: error.message})
+            }
 
             await Promise.allSettled([user.save(), refreshTokenDB.save()])
             res.cookie('refreshToken',refreshToken, {
@@ -148,7 +162,7 @@ export class AuthController {
         try {   
             const {email} = req.body
 
-            const user = await User.findOne({email})
+            const user = await User.findOne(email)
 
             if (!user) {
                 const error = new Error('Usuario no registrado')
@@ -179,6 +193,7 @@ export class AuthController {
 
 
     static user = (req: Request, res: Response) => {
+        console.log(req.user)
         return res.status(200).json(req.user)
     }
 

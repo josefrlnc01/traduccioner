@@ -1,46 +1,59 @@
 import { confirmAccount } from "@/api/AuthApi"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import type { TokenConfirmation } from "@/types"
+import { Link } from "react-router"
+
 
 export default function ConfirmAccountView() {
-    const [token, setToken] = useState<TokenConfirmation['token']>('')
+  const [token, setToken] = useState<TokenConfirmation['token']>('')
 
 
-    const {mutate} = useMutation({
-        mutationFn: confirmAccount,
-        onError : (error) => {
-            toast.error(error.message)
-        },
-        onSuccess : (data) => {
-            toast.success(data)
-        }
-    })
-
-    const handleChange = (token: TokenConfirmation['token']) => {
-        setToken(token)
+  const { mutate } = useMutation({
+    mutationFn: confirmAccount,
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    onSuccess: (data) => {
+      toast.success(data)
     }
+  })
 
-    const handleComplete = (token: TokenConfirmation['token']) => {
-        mutate(token)
-    }
+  const handleChange = (token: TokenConfirmation['token']) => {
+    setToken(token)
+  }
 
-   return (
-    <InputOTP value={token} maxLength={6} onChange={handleChange} onComplete={handleComplete}>
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-        <InputOTPSlot index={3} />
-        <InputOTPSlot index={4} />
-        <InputOTPSlot index={5} />
-      </InputOTPGroup>
-    </InputOTP>
+  const handleComplete = (token: TokenConfirmation['token']) => {
+    mutate(token)
+  }
+
+  return (
+    <>
+      <InputOTP value={token} maxLength={6} onChange={handleChange} onComplete={handleComplete}>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
+      <nav className="mt-10 flex flex-col space-y-4">
+        <Link
+          to='/auth/request-code'
+          className="text-center text-gray-300 font-normal"
+        >
+          Solicitar un nuevo Código
+        </Link>
+      </nav>
+    </>
+
   )
 }

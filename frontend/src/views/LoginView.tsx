@@ -1,6 +1,8 @@
 import { authenticateAccount } from '@/api/AuthApi'
 import ErrorMessage from '@/components/ErrorMessage'
+import { setAccessToken } from '@/stores/auth'
 import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
@@ -11,7 +13,8 @@ type UserLoginForm = {
     password: string
 }
 
-export default function LoginView() {
+export default function LoginView() { 
+
     const navigate = useNavigate()
     const initialValues: UserLoginForm = {
         email: '',
@@ -22,10 +25,14 @@ export default function LoginView() {
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
+            setAccessToken(data)
             navigate('/')
         }
     })
+
+
+    
 
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 

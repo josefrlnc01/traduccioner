@@ -7,7 +7,10 @@ export const userSchema = z.object({
     confirmed: z.boolean()
 })
 
-
+export const userReqSchema = z.object({
+    name: z.string(),
+    email: z.string()
+})
  const registrationFormSchema = z.object({
     name:z.string(),
     email:z.string(),
