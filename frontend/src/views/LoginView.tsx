@@ -31,7 +31,7 @@ export default function LoginView() {
 
   return (
     <>
-        <form className='space-y-3 p-8 bg-black' onSubmit={handleSubmit(handleLogin)}>
+        <form className='space-y-3 p-4 bg-black rounded-md' onSubmit={handleSubmit(handleLogin)}>
             <div className='flex flex-col gap-5'>
                 <label className='text-2xl'>Email</label>
                 <input

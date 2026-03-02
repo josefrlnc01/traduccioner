@@ -1,14 +1,9 @@
 import axios, { isAxiosError } from 'axios'
-import { userSchema, type UserLoginForm } from '@/types'
+import { userSchema, type RegistrationForm, type UserLoginForm } from '@/types'
 
-type UserRegistrationForm = {
-    name: string,
-    email: string,
-    password: string,
-    confirmed: boolean
-}
+
 const baseUrl = import.meta.env.VITE_API_URL
-export async function createAccount (formData: UserRegistrationForm) {
+export async function createAccount (formData: RegistrationForm) {
     try {
         const {data} = await axios.post(`${baseUrl}/auth/create-account`, formData)
         if (!data) throw new Error('Es necesario introducir los campos para crear la cuenta')
