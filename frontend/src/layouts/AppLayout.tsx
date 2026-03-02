@@ -32,14 +32,12 @@ export default function AppLayout() {
         
     </header>
 
-    <section className='max-w-screen-2xl mx-auto mt-10 p-5'>
+    <aside className='max-w-screen-2xl mx-auto mt-10 p-5'>
         <Outlet/>
-    </section>
+    </aside>
     
 
-    <footer className='py-5'>
-        <p className='text-center'>Derechos reservados</p>
-    </footer>
+    
     <ToastContainer
     pauseOnHover={false}
     pauseOnFocusLoss={false}
