@@ -55,7 +55,7 @@ export class AuthController {
                 name: user.name
             })
             await Promise.allSettled([user.save(), token.save()])
-            return res.status(200).send('Usuario creado correctamente')
+            return res.status(200).send('Usuario creado correctamente, revisa tu correo para confirmar tu cuenta')
         } catch (error) {
             return res.status(500).json({ error: 'Hubo un error en la creación de usuario' })
         }
@@ -88,11 +88,11 @@ export class AuthController {
 
     static authenticateAndLogin = async (req: Request, res: Response) => {
         try {
-
+            console.log(req.body)
             const {email, password} = req.body
 
-            const user = await User.findOne(email)
-            
+            const user = await User.findOne({email})
+            console.log(user)
             if (!user) {
                 const error = new Error('Usuario no registrado')
                 return res.status(400).json({ error: error.message })
