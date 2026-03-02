@@ -144,6 +144,40 @@ export class AuthController {
     }
 
 
+    static resetAccountConfirmationToken = async (req: Request, res: Response) => {
+        try {   
+            const {email} = req.body
+
+            const user = await User.findOne({email})
+
+            if (!user) {
+                const error = new Error('Usuario no registrado')
+                return res.status(400).json({ error: error.message })
+            }
+
+            if (user.confirmed) {
+                const error = new Error('Esta cuenta ya está confirmada')
+                return res.status(400).json({ error: error.message })
+            }
+
+            const token = new Token()
+            token.token = generate6DigitsToken()
+            token.user = user._id
+            AuthEmail.sendEmail({
+                email: user.email,
+                name: user.name,
+                token: token.token
+            })
+
+            await Promise.allSettled([user.save(), token.save()])
+
+            return res.status(200).send('Nuevo token enviado, revisa tu bandeja de email')
+        } catch (error) {
+            return res.status(500).json({error: 'Hubo un error en el reenvío del token de confirmación de cuenta'})
+        }
+    }
+
+
     static user = (req: Request, res: Response) => {
         return res.status(200).json(req.user)
     }
