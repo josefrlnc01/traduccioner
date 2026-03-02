@@ -53,7 +53,7 @@ export async function confirmAccount (formData:string) {
 
 export async function authenticateAccount (formData: UserLoginForm) {
     try {
-        const {data} = await axios.post(`${baseUrl}/auth/login`, formData)
+        const {data} = await axios.post(`${baseUrl}/auth/authenticate-account`, formData)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {

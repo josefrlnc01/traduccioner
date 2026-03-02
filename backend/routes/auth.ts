@@ -6,4 +6,5 @@ export const authRoute = Router()
 
 authRoute.post('/create-account', AuthController.createAccount)
 authRoute.post('/confirm-account', AuthController.confirmAccount)
+authRoute.post('/authenticate-account', AuthController.authenticateAndLogin)
 authRoute.get('/user', AuthController.user)
