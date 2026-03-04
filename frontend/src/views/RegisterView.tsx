@@ -3,11 +3,11 @@ import ErrorMessage from "@/components/ErrorMessage"
 import type { RegistrationForm } from "@/types"
 import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { toast } from "react-toastify"
 
 export default function RegisterView() {
-
+    const navigate = useNavigate()
     const initialValues: RegistrationForm = {
         name: '',
         email: '',
@@ -22,6 +22,7 @@ export default function RegisterView() {
         },
         onSuccess: (data) => {
             toast.success(data)
+            navigate('/auth/login')
         }
     })
 

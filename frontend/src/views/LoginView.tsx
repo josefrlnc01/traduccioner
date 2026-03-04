@@ -1,6 +1,5 @@
 import { authenticateAccount } from '@/api/AuthApi'
 import ErrorMessage from '@/components/ErrorMessage'
-import { setAccessToken } from '@/stores/auth'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
@@ -25,9 +24,7 @@ export default function LoginView() {
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: (data) => {
-            console.log(data)
-            setAccessToken(data)
+        onSuccess: () => {
             navigate('/')
         }
     })

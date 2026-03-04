@@ -3,6 +3,13 @@ export type VideoSubtitles = {
     title: string
 }
 
+export type UserRegistrationForm = {
+    name: string,
+    email: string
+    password: string,
+    password_confirmation: string
+}
+
 export type RequestProps = {
     videoLink: string
     lang: string

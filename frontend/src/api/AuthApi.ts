@@ -83,17 +83,11 @@ export async function resendToken(formData: string) {
 
 export async function getRefreshToken() {
     try {
-        const response = await fetch(`${baseUrl}/auth/refresh-token`, {
-            method: 'POST',
-            credentials: 'include'
+        const response = await axios.post(`${baseUrl}/auth/refresh-token`, {}, {
+            withCredentials: true
         })
-        if (!response.ok) throw new Error('Hubo un error al obtener el token de refresco')
-
         if (response.status === 401) return null
-
-        const data = await response.json()
-
-        return data.access_token
+        return response.data.access_token
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
