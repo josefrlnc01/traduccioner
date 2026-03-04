@@ -1,14 +1,14 @@
 import { Request, Response } from "express"
-import User, { IUser } from "../models/User.js"
-import { checkPassword, hashPassword } from "../utils/auth.js"
-import Token from "../models/Token.js"
-import { generate6DigitsToken } from "../utils/token.js"
-import { AuthEmail } from "../emails/AuthEmail.js"
+import User, { IUser } from "../../models/User.js"
+import { checkPassword, hashPassword } from "../../utils/auth.js"
+import Token from "../../models/Token.js"
+import { generate6DigitsToken } from "../../utils/token.js"
+import { AuthEmail } from "../../emails/AuthEmail.js"
 import jwt from 'jsonwebtoken'
-import RefreshToken from "../models/RefreshToken.js"
-import { getRequiredEnv } from "../utils/auth.js"
+import RefreshToken from "../../models/RefreshToken.js"
+import { getRequiredEnv } from "../../utils/auth.js"
 import { de } from "zod/v4/locales"
-import { authJWT, confirmToken, createUser, decodeAndGenerateTokens, verifyAndSendToken } from "../modules/auth/auth.service.js"
+import { authJWT, confirmToken, createUser, decodeAndGenerateTokens, verifyAndSendToken } from "./auth.service.js"
 declare global {
     namespace Express {
         interface Request {

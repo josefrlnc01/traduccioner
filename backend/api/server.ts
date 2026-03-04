@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { mainRoute } from '../routes/mainRoute.js'
 import { corsMiddleware } from '../middlewares/corsOptions.js'
-import { authRoute } from '../routes/auth.js'
+import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
 import cookieParser from 'cookie-parser'
 
