@@ -39,9 +39,9 @@ export async function getUser(accessToken: string) {
 
 
 
-export async function confirmAccount(formData: string) {
+export async function confirmAccount(token: string) {
     try {
-        const { data } = await axios.post<string>(`${baseUrl}/auth/confirm-account`, formData)
+        const { data } = await axios.post<string>(`${baseUrl}/auth/confirm-account`, {token})
         console.log(data)
         return data
     } catch (error) {
@@ -69,9 +69,10 @@ export async function authenticateAccount(formData: UserLoginForm) {
 
 
 
-export async function resendToken(formData: string) {
+export async function resendToken(email: string) {
     try {
-        const { data } = await axios.post(`${baseUrl}/auth/resend-confirmation-token`, formData)
+        console.log('formdata', email)
+        const { data } = await axios.post<string>(`${baseUrl}/auth/resend-confirmation-token`, {email})
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {

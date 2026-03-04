@@ -1,5 +1,5 @@
 import mongoose, {Schema, Document, Types} from 'mongoose'
-
+import z from 'zod'
 
 export interface IToken extends Document {
     token: string,
@@ -23,7 +23,7 @@ const tokenSchema: Schema = new Schema({
     }
 })
 
-
+export type TokenType = z.infer<typeof tokenSchema>
 const Token = mongoose.model<IToken>('Token', tokenSchema)
 
 export default Token

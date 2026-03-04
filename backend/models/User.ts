@@ -1,5 +1,5 @@
 import mongoose, {Schema, Document} from 'mongoose'
-
+import z from 'zod'
 export interface IUser extends Document {
     name: string,
     email: string,
@@ -27,7 +27,7 @@ export const userSchema: Schema = new Schema({
     }
 })
 
-
+export type UserType = z.infer<typeof userSchema>
 const User = mongoose.model<IUser>('User', userSchema)
 
 export default User
