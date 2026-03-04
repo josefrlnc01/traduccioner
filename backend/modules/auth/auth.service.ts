@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { AuthEmail } from "../../emails/AuthEmail.js";
 import RefreshToken from "../../models/RefreshToken.js";
-import Token, { IToken } from "../../models/Token.js";
-import User, { UserType } from "../../models/User.js";
+import Token from "../../models/Token.js";
+import User from "../../models/User.js";
 import { UserRegistrationForm } from "../../types/index.js";
 import { getRequiredEnv, hashPassword } from "../../utils/auth.js";
 import { generate6DigitsToken } from "../../utils/token.js";
