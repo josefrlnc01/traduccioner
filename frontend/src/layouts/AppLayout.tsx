@@ -6,9 +6,6 @@ import { Outlet } from 'react-router'
 
 export default function AppLayout() {
     const { data, isError, isLoading } = useAuth()
-   
-    console.log(data)
-
 
     if (isLoading) return 'Cargando...'
 
@@ -18,11 +15,9 @@ export default function AppLayout() {
     if (data) {
         return (
             <>
-                <aside className='max-w-screen-2xl'>
+                <aside className='max-w-screen min-w-screen'>
                     <Outlet />
                 </aside>
-
-
 
                 <ToastContainer
                     pauseOnHover={false}
