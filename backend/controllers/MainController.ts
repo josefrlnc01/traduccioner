@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import fs from 'node:fs/promises'
 import getVideoId from 'get-video-id'
-import { translateText } from "../utils/translateText.js";
-import type { DataOfId, RequestProps } from "../types/index.ts";
+import { translateText } from "../modules/translation/translation.service.js";
+import type { DataOfId, RequestProps } from "../shared/types/index.js";
 import { VideoService } from "../services/video.service.js";
 
 

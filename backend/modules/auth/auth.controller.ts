@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
-import { IUser } from "../../models/User.js"
-import { checkPassword, hashPassword } from "../../utils/auth.js"
-import Token from "../../models/Token.js"
-import { generate6DigitsToken } from "../../utils/token.js"
+import { IUser, userSchema } from "../user/user.model.js"
+import { checkPassword, hashPassword } from "../../shared/utils/auth.js"
+import Token from "../tokens/token.model.js"
+import { generate6DigitsToken } from "../../shared/utils/token.js"
 import { AuthEmail } from "../../emails/AuthEmail.js"
 import { authJWT, confirmToken, createUser, decodeAndGenerateTokens, verifyAndSendToken } from "./auth.service.js"
 declare global {
@@ -131,7 +131,6 @@ export class AuthController {
 
 
     static user = (req: Request, res: Response) => {
-        console.log(req.user)
         return res.status(200).json(req.user)
     }
 

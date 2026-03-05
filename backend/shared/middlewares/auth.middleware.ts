@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken'
 import { getRequiredEnv } from "../utils/auth.js";
-import User from "../models/User.js";
+import User from "../../modules/user/user.model.js";
 
 
 export async function authenticate (req: Request, res: Response, next: NextFunction) {

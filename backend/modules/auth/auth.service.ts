@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 import { AuthEmail } from "../../emails/AuthEmail.js";
-import RefreshToken from "../../models/RefreshToken.js";
-import Token from "../../models/Token.js";
-import User from "../../models/User.js";
-import { UserRegistrationForm } from "../../types/index.js";
-import { getRequiredEnv, hashPassword } from "../../utils/auth.js";
-import { generate6DigitsToken } from "../../utils/token.js";
+import RefreshToken from "../tokens/refreshToken.model.js";
+import Token from "../tokens/token.model.js";
+import User from "../user/user.model.js";
+import { UserRegistrationForm } from "../../shared/types/index.js";
+import { getRequiredEnv, hashPassword } from "../../shared/utils/auth.js";
+import { generate6DigitsToken } from "../../shared/utils/token.js";
 
 
 const accessTokenKey = getRequiredEnv('ACCESS_JWT_KEY')
