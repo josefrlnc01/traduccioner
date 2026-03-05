@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { requiredEnv } from "./mail/NODEMAILER.js";
+import { getRequiredEnv } from "../shared/utils/variables.js";
 
 export async function connectToDb() {
-    const uri = requiredEnv('URI')
+    const uri = getRequiredEnv('URI')
     try {
         const connection = await mongoose.connect(uri)
         const url = `${connection.connection.host}:${connection.connection.port}`

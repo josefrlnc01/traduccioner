@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken'
-import { getRequiredEnv } from "../utils/auth.js";
+import { accessTokenKey } from "../utils/variables.js";
 import User from "../../modules/user/user.model.js";
 
 
@@ -13,7 +13,7 @@ export async function authenticate (req: Request, res: Response, next: NextFunct
     }
     
     const token = authHeaders.split(' ')[1]
-    const accessTokenKey = getRequiredEnv('ACCESS_JWT_KEY')
+    
     try {
         const decoded = jwt.verify(token, accessTokenKey)
 

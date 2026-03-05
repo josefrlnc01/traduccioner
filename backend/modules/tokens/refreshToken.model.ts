@@ -13,7 +13,8 @@ const refreshTokenSchema: Schema = new Schema({
     },
     user: {
         type: Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     }
 })
 

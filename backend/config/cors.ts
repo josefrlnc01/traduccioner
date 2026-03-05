@@ -1,14 +1,6 @@
 import cors from 'cors'
 export const isProd = process.env.NODE_ENV === 'production'
-
-function getRequiredEnv(key:string): string {
-    const value = process.env[key]
-    if (!value) {
-        throw new Error ("Variables de entorno no definidas")
-    }
-    return value
-}
-
+import { getRequiredEnv } from '../shared/utils/variables.js'
 
 let frontendUrl: string | undefined
 

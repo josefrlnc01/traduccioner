@@ -10,8 +10,3 @@ export async function checkPassword (password:string, storedHash:string) {
 }
 
 
-export const getRequiredEnv = (key: string) => {
-    const value = process.env[key]
-    if (!value) throw new Error('Valor indefinido')
-    return value
-}

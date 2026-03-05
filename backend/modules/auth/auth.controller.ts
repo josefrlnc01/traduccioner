@@ -12,10 +12,6 @@ declare global {
 }
 
 
-
-
-
-
 export class AuthController {
     static createAccount = async (req: Request, res: Response) => {
         try {
