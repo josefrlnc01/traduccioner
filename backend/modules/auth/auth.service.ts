@@ -4,7 +4,7 @@ import RefreshToken from "../tokens/refreshToken.model.js";
 import Token from "../tokens/token.model.js";
 import User from "../user/user.model.js";
 import type { UserRegistrationForm } from "../user/user.types.js";
-import { getRequiredEnv, hashPassword } from "../../shared/utils/auth.js";
+import { checkPassword, getRequiredEnv, hashPassword } from "../../shared/utils/auth.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
 
 
@@ -24,7 +24,7 @@ export async function createUser(u: UserRegistrationForm) {
     const token = new Token()
     token.token = generate6DigitsToken()
     token.user = user._id
-    await Promise.allSettled([user.save(), token.save()])
+    await Promise.all([user.save(), token.save()])
 
     return { user, token }
 }
@@ -43,19 +43,39 @@ export async function confirmToken(token: string) {
     }
 
     user.confirmed = true
-    await Promise.allSettled([user.save(), tokenExists.deleteOne()])
+    await Promise.all([user.save(), tokenExists.deleteOne()])
 }
 
 
 
-export async function authJWT(email: string) {
+export async function authJWT(email: string, password: string) {
 
     const user = await User.findOne({ email })
-    console.log(user)
     if (!user) {
         throw new Error('Usuario no registrado')
 
     }
+
+    if (!user.confirmed) {
+        
+        const token = new Token()
+        token.token = generate6DigitsToken()
+        AuthEmail.sendEmail({
+            email: user.email,
+            name: user.name,
+            token: token.token
+        })
+        await token.save()
+        throw new Error('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación')
+    }
+
+
+    const isValidPassword = await checkPassword(password, user.password)
+
+    if (!isValidPassword) {
+        throw new Error('Contraseña incorrecta')
+    }
+
     const accessToken = jwt.sign({
         id: user._id
     }, accessTokenKey,
@@ -68,14 +88,11 @@ export async function authJWT(email: string) {
         expiresIn: '90d'
     })
 
-    console.log('refreshToken', refreshToken)
-
     const refreshTokenDB = new RefreshToken({ token: refreshToken })
-    console.log(refreshTokenDB)
     refreshTokenDB.user = user._id
 
 
-    await Promise.allSettled([user.save(), refreshTokenDB.save()])
+    await Promise.all([user.save(), refreshTokenDB.save()])
 
     return { accessToken, refreshToken, user }
 }
@@ -102,7 +119,7 @@ export async function verifyAndSendToken(email: string) {
         token: token.token
     })
 
-    await Promise.allSettled([user.save(), token.save()])
+    await Promise.all([user.save(), token.save()])
 }
 
 
@@ -152,8 +169,8 @@ export async function decodeAndGenerateTokens(refreshToken: string) {
 
     newRefreshTokenInDB.user = user._id
 
-    await Promise.allSettled([user.save(), newRefreshTokenInDB.save()])
+    await Promise.all([user.save(), newRefreshTokenInDB.save()])
 
 
-    return {accessToken, newRefreshToken}
+    return { accessToken, newRefreshToken }
 }

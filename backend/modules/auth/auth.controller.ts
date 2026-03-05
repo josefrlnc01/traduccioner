@@ -1,10 +1,8 @@
 import { Request, Response } from "express"
 import { IUser} from "../user/user.model.js"
-import { checkPassword, hashPassword } from "../../shared/utils/auth.js"
-import Token from "../tokens/token.model.js"
-import { generate6DigitsToken } from "../../shared/utils/token.js"
 import { AuthEmail } from "../../config/mail/mail.js"
 import { authJWT, confirmToken, createUser, decodeAndGenerateTokens, verifyAndSendToken } from "./auth.service.js"
+import { registerSchema } from "./auth.schema.js"
 declare global {
     namespace Express {
         interface Request {
@@ -21,12 +19,8 @@ declare global {
 export class AuthController {
     static createAccount = async (req: Request, res: Response) => {
         try {
-            const { password, password_confirmation } = req.body
-            if (password !== password_confirmation) {
-                throw new Error('Las contraseñas no coinciden')
-            }
-            const { user, token } = await createUser(req.body)
-            console.log('token en create account', token)
+            const data = registerSchema.parse(req.body)
+            const { user, token } = await createUser(data)
             await AuthEmail.sendEmail({
                 name: user.name,
                 email: user.email,
@@ -61,28 +55,8 @@ export class AuthController {
         try {
             const { email, password } = req.body
 
-            const {accessToken, refreshToken, user} = await authJWT(email)
+            const {accessToken, refreshToken, user} = await authJWT(email, password)
 
-            if (!user.confirmed) {
-                const error = new Error('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación')
-                const token = new Token()
-                token.token = generate6DigitsToken()
-                AuthEmail.sendEmail({
-                    email: user.email,
-                    name: user.name,
-                    token: token.token
-                })
-                await token.save()
-                return res.status(400).json({ error: error.message })
-            }
-
-
-            const isValidPassword = await checkPassword(password, user.password)
-
-            if (!isValidPassword) {
-                const error = new Error('Contraseña incorrecta')
-                return res.status(401).json({ error: error.message })
-            }
             res.cookie('refreshToken', refreshToken, {
                 httpOnly: true,
                 sameSite: 'strict'
