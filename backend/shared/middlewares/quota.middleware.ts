@@ -8,6 +8,7 @@ export const checkQuota = async (req: Request, res: Response, next: NextFunction
         'unknown').trim()
 
     try {
+        //operación atómica
         const quota = await Quota.findOneAndUpdate(
             {user: user._id, ip},
             {
