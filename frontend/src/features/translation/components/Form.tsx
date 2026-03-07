@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sendLink } from "../api/translationApi";
-import { ComboboxMultiple } from "@/shared/components/ComboboxMultiple";
+import { ComboboxMultiple } from "./ComboboxMultiple";
 import Subtitles from "./Subtitles";
 
 import { getAbbreviateLanguage } from "@/shared/utils/lang";
@@ -56,6 +56,7 @@ export default function Form() {
                             onClick={handleForm}
                             className="hidden bg-blue-600 pl-6 pr-6 pb-2 pt-2 rounded-xl font-semibold text-white lg:block">Traducir</button>
                     </div>
+
                     <div className="w-full flex gap-2 justify-between items-center">
                         <ComboboxMultiple
                             language={language}

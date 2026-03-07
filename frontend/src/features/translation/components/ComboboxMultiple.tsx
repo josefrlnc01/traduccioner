@@ -1,6 +1,6 @@
 "use client"
 import * as React from "react"
-import { ComboboxInput, Combobox, ComboboxContent, ComboboxEmpty, ComboboxList, ComboboxItem } from "./ui/combobox"
+import { ComboboxInput, Combobox, ComboboxContent, ComboboxEmpty, ComboboxList, ComboboxItem } from "../../../shared/components/ui/combobox"
 
 
 type ComboboxMultipleProps = {
@@ -19,7 +19,7 @@ export function ComboboxMultiple({language, setLanguage}:ComboboxMultipleProps) 
     onValueChange={setLanguage} 
     >
       <ComboboxInput
-      className={"bg-slate-900 border-none text-gray-200 lg:mx-auto"} 
+      className={"bg-slate-900 border-none text-gray-200 lg:mx-auto lg:p-6 lg:pl-0 lg:pr-0 lg:w-2/4"} 
       placeholder="Selecciona un lenguaje" />
       <ComboboxContent >
         <ComboboxEmpty>No items found.</ComboboxEmpty>
