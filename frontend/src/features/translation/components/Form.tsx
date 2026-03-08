@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sendLink } from "../api/translationApi";
+import {  sendLink, type PromiseFile, type PromiseLink } from "../api/translationApi";
 import { ComboboxMultiple } from "./ComboboxMultiple";
 import Subtitles from "./Subtitles";
 
@@ -7,26 +7,22 @@ import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
 
 export type MutationProps = {
-    link: string
-    lang: string | null
+    link: string | null
+    lang: string | null,
+    formData: FormData | null
 }
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [language, setLanguage] = useState<string | null>(null)
-
+    const [fileInputValue, setFileInputValue] = useState('')
     const langForTranslate = getAbbreviateLanguage(language)
-
+    const [formData, setFormData] = useState<FormData | null>(null)
     const mutation = useMutation<
-        {
-            subtitles: string
-            translatedText: string
-            title: string
-            id: string
-        } | undefined,
+        PromiseLink | PromiseFile | undefined,
         Error,
         MutationProps
     >({
-        mutationFn: ({ link, lang }) => sendLink(link, lang)
+        mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData)
     })
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
@@ -34,10 +30,26 @@ export default function Form() {
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        mutation.mutate({ link: inputValue, lang: langForTranslate })
+
+        if (!inputValue && formData) {
+            mutation.mutate({ link: null, lang: null, formData })
+            return
+        }
+
+        mutation.mutate({ link: inputValue, lang: langForTranslate, formData: null })
     }
 
+    const handleInputFile = (e:  React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        const file = e.currentTarget.files?.[0]
+        if (!file) return
 
+        const formData = new FormData()
+        formData.append('audio', file)
+        setFormData(formData)
+        console.log(formData)
+        setFileInputValue(e.currentTarget.value)
+    }
+    console.log(fileInputValue)
 
     return (
         <>
@@ -59,6 +71,11 @@ export default function Form() {
                     </div>
 
                     <div className="w-full flex gap-2 justify-between items-center">
+                        <input type="file" 
+                        onChange={handleInputFile} 
+                        name="audio" 
+                        formEncType="multipart/form-data"
+                        className="min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900"/>
                         <ComboboxMultiple
                             language={language}
                             setLanguage={setLanguage}
