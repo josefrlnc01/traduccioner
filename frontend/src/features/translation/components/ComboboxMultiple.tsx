@@ -19,7 +19,7 @@ export function ComboboxMultiple({language, setLanguage}:ComboboxMultipleProps) 
     onValueChange={setLanguage} 
     >
       <ComboboxInput
-      className={"bg-slate-900 border-none text-gray-200 lg:mx-auto lg:p-6 lg:pl-0 lg:pr-0 lg:w-2/4"} 
+      className={"bg-slate-900 border-none text-gray-200 min-w-2/4 md:p-6 md:pl-0 md:pr-0 md:min-w-2/4 md:w-1/4"} 
       placeholder="Selecciona un lenguaje" />
       <ComboboxContent >
         <ComboboxEmpty>No items found.</ComboboxEmpty>

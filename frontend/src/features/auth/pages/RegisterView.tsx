@@ -33,7 +33,7 @@ export default function RegisterView() {
 
     return (
         <>
-            <form className="w-full lg:max-w-md lg:mx-auto  space-y-6 p-8 bg-zinc-950 border border-zinc-800 rounded-2xl shadow-xl" onSubmit={handleSubmit(handleRegister)}>
+            <form className="w-full md:max-w-md md:mx-auto  space-y-6 p-8 bg-zinc-950 border border-zinc-800 rounded-2xl shadow-xl" onSubmit={handleSubmit(handleRegister)}>
                 <div className="text-center mb-8">
                     <h2 className="text-3xl font-bold text-white">Traduccioner</h2>
                     <p className="text-zinc-400 mt-2">Crea una cuenta nueva</p>

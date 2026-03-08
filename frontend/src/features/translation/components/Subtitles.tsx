@@ -59,7 +59,7 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
 
     if (!mutation.isSuccess) {
         return (
-            <aside className="flex flex-col lg:items-center p-4 text-gray-400 lg:hidden">
+            <aside className="flex flex-col text-center md:items-center p-4 text-gray-400 md:hidden">
                 Pega un enlace de Youtube y selecciona un idioma para ver la traducción
             </aside>
         )
@@ -83,7 +83,7 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
 
     return (
 
-        <section className='flex flex-col lg:items-center p-6 rounded-xl overflow-y-auto'>
+        <section className='flex flex-col md:items-center p-6 rounded-xl overflow-y-auto'>
             <aside className='w-full max-w-4xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
 
                 {/* Video Container */}
@@ -108,9 +108,9 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
                     {chunksArray(translatedText.toLowerCase().split(' '), 5).map((chunk, i) => (
                         <div
                             key={i}
-                            className='group hover:bg-slate-800/40 -mx-2 px-2 py-2 rounded-lg transition-all duration-200'
+                            className='group hover:bg-slate-800/40 -mx-2 px-2 py-2 rounded-md transition-all duration-200'
                         >
-                            <p className='text-xl lg:text-2xl lg:text-center font-semibold text-gray-200 leading-relaxed'>
+                            <p className='text-xl md:text-2xl md:text-center font-semibold text-gray-200 leading-relaxed'>
                                 {chunk}
                             </p>
                         </div>
