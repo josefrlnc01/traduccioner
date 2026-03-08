@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
 import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
+import { saveVideo } from '@/features/stored/storedApi';
 
 
 
@@ -14,6 +16,15 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)
+    const { mutate } = useMutation({
+        mutationFn: saveVideo,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
     
     const awaitPhrases = ['Cargando traducción, puede tardar un poco...', 'Procesando audio...', 'Extrayendo texto...']
 
@@ -27,17 +38,17 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
                 setFade(true)
             }, 300)
         }, 6000)
-
+        setIndex(0)
         return () => clearTimeout(timeOut)
     }, [index, awaitPhrases.length])
 
    
 
     if (mutation.isError) {
-        toast.error(mutation.error.message)
+        
         return (
-            <aside className="p-4 text-red-500">
-                Error al cargar los subtítulos
+            <aside className="p-4 text-red-500 md:text-center">
+                No puedes realizar más traducciones
             </aside>
         )
     }
@@ -78,7 +89,14 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
     }
 
     
-   
+    const handleSave = () => {
+        const data = {
+            videoId:id,
+            title,
+            text: translatedText
+        }
+        mutate(data)
+    }
 
 
     return (
@@ -102,6 +120,10 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
                         {title}
                     </h2>
                 </div>
+                <button
+                onClick={handleSave}
+                className='p-2 bg-blue-800 w-20 text-white font-bold mx-auto'
+                type='button'>Guardar canción</button>
 
                 {/* Lyrics Section */}
                 <div className='px-4 py-3 space-y-2'>
