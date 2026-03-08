@@ -51,7 +51,7 @@ export default function Form() {
                     <input onChange={handleInput}
                         placeholder="Copia tu enlace aqui"
                         type='text'
-                        className='min-w-full w-full md:w-1/4 p-3 text-gray-300 rounded-md bg-slate-900' />
+                        className='min-w-full w-full md:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900' />
                         <button
                             type="submit"
                             onClick={handleForm}
