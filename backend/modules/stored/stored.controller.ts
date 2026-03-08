@@ -11,7 +11,7 @@ export class VideoStoredController {
             return res.status(201).send('Video guardado correctamente')
         } catch (error) {
             if (error instanceof Error) {
-                return res.status(400).json({error: error.message})
+                return res.status(409).json({error: error.message})
             }
             return res.status(500).json({error: 'Hubo un error al guardar el vídeo'})
         }

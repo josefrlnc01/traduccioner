@@ -38,7 +38,6 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
                 setFade(true)
             }, 300)
         }, 6000)
-        setIndex(0)
         return () => clearTimeout(timeOut)
     }, [index, awaitPhrases.length])
 
@@ -120,10 +119,13 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
                         {title}
                     </h2>
                 </div>
-                <button
+                <div className='w-full flex justify-end p-3'>
+                    <button
                 onClick={handleSave}
-                className='p-2 bg-blue-800 w-20 text-white font-bold mx-auto'
+                className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
                 type='button'>Guardar canción</button>
+                </div>
+                
 
                 {/* Lyrics Section */}
                 <div className='px-4 py-3 space-y-2'>

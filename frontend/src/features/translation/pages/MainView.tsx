@@ -6,7 +6,7 @@ export default function MainView() {
   
   return (
     <>
-    <section className='w-vw bg-slate-950'>
+    <section className='bg-slate-950'>
     <Header/>
     <Form/>
     </section>

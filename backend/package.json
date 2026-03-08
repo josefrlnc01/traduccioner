@@ -29,7 +29,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "server": "tsx watch ./api/server.ts"
+    "server": "tsx watch ./api/server.ts",
+    "dev" : "tsx ./api/server.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

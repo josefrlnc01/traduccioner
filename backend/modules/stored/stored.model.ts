@@ -29,6 +29,7 @@ const videoStoredSchema: Schema = new Schema({
     }
 })
 
+videoStoredSchema.index({id:1, videoId:1}, {unique: true})
 
 const VideoStored = mongoose.model<IVideoStored>('VideoStored', videoStoredSchema)
 
