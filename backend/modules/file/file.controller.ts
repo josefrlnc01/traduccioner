@@ -19,6 +19,10 @@ export class FileController {
             const finalFilePath = await convertVideoToAudio(filePath)
             const text = await transcribeWhisperAudio(finalFilePath)
             if (!text) return res.status(400).json({ error: 'Error al obtener transcripción' })
+            if (lang === 'not') {
+                return res.status(200).json({ text })
+            }
+            
             const translated = await translateText(lang, text)
             console.log(translated)
             return res.status(200).json({ text, translated})

@@ -60,15 +60,19 @@ export default function Form() {
                     Selecciona un idioma si quieres ver su traducción
                 </aside>
                 <form className="w-96 lg:w-3/4 flex flex-col p-2 gap-6">
-                   {!fileInputValue &&  <div className="w-full flex justify-around gap-1">
+                    {!fileInputValue && 
+                    <div className="w-full flex flex-col justify-around gap-2">
+                        <label className=" text-gray-400 pl-1">Introduce un enlace de youtube</label>
                         <input onChange={handleInput}
                             placeholder="Copia tu enlace aqui"
                             type='text'
                             className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900' />
 
                     </div>}
-
-                    {!inputValue && <div className="w-full flex gap-2 justify-between items-center">
+                        {(!inputValue && !fileInputValue) && <span className="text-center">O</span>}
+                    {!inputValue && 
+                    <div className="w-full flex flex-col gap-2">
+                        <label className=" text-gray-400 pl-1">Selecciona un vídeo/audio de tu dispositivo</label>
                         <input type="file"
                             onChange={handleInputFile}
                             name="audio"
@@ -85,12 +89,16 @@ export default function Form() {
                         <button
                             type="submit"
                             onClick={handleForm}
-                            className="hidden bg-blue-600 pl-6 pr-6 pb-2 pt-2 rounded-xl font-semibold text-white lg:block hover:bg-blue-500 transition-colors cursor-pointer">Transcribir</button>
+                            className="bg-blue-600 min-w-2/4 pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors cursor-pointer">Transcribir</button>
                     </div>
                 </form>
             </aside>
             <Subtitles
-                mutation={mutation}
+            mutation={mutation}
+            inputValue={inputValue}
+            fileInputValue={fileInputValue}
+            language={language}
+                
             />
         </>
     )

@@ -40,7 +40,7 @@ export async function sendLink(link:string | null, lang: string | null, formData
         const {subtitles, translatedText, title, id} = data
             return {title, subtitles, translatedText, id}
         } else {
-            const response = await fetch(`${urlBackend}/file/${lang ? lang : 'es'}`, {
+            const response = await fetch(`${urlBackend}/file/${lang ? lang : 'not'}`, {
                 method: 'POST',
                 body: formData,
                 headers: {

@@ -12,7 +12,7 @@ import { saveVideo } from '@/features/stored/storedApi';
 gsap.registerPlugin(ScrollTrigger)
 
 
-export default function Subtitles({ mutation }: SubtitlesViewProps) {
+export default function Subtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)
@@ -79,23 +79,23 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
 
     if (!("translatedText" in mutation.data)) {
         return (
-            <section className='flex flex-col md:items-center p-6 rounded-xl overflow-y-auto gap-4'>
-                <aside className='w-full max-w-4xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
-                    <h2 className='text-2xl font-bold tracking-tight text-gray-100 leading-tight mb-4'>
+            <section className='flex justify-center items-center p-6 rounded-xl overflow-y-auto gap-4'>
+                <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                    <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
                         Transcripción de audio
                     </h2>
-                    <p className='text-xl md:text-2xl md:text-center font-semibold text-gray-200 leading-relaxed'>
+                    <p className='text-xl md:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                         {mutation.data.text}
                     </p>
                 </aside>
-                <aside className='w-full max-w-4xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
-                    <h2 className='text-2xl font-bold tracking-tight text-gray-100 leading-tight mb-4'>
+                {((inputValue || fileInputValue) && language) && <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                    <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
                         Traducción de audio
                     </h2>
-                    <p className='text-xl md:text-2xl md:text-center font-semibold text-gray-200 leading-relaxed'>
+                    <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
                         {mutation.data.translated}
                     </p>
-                </aside>
+                </aside> }
             </section>
         )
     }
