@@ -7,7 +7,8 @@ export type PromiseLink = {
 }
 
 export type PromiseFile = {
-    text:string
+    text:string,
+    translated: string
 }
 const urlBackend = import.meta.env.VITE_API_URL
 export async function sendLink(link:string | null, lang: string | null, formData: FormData | null):Promise<PromiseLink | PromiseFile | undefined> {
@@ -39,7 +40,7 @@ export async function sendLink(link:string | null, lang: string | null, formData
         const {subtitles, translatedText, title, id} = data
             return {title, subtitles, translatedText, id}
         } else {
-            const response = await fetch(`${urlBackend}/file`, {
+            const response = await fetch(`${urlBackend}/file/${lang ? lang : 'es'}`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -58,8 +59,8 @@ export async function sendLink(link:string | null, lang: string | null, formData
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { text } = data
-            return { text }
+            const {text, translated } = data
+            return { text, translated }
         }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')

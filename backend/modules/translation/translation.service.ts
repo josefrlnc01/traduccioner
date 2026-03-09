@@ -6,7 +6,8 @@ const translate = new Translate({
     projectId: process.env.PROJECT_ID
 })
 
-export async function translateText(lang:string, text:string) {
+export async function translateText(lang:string | null = null, text:string) {
+    console.log('lenguaje', lang)
     if (!lang) return "Debes especificar un lenguaje"
 
     const [translation] = await translate.translate(text, lang)

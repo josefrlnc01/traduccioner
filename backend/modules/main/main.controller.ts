@@ -33,7 +33,7 @@ export async function init(req: Request, res: Response) {
         }
         const { subtitles, title } = data
         const translatedText = await translateText(lang, subtitles)
-        return res.json({ title, translatedText, id })
+        return res.json({ title, translatedText, subtitles, id })
     } catch (err) {
         console.error('Error processing video:', err)
         return res.status(500).json({ error: 'Failed to process video' })

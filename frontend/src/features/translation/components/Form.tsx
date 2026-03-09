@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  sendLink, type PromiseFile, type PromiseLink } from "../api/translationApi";
+import { sendLink, type PromiseFile, type PromiseLink } from "../api/translationApi";
 import { ComboboxMultiple } from "./ComboboxMultiple";
 import Subtitles from "./Subtitles";
 
@@ -32,14 +32,14 @@ export default function Form() {
         e.preventDefault()
 
         if (!inputValue && formData) {
-            mutation.mutate({ link: null, lang: null, formData })
+            mutation.mutate({ link: null, lang: langForTranslate, formData })
             return
         }
 
         mutation.mutate({ link: inputValue, lang: langForTranslate, formData: null })
     }
 
-    const handleInputFile = (e:  React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         const file = e.currentTarget.files?.[0]
         if (!file) return
 
@@ -50,32 +50,34 @@ export default function Form() {
         setFileInputValue(e.currentTarget.value)
     }
 
+    console.log(langForTranslate)
+
     return (
         <>
             <aside className="w-screen lg:w-2/4 lg:m-auto lg:max-w-2/4  lg:min-h-2/5 lg:h-2/5 flex flex-col justify-center items-center lg:justify-center">
-            <h2 className="hidden text-2xl font-bold text-white text-center lg:block">Traduce cualquier canción en segundos</h2>
-            <aside className="hidden lg:items-center p-4 text-gray-400 lg:flex lg:flex-col">
-                Pega un enlace de Youtube y selecciona un idioma para ver la traducción
-            </aside>
+                <h2 className="hidden text-2xl font-bold text-white text-center lg:block">Transcribe cualquier vídeo o audio en segundos</h2>
+                <aside className="hidden lg:items-center p-4 text-gray-400 lg:flex lg:flex-col">
+                    Selecciona un idioma si quieres ver su traducción
+                </aside>
                 <form className="w-96 lg:w-3/4 flex flex-col p-2 gap-6">
-                    <div className="w-full flex justify-around gap-1">
-                    <input onChange={handleInput}
-                        placeholder="Copia tu enlace aqui"
-                        type='text'
-                        className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900' />
-                        <button
-                            type="submit"
-                            onClick={handleForm}
-                            className="hidden bg-blue-600 pl-6 pr-6 pb-2 pt-2 rounded-xl font-semibold text-white lg:block hover:bg-blue-500 transition-colors cursor-pointer">Traducir</button>
-                    </div>
+                   {!fileInputValue &&  <div className="w-full flex justify-around gap-1">
+                        <input onChange={handleInput}
+                            placeholder="Copia tu enlace aqui"
+                            type='text'
+                            className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900' />
 
+                    </div>}
+
+                    {!inputValue && <div className="w-full flex gap-2 justify-between items-center">
+                        <input type="file"
+                            onChange={handleInputFile}
+                            name="audio"
+                            accept="video/*"
+                            formEncType="multipart/form-data"
+                            className="min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900" />
+
+                    </div>}
                     <div className="w-full flex gap-2 justify-between items-center">
-                        <input type="file" 
-                        onChange={handleInputFile} 
-                        name="audio"
-                        accept="video/*" 
-                        formEncType="multipart/form-data"
-                        className="min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900"/>
                         <ComboboxMultiple
                             language={language}
                             setLanguage={setLanguage}
@@ -83,7 +85,7 @@ export default function Form() {
                         <button
                             type="submit"
                             onClick={handleForm}
-                            className="bg-blue-600 pl-6 pr-6 pb-2 pt-2 rounded-xl font-semibold text-white lg:hidden">Traducir</button>
+                            className="hidden bg-blue-600 pl-6 pr-6 pb-2 pt-2 rounded-xl font-semibold text-white lg:block hover:bg-blue-500 transition-colors cursor-pointer">Transcribir</button>
                     </div>
                 </form>
             </aside>
