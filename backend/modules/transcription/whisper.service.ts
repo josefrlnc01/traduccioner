@@ -2,7 +2,6 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import OpenAi from 'openai'
 import fs from 'node:fs'
-import { resolveSoa } from "node:dns";
 
 
 

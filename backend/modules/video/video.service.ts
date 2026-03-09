@@ -1,6 +1,6 @@
 import ytDlp from 'yt-dlp-exec'
 import fs from 'node:fs/promises'
-import path, { extname } from 'node:path'
+import path from 'node:path'
 import { getVideoLength } from '../youtube/youtube.service.js'
 import { getVideoMinutes } from '../../shared/utils/video.js'
 import type { VideoSubtitles } from './video.types.js'

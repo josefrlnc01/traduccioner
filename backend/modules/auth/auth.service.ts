@@ -5,7 +5,6 @@ import Token from "../tokens/token.model.js";
 import User from "../user/user.model.js";
 import type { UserRegistrationForm } from "../user/user.types.js";
 import { checkPassword, hashPassword } from "../../shared/utils/auth.js";
-import { getRequiredEnv } from "../../shared/utils/variables.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
 import { refreshTokenKey, accessTokenKey } from "../../shared/utils/variables.js";
 
