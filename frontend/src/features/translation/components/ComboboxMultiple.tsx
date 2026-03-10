@@ -8,7 +8,7 @@ type ComboboxMultipleProps = {
   setLanguage :  React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const languages = ["Español", "Ingles", "Frances", "Italiano"] as const
+const languages = ["Español", "Inglés", "Francés", "Italiano"] as const
 export function ComboboxMultiple({language, setLanguage}:ComboboxMultipleProps) {
 
   return (
@@ -19,7 +19,7 @@ export function ComboboxMultiple({language, setLanguage}:ComboboxMultipleProps) 
     onValueChange={setLanguage} 
     >
       <ComboboxInput
-      className={"bg-slate-900 border-none rounded-xl text-gray-200 min-w-2/4 md:p-6 md:pl-0 md:pr-0 md:min-w-2/4 md:w-1/4"} 
+      className={"bg-slate-900 border-none rounded-xl text-gray-200 min-w-2/4  p-6 pl-0 pr-0 lg:min-w-2/4 lg:w-1/4 hover:bg-slate-800 transition-colors"} 
       placeholder="Selecciona un lenguaje" />
       <ComboboxContent >
         <ComboboxEmpty>No items found.</ComboboxEmpty>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/translationApi";
 import { ComboboxMultiple } from "./ComboboxMultiple";
 import Subtitles from "./Subtitles";
-
+import InputIcon from "../../../assets/input.svg"
 import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
 
@@ -63,22 +63,26 @@ export default function Form() {
                     <div className="w-full flex flex-col justify-around gap-2">
                         <label className=" text-gray-400 pl-1">Introduce un enlace de youtube</label>
                         <input onChange={handleInput}
-                            placeholder="Copia tu enlace aqui"
+                            placeholder="Copia tu enlace aquí"
                             type='text'
-                            className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900' />
+                            className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900  hover:bg-slate-800 transition-colors' />
 
                     </div>}
                         {(!inputValue && !fileInputValue) && <span className="text-center">O</span>}
                     {!inputValue && 
                     <div className="w-full flex flex-col gap-2">
-                        <label className=" text-gray-400 pl-1">Selecciona un vídeo/audio de tu dispositivo</label>
+                        <label className=" text-gray-400 pl-1">Selecciona un video/audio de tu dispositivo</label>
+                        <label htmlFor="fileUpload" className="min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900  hover:bg-slate-800 transition-colors cursor-pointer">
+                        <img className="mx-auto" src={InputIcon}/>
+                        </label>
                         <input type="file"
                             onChange={handleInputFile}
                             name="audio"
+                            id="fileUpload"
                             accept="video/*"
                             formEncType="multipart/form-data"
-                            className="min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900" />
-
+                            className="hidden" />
+                            
                     </div>}
                     <div className="w-full flex gap-2 justify-between items-center">
                         <ComboboxMultiple

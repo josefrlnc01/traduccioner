@@ -78,14 +78,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
 
 
 
-    if (!mutation.isSuccess) {
-        return (
-            <aside className="flex flex-col text-center md:items-center p-4 text-gray-400 md:hidden">
-                Pega un enlace de Youtube y selecciona un idioma para ver la traducción
-            </aside>
-        )
-    }
-
+    
     if (!mutation.data) return null
 
     if (!("translatedText" in mutation.data)) {
@@ -101,22 +94,27 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
             saveFile.mutate(data)
         }
         return (
-            <section className='flex flex-col md:items-center p-6 rounded-xl'>
-                <button
-                    onClick={handleSave}
-                    className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                    type='button'>Guardar</button>
-                <aside className='w-full max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
-                    <section className='flex justify-center items-center p-6 rounded-xl overflow-x-hidden overflow-y-auto gap-4'>
-                        <aside className='min-2/4 max-w-2/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+            <section className='flex flex-col lg:flex md:items-center p-6 rounded-xl'>
+
+                <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
+                    <div className='w-full flex justify-end p-2'>
+                        <button
+                            onClick={handleSave}
+                            className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>Guardar</button>
+                    </div>
+
+                    <section className='flex flex-col lg:flex lg:flex-row justify-center gap-2  items-center p-6 rounded-xl overflow-x-hidden overflow-y-auto'>
+                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
                             <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
                                 Transcripción
                             </h2>
-                            <p className='text-xl md:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                            <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 {mutation.data.text}
                             </p>
                         </aside>
-                        {((inputValue || fileInputValue) && language) && <aside className='min-2/4 max-w-2/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                        {((inputValue || fileInputValue) && language && translated) && 
+                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
                             <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
                                 Traducción
                             </h2>

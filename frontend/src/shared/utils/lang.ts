@@ -2,9 +2,9 @@ export function getAbbreviateLanguage(lang: string | null) {
         switch (lang) {
             case "Español":
                 return "es"
-            case "Ingles":
+            case "Inglés":
                 return "en"
-            case "Frances":
+            case "Francés":
                 return "fr"
             case "Italiano":
                 return "it"
