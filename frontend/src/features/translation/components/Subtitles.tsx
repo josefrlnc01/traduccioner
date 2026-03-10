@@ -6,6 +6,7 @@ import type { SubtitlesViewProps } from "../types/subtitles.types";
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { saveTranscription } from '@/features/stored/storedApi';
+import { saveFileTranscription } from '@/features/file/fileApi';
 
 
 
@@ -15,11 +16,20 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Subtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
-    const [text, setText] = useState('')
-    const [translated, setTranslated] = useState('')
     const [fade, setFade] = useState(true)
-    const { mutate } = useMutation({
+    const saveYtFile = useMutation({
         mutationFn: saveTranscription,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
+
+
+    const saveFile = useMutation({
+        mutationFn: saveFileTranscription,
         onError: (error) => {
             toast.error(error.message)
         },
@@ -88,7 +98,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
                 text: text,
                 translated: translated
             }
-            mutate(data)
+            saveFile.mutate(data)
         }
         return (
             <section className='flex flex-col md:items-center p-6 rounded-xl'>
@@ -130,7 +140,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
             text: subtitles,
             translated: translatedText
         }
-        mutate(data)
+        saveYtFile.mutate(data)
     }
 
 

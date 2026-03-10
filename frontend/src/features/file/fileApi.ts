@@ -5,6 +5,7 @@ const baseUrl = import.meta.env.VITE_API_URL
 
 export async function saveFileTranscription ({ text, translated}: File) {
     const accessToken = tokenStore.get()
+    console.log('saveFile')
     try {
         const {data} = await axios.post(`${baseUrl}/file/save`, {
             text,
