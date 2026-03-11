@@ -104,37 +104,59 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
             saveFile.mutate(data)
         }
         return (
-            <section className='flex flex-col lg:flex md:items-center p-3 rounded-xl'>
+            <section className='flex flex-col lg:flex md:items-center rounded-xl'>
 
-                <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
+                <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-transparent backdrop-blur-sm borde shadow-2xl'>
                     <div className='w-full flex justify-end p-4 gap-3'>
-                        <button
-                            onClick={handleGenerate}
-                            className='p- pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Descargar</button>
-                        <button
-                            onClick={handleSave}
-                            className='p-2 pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Guardar</button>
+
                     </div>
 
-                    <section className='flex flex-col lg:flex lg:flex-row justify-center gap-2  items-center p-6 rounded-xl overflow-x-hidden overflow-y-auto'>
-                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
-                            <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                                Transcripción
-                            </h2>
-                            <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {mutation.data.text}
-                            </p>
+                    <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
+                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 flex flex-col gap-2 rounded-md bg-slate-900/80 backdrop-blur-sm shadow-2xl'>
+                            <header className='flex justify-between items-center w-full p-4 bg-slate-800/90'>
+                                <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
+                                    Transcripción
+                                </h2>
+                            </header>
+                            <div className='p-2 flex flex-col justify-between grow'>
+                                <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                    {mutation.data.text}
+                                </p>
+                                <div className='bg-transparent w-full flex justify-end p-4 gap-3'>
+                                <button
+                                    onClick={handleGenerate}
+                                    className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                    type='button'>Descargar</button>
+                                <button
+                                    onClick={handleSave}
+                                    className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                    type='button'>Guardar</button>
+                            </div>
+                            </div>
+                            
                         </aside>
                         {((inputValue || fileInputValue) && language && translated) &&
-                            <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
-                                <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                                    Traducción
-                                </h2>
-                                <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
+                            <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 flex flex-col gap-2 rounded-md bg-slate-900/80 backdrop-blur-sm shadow-2xl'>
+                                <header className='flex justify-between items-center w-full p-4 bg-slate-800/90'>
+                                    <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
+                                        Traducción
+                                    </h2>
+                                </header>
+                                <div className='p-2 flex flex-col justify-between grow'>
+                                <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                     {mutation.data.translated}
                                 </p>
+                                <div className='bg-transparent w-full flex justify-end p-4 gap-3'>
+                                <button
+                                    onClick={handleGenerate}
+                                    className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                    type='button'>Descargar</button>
+                                <button
+                                    onClick={handleSave}
+                                    className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                    type='button'>Guardar</button>
+                            </div>
+                            </div>
                             </aside>}
                     </section>
                 </aside>
@@ -154,45 +176,67 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
         }
         saveYtFile.mutate(data)
     }
-
+    const handleGenerate = () => {
+            generatePdf.mutate(subtitles)
+        }
 
     return (
-        
-        <section className='flex flex-col lg:flex md:items-center p-3 rounded-xl'>
 
-                <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
-               
-                    <div className='w-full flex justify-end p-4 gap-3'>
-                        <button
-                            onClick={handleSave}
-                            className='p- pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Descargar</button>
-                        <button
-                            onClick={handleSave}
-                            className='p-2 pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Guardar</button>
-                    </div>
-                     <h2 className='text-center text-2xl text-white font-bold'>{title}</h2>
-                    <section className='flex flex-col lg:flex lg:flex-row justify-center gap-2  items-center p-6 rounded-xl overflow-x-hidden overflow-y-auto'>
-                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
-                            <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+        <section className='flex flex-col lg:flex md:items-center rounded-xl'>
+
+            <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-transparent backdrop-blur-sm borde shadow-2xl'>
+                <div className='w-full flex justify-end p-4 gap-3'>
+
+                </div>
+
+                <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
+                    <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 flex flex-col gap-2 rounded-md bg-slate-900/80 backdrop-blur-sm shadow-2xl'>
+                        <header className='flex justify-between items-center w-full p-4 bg-slate-800/90'>
+                            <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                                 Transcripción
                             </h2>
+                        </header>
+                        <div className='p-4'>
                             <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 {mutation.data.subtitles}
                             </p>
-                        </aside>
-                        {((inputValue || fileInputValue) && language && translatedText) &&
-                            <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
-                                <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                        </div>
+                        <section className='bg-transparent w-full flex justify-end p-4 gap-3'>
+                            <button
+                                onClick={handleGenerate}
+                                className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                type='button'>Descargar</button>
+                            <button
+                                onClick={handleSave}
+                                className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                type='button'>Guardar</button>
+                        </section>
+                    </aside>
+                    {((inputValue || fileInputValue) && language && translatedText) &&
+                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 flex flex-col gap-2 rounded-md bg-slate-900/80 backdrop-blur-sm shadow-2xl'>
+                            <header className='flex justify-between items-center w-full p-4 bg-slate-800/90'>
+                                <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                                     Traducción
                                 </h2>
-                                <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
+                            </header>
+                            <div className='p-4'>
+                                <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                     {mutation.data.translatedText}
                                 </p>
-                            </aside>}
-                    </section>
-                </aside>
-            </section>
+                            </div>
+                            <section className='bg-transparent w-full flex justify-end p-4 gap-3'>
+                                <button
+                                    onClick={handleSave}
+                                    className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                    type='button'>Descargar</button>
+                                <button
+                                    onClick={handleSave}
+                                    className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                    type='button'>Guardar</button>
+                            </section>
+                        </aside>}
+                </section>
+            </aside>
+        </section>
     )
 }

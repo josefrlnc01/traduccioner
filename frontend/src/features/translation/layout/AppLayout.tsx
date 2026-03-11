@@ -29,7 +29,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                     defaultOpen={false}>
                     <AppSidebar />
                     
-                    <main className='max-w-screen min-w-screen max-h-screen min-h-screen bg-[#101622] text-white'>
+                    <main className='min-w-screen max-h-screen min-h-screen bg-[#101622] text-white'>
                         
                         <Outlet />
 
