@@ -8,3 +8,10 @@ export type SubtitlesViewProps = {
     fileInputValue: string,
     language: string | null
 }
+
+export type FileSubtitlesProps = {
+    mutation: UseMutationResult< PromiseFile | undefined, Error,  unknown>,
+    inputValue: string,
+    fileInputValue: string,
+    language: string | null
+}
