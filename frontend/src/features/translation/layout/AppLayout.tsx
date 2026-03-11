@@ -11,7 +11,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     const { data, isError, isLoading } = useAuth()
     if (isLoading) {
         return (
-            <aside className="p-4 min-h-screen max-w-screen h-screen bg-slate-950 flex flex-col gap-3 items-center text-white justify-center">
+            <aside className="p-4 min-h-screen max-w-screen h-screen bg-[#101622] flex flex-col gap-3 items-center text-white justify-center">
                 <Spinner
                     className="size-20"
                 />
@@ -29,7 +29,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                     defaultOpen={false}>
                     <AppSidebar />
                     
-                    <main className='max-w-screen min-w-screen max-h-screen min-h-screen bg-slate-950 text-white'>
+                    <main className='max-w-screen min-w-screen max-h-screen min-h-screen bg-[#101622] text-white'>
                         
                         <Outlet />
 
