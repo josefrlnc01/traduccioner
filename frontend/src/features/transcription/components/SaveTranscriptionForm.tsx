@@ -5,10 +5,10 @@ type TranscriptionProps = {
     isOpen: boolean,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-export default function SaveTranscriptionForm({isOpen, setIsOpen}: TranscriptionProps) {
+export default function SaveTranscriptionForm({ isOpen, setIsOpen }: TranscriptionProps) {
     const [inputValue, setInputValue] = useState('')
     const [textAreaValue, setTextAreaValue] = useState('')
-    
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
@@ -17,13 +17,19 @@ export default function SaveTranscriptionForm({isOpen, setIsOpen}: Transcription
         setTextAreaValue(e.target.value)
     }
 
-   
-  function close() {
-    setIsOpen(false)
-  }
+
+    function close() {
+
+        setIsOpen(false)
+    }
+
+
+    function handleSaveTranscription() {
+
+    }
     return (
         <>
-        
+
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={close}>
                 <div className="fixed inset-0 z-10 w-screen min-w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
@@ -48,17 +54,15 @@ export default function SaveTranscriptionForm({isOpen, setIsOpen}: Transcription
                                         onChange={handleTextArea}
                                         className='w-full p-3 min-h-20 h-20 max-h-20 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all'></textarea>
                                 </div>
-                               <Button
-                                
+                                <Button
+
                                     className="w-full gap-2 rounded-md bg-gray-700 p-2 text-center text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 cursor-pointer"
                                     onClick={close}
                                 >
                                     Guardar
                                 </Button>
                             </form>
-                            <div className="mt-4">
-                                
-                            </div>
+
                         </DialogPanel>
                     </div>
                 </div>

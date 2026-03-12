@@ -55,9 +55,9 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
     if (!mutation.data) return null
 
-    if (("translatedText" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
+    if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
     const text = mutation.data.text
-    const translated = mutation.data.translated
+    const translatedFile = mutation.data.translatedFile
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
     }
@@ -66,7 +66,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
             videoId: null,
             title: null,
             text: text,
-            translated: translated
+            translatedFile: translatedFile
         }
         saveFile.mutate(data)
     }
@@ -103,7 +103,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     </div>
 
                 </aside>
-                {((inputValue || fileInputValue) && language && translated) &&
+                {((inputValue || fileInputValue) && language && translatedFile) &&
                     <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                         <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
                             <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
@@ -112,12 +112,12 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         </header>
                         <div className='grow bg-slate-800/40 p-4'>
                             <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {mutation.data.translated}
+                                {mutation.data.translatedFile}
                             </p>
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button
-                                onClick={() => handleGenerateTranscriptionPdf(translated)}
+                                onClick={() => handleGenerateTranscriptionPdf(translatedFile)}
                                 className='p-3 pl-4 pr-4 grow text-white font-bold rounded-md bg-blue-700 hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>Descargar</button>
                             <Button

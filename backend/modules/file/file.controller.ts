@@ -23,9 +23,9 @@ export class FileController {
                 return res.status(200).json({ text })
             }
             
-            const translated = await translateText(lang, text)
-            console.log(translated)
-            return res.status(200).json({ text, translated})
+            const translatedFile = await translateText(lang, text)
+            console.log(translatedFile)
+            return res.status(200).json({ text, translatedFile})
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })
@@ -34,9 +34,9 @@ export class FileController {
 
     static save = async (req: Request, res: Response) => {
         try {
-            const {text, translated} = req.body
+            const {text, translatedFile} = req.body
             const user = req.user
-            await insert({text, translated, user})
+            await insert({text, translatedFile, user})
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             console.error(error)

@@ -27,16 +27,16 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     if (!mutation.data) return null
 
-    if (!("translatedText" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
+    if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
 
-    const { translatedText, title, id, subtitles } = mutation.data
+    const { translatedYoutubeVideo, title, id, subtitles } = mutation.data
 
     const handleSave = () => {
         const data = {
             videoId: id,
             title,
             text: subtitles,
-            translated: translatedText
+            translatedYoutubeVideo: translatedYoutubeVideo
         }
         saveYtFile.mutate(data)
     }
@@ -83,7 +83,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                     </div>
 
                 </aside>
-                {((inputValue || fileInputValue) && language && translatedText) &&
+                {((inputValue || fileInputValue) && language && translatedYoutubeVideo) &&
                     <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                         <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
                             <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
@@ -92,12 +92,12 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         </header>
                         <div className='grow bg-slate-800/40 p-4'>
                             <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {mutation.data.translatedText}
+                                {mutation.data.translatedYoutubeVideo}
                             </p>
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button
-                                onClick={() => handleGenerateTranscriptionPdf(translatedText)}
+                                onClick={() => handleGenerateTranscriptionPdf(translatedYoutubeVideo)}
                                 className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>Descargar</button>
                             <Button

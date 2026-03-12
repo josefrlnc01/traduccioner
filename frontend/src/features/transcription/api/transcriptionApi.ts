@@ -5,14 +5,14 @@ import type { FileStored } from "../types/file.types";
 
 export type PromiseLink = {
     subtitles: string,
-    translatedText: string,
+    translatedYoutubeVideo: string,
     title: string,
     id: string
 }
 
 export type PromiseFile = {
     text: string,
-    translated: string
+    translatedFile: string
 }
 const urlBackend = import.meta.env.VITE_API_URL
 export async function sendLink(link: string | null, lang: string | null, formData: FormData | null): Promise<PromiseLink | PromiseFile | undefined> {
@@ -42,8 +42,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { subtitles, translatedText, title, id } = data
-            return { title, subtitles, translatedText, id }
+            const { subtitles, translatedYoutubeVideo, title, id } = data
+            return { title, subtitles, translatedYoutubeVideo, id }
         } else {
             const response = await fetch(`${urlBackend}/file/${lang ? lang : 'not'}`, {
                 method: 'POST',
@@ -64,8 +64,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { text, translated } = data
-            return { text, translated }
+            const { text, translatedFile } = data
+            return { text, translatedFile }
         }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')
@@ -75,14 +75,14 @@ export async function sendLink(link: string | null, lang: string | null, formDat
 
 
 const baseUrl = import.meta.env.VITE_API_URL
-export async function saveTranscription ({videoId, title, text, translated}: YoutubeVideoStored) {
+export async function saveTranscription ({videoId, title, text, translatedYoutubeVideo}: YoutubeVideoStored) {
     const accessToken = tokenStore.get()
     try {
         const {data} = await axios.post(`${baseUrl}/yt-video/save`, {
             videoId,
             title,
             text,
-            translated
+            translatedYoutubeVideo
         },
         {
             headers: {
@@ -100,13 +100,13 @@ export async function saveTranscription ({videoId, title, text, translated}: You
 }
 
 
-export async function saveFileTranscription ({ text, translated}: FileStored) {
+export async function saveFileTranscription ({ text, translatedFile}: FileStored) {
     const accessToken = tokenStore.get()
     console.log('saveFile')
     try {
         const {data} = await axios.post(`${baseUrl}/file/save`, {
             text,
-            translated
+            translatedFile
         },
         {
             headers: {
