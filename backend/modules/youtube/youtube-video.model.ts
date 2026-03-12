@@ -4,7 +4,7 @@ import mongoose, {Document, Schema, Types} from "mongoose";
 export interface IYoutubeVideo extends Document {
     videoId: string | null,
     title: string,
-    text: string,
+    youtubeVideoText: string,
     translatedYoutubeVideo: string
     user: Types.ObjectId
 }
@@ -19,7 +19,7 @@ const youtubeVideoSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    text: {
+    youtubeVideoText: {
         type: String,
         required: true
     },

@@ -21,7 +21,7 @@ export async function insert({ data, user }: InsertProps) {
         const video = new VideoStored()
         video.videoId = data.videoId
         video.title = data.title
-        video.text = data.text
+        video.youtubeVideoText = data.youtubeVideoText
         video.user = user._id
 
         await video.save()

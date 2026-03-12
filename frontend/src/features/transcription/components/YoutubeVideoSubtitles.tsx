@@ -29,13 +29,13 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
 
-    const { translatedYoutubeVideo, title, id, subtitles } = mutation.data
+    const { translatedYoutubeVideo, title, id, youtubeVideoText } = mutation.data
 
     const handleSave = () => {
         const data = {
             videoId: id,
             title,
-            text: subtitles,
+            text: youtubeVideoText,
             translatedYoutubeVideo: translatedYoutubeVideo
         }
         saveYtFile.mutate(data)
@@ -65,12 +65,12 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                     </header>
                     <div className='grow bg-slate-800/40 p-4'>
                         <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {mutation.data.subtitles}
+                            {youtubeVideoText}
                         </p>
                     </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
-                            onClick={() => handleGenerateTranscriptionPdf(subtitles)}
+                            onClick={() => handleGenerateTranscriptionPdf(youtubeVideoText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                         <Button
@@ -92,7 +92,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         </header>
                         <div className='grow bg-slate-800/40 p-4'>
                             <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {mutation.data.translatedYoutubeVideo}
+                                {translatedYoutubeVideo}
                             </p>
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>

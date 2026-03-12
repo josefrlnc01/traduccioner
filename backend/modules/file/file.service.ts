@@ -47,11 +47,11 @@ async function fileExists() {
 }
 
 
-export async function insert ({text, translatedFile, user}: InsertFileProps) {
+export async function insert ({fileText, translatedFile, user}: InsertFileProps) {
     try {
         const fileExists = await FileModel.findOne({
             user: user,
-            text: text
+            fileText: fileText
         })
 
         if (fileExists) {
@@ -59,7 +59,7 @@ export async function insert ({text, translatedFile, user}: InsertFileProps) {
         }
 
         const file = new FileModel()
-        file.text = text
+        file.fileText = fileText
         file.translatedFile = translatedFile
         file.user = user._id
         await file.save()

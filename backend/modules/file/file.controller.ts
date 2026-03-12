@@ -17,15 +17,15 @@ export class FileController {
 
             const filePath = await createPath(file)
             const finalFilePath = await convertVideoToAudio(filePath)
-            const text = await transcribeWhisperAudio(finalFilePath)
-            if (!text) return res.status(400).json({ error: 'Error al obtener transcripción' })
+            const fileText = await transcribeWhisperAudio(finalFilePath)
+            if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
             if (lang === 'not') {
-                return res.status(200).json({ text })
+                return res.status(200).json({ fileText })
             }
             
-            const translatedFile = await translateText(lang, text)
+            const translatedFile = await translateText(lang, fileText)
             console.log(translatedFile)
-            return res.status(200).json({ text, translatedFile})
+            return res.status(200).json({ fileText, translatedFile})
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })
@@ -34,9 +34,9 @@ export class FileController {
 
     static save = async (req: Request, res: Response) => {
         try {
-            const {text, translatedFile} = req.body
+            const {fileText, translatedFile} = req.body
             const user = req.user
-            await insert({text, translatedFile, user})
+            await insert({fileText, translatedFile, user})
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             console.error(error)

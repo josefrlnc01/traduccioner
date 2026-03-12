@@ -4,14 +4,14 @@ import type { YoutubeVideoStored } from "../types/yt-video.types";
 import type { FileStored } from "../types/file.types";
 
 export type PromiseLink = {
-    subtitles: string,
+    youtubeVideoText: string,
     translatedYoutubeVideo: string,
     title: string,
     id: string
 }
 
 export type PromiseFile = {
-    text: string,
+    fileText: string,
     translatedFile: string
 }
 const urlBackend = import.meta.env.VITE_API_URL
@@ -42,8 +42,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { subtitles, translatedYoutubeVideo, title, id } = data
-            return { title, subtitles, translatedYoutubeVideo, id }
+            const { youtubeVideoText, translatedYoutubeVideo, title, id } = data
+            return { title, youtubeVideoText, translatedYoutubeVideo, id }
         } else {
             const response = await fetch(`${urlBackend}/file/${lang ? lang : 'not'}`, {
                 method: 'POST',
@@ -64,8 +64,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { text, translatedFile } = data
-            return { text, translatedFile }
+            const { fileText, translatedFile } = data
+            return { fileText, translatedFile }
         }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')

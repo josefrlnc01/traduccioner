@@ -2,7 +2,7 @@ import mongoose, {Document, Types, Schema} from "mongoose";
 
 interface IFileStored extends Document {
     title: string,
-    text: string,
+    fileText: string,
     translatedFile: string | null
     user: Types.ObjectId
 }
@@ -12,7 +12,7 @@ const fileSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    text: {
+    fileText: {
         type: String,
         required: true
     },

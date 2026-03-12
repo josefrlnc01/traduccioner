@@ -56,7 +56,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     if (!mutation.data) return null
 
     if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
-    const text = mutation.data.text
+    const fileText = mutation.data.fileText
     const translatedFile = mutation.data.translatedFile
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
@@ -65,7 +65,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
         const data = {
             videoId: null,
             title: null,
-            text: text,
+            text: fileText,
             translatedFile: translatedFile
         }
         saveFile.mutate(data)
@@ -86,12 +86,12 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     </header>
                     <div className='grow bg-slate-800/40 p-4'>
                         <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {mutation.data.text}
+                            {fileText}
                         </p>
                     </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
-                            onClick={() => handleGenerateTranscriptionPdf(text)}
+                            onClick={() => handleGenerateTranscriptionPdf(fileText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                         <Button
@@ -112,7 +112,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         </header>
                         <div className='grow bg-slate-800/40 p-4'>
                             <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {mutation.data.translatedFile}
+                                {translatedFile}
                             </p>
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
