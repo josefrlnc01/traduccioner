@@ -1,14 +1,29 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { useMutation } from '@tanstack/react-query'
+import { saveFileTranscription } from '../api/transcriptionApi'
+import { toast } from 'react-toastify'
 
 type TranscriptionProps = {
     isOpen: boolean,
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    fileText: string | null,
+    youtubeVideoText: string | null,
+    translatedFile: string | null,
+    translatedYoutubeVideo: string | null
 }
-export default function SaveTranscriptionForm({ isOpen, setIsOpen }: TranscriptionProps) {
+export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, youtubeVideoText, translatedFile, translatedYoutubeVideo }: TranscriptionProps) {
     const [inputValue, setInputValue] = useState('')
     const [textAreaValue, setTextAreaValue] = useState('')
-
+    const saveFile = useMutation({
+        mutationFn: saveFileTranscription,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
@@ -19,18 +34,26 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen }: Transcripti
 
 
     function close() {
-
         setIsOpen(false)
     }
 
 
     function handleSaveTranscription() {
+         
+        const data = {
 
+            title: inputValue,
+            comment: textAreaValue,
+            fileText: fileText,
+            translatedFile: translatedFile
+        }
+        saveFile.mutate(data)
+   
     }
     return (
         <>
 
-            <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={close}>
+            <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={() => setIsOpen(false)}>
                 <div className="fixed inset-0 z-10 w-screen min-w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
@@ -55,9 +78,9 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen }: Transcripti
                                         className='w-full p-3 min-h-20 h-20 max-h-20 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all'></textarea>
                                 </div>
                                 <Button
-
-                                    className="w-full gap-2 rounded-md bg-gray-700 p-2 text-center text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 cursor-pointer"
                                     onClick={close}
+                                    className="w-full gap-2 rounded-md bg-gray-700 p-2 text-center text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 cursor-pointer"
+    
                                 >
                                     Guardar
                                 </Button>

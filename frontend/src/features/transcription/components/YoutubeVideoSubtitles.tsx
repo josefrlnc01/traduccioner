@@ -55,6 +55,10 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             <SaveTranscriptionForm
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                fileText={null}
+                youtubeVideoText={youtubeVideoText}
+                translatedFile={null}
+                translatedYoutubeVideo={translatedYoutubeVideo}
             />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>

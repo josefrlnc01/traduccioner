@@ -23,16 +23,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
             toast.error(error.message)
         }
     })
-    const saveFile = useMutation({
-        mutationFn: saveFileTranscription,
-        onError: (error) => {
-            toast.error(error.message)
-        },
-        onSuccess: (data) => {
-            toast.success(data)
-        }
-    })
-
+    
     if (mutation.isError) {
 
         return (
@@ -61,21 +52,17 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
     }
-    const handleSave = () => {
-        const data = {
-            videoId: null,
-            title: null,
-            text: fileText,
-            translatedFile: translatedFile
-        }
-        saveFile.mutate(data)
-    }
+    
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
             <SaveTranscriptionForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
+            fileText={fileText}
+            youtubeVideoText={null}
+            translatedFile={translatedFile}
+            translatedYoutubeVideo={null}
             />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>

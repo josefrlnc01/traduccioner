@@ -1,4 +1,6 @@
 export type FileStored = {
-    text: string,
+    title: string,
+    comment: string | null
+    fileText: string | null,
     translatedFile: string | null
 }
