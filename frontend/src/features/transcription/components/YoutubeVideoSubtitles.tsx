@@ -20,7 +20,12 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         setIsOpen(true)
     }
 
-    
+    const generatePdf = useMutation({
+        mutationFn: generatePDF,
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
 
     if (!mutation.data) return null
 
@@ -28,12 +33,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     const { translatedYoutubeVideo, youtubeVideoText } = mutation.data
 
-    const generatePdf = useMutation({
-        mutationFn: generatePDF,
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
+    
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
     }

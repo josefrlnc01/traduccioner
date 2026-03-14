@@ -206,12 +206,3 @@ export class AuthService {
     }
 }
 
-
-
-
-
-
-
-export async function decodeAndGenerateTokens(refreshToken?: string) {
-
-}

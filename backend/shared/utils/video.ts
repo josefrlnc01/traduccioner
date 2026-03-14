@@ -15,21 +15,19 @@ export function getVideoMinutes(data:string){
 
 
 //Conversión de formatos de audio/video a audio.mp3
-export async function convertVideoToAudio (audioPath: string) {
+export async function convertVideoToAudio (audioPath: string): Promise<string> {
     const finalFilePath = 'audioConverted.mp3'
-    ffmpeg(audioPath)
+    return new Promise((resolve, reject) => {
+        ffmpeg(audioPath)
         .toFormat("mp3")
-        .on('end', () => {
-            
+        .on('end', async () => {
             console.log('conversión realizada')
+            await fs.unlink(audioPath)
+            resolve(finalFilePath)
         })
         .on('error', (err) => {
-            console.error(err)
+            reject(err)
         })
         .saveToFile(finalFilePath)
-
-    //Borramos archivo .mp4 que recibimos por multer y guardamos en uploads del input del usuario
-    await fs.unlink(audioPath)
-    //Devolvemos ruta en la que se guarda el archivo .mp3
-    return finalFilePath
+    })
 } 

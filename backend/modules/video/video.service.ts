@@ -6,8 +6,10 @@ import type { VideoSubtitles } from './video.types.js'
 import { YoutubeVideoService } from '../youtube-video/youtube-video.service.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
 
+
 export class VideoService {
     static downloadAudio = async (link: string | null): Promise<string | null> => {
+        const ffmpegPath = process.env.NODE_ENV === 'production' ? process.env.FFMPEG_PATH : process.env.FFMPEG_PATH_LOCAL
         try {
             //Creación de dirección de archivo de audio de youtube descargado
             const backendDir = process.cwd()
@@ -28,7 +30,7 @@ export class VideoService {
                 format: 'bestaudio',
                 audioFormat: 'mp3',
                 extractAudio: true,
-                ffmpegLocation: 'C:\\ffmpeg\\bin\\ffmpeg.exe'
+                ffmpegLocation: ffmpegPath
             })
 
             return filepath

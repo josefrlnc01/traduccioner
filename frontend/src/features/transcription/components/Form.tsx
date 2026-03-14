@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
@@ -14,7 +14,7 @@ export type MutationProps = {
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [language, setLanguage] = useState<string | null>(null)
-    const [fileInputValue, setFileInputValue] = useState('')
+    const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const langForTranslate = getAbbreviateLanguage(language)
     const [formData, setFormData] = useState<FormData | null>(null)
     const mutation = useMutation<
@@ -27,6 +27,12 @@ export default function Form() {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
+    let target
+
+    useEffect(() => {
+        target = document.getElementById('fileUpload')
+    }, [])
+
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
@@ -47,10 +53,10 @@ export default function Form() {
         formData.append('audio', file)
         setFormData(formData)
         console.log(formData)
-        setFileInputValue(e.currentTarget.value)
+        setFileInputValue(formData)
     }
 
-
+    
     return (
         <>
         <section className="w-full grow flex flex-col justify-start items-center mb-15">
@@ -64,10 +70,12 @@ export default function Form() {
                 <form className="w-full flex p-2 gap-6">
 
                     {!inputValue &&
-                        <div className="flex p-12 flex-col grow-2 gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
+                        <div id="targ" 
+                        className="flex p-12 flex-col grow-2 gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
                             <img src={InputIcon} />
-                            <label className="text-xl font-bold">Sube tu archivo</label>
-                            <p className="text-lg text-gray-400 mb-4">Selecciona un video o audio de tu dispositivo</p>
+                            <label className="text-2xl font-bold">Sube tu archivo</label>
+                            <p className="text-lg text-gray-400">Selecciona un video o audio de tu dispositivo</p>
+                            <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
                             <label htmlFor="fileUpload" className="w-1/4 min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-slate-800 hover:bg-slate-900/80 transition-colors cursor-pointer">
                                 Seleccionar archivo
                             </label>
