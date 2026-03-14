@@ -7,7 +7,7 @@ import { error } from 'node:console'
 
 
 export class FileService {
-    static createPath = async (file: Express.Multer.File) => {
+    static createPathForFile = async (file: Express.Multer.File) => {
         try {
             const __fileName = fileURLToPath(import.meta.url)
             const __dirname = dirname(__fileName)
@@ -17,13 +17,15 @@ export class FileService {
             if (!fileIn) {
                 await fs.writeFile(rutaArchivo, JSON.stringify([]), "utf-8")
             }
-
+            //Creación de archivo de control de audios del usuario
             const archivo = await fs.readFile(rutaArchivo, "utf-8")
             const archivoParseado = JSON.parse(archivo)
 
             const nombreArchivo = {
                 nombre: fileName
             }
+
+            //Creación de ruta de audios introducidos por el usuario
             const filePath = path.join(process.cwd(), 'uploads', fileName)
             archivoParseado.push(nombreArchivo)
             await fs.writeFile(rutaArchivo, JSON.stringify(archivoParseado, null, 2), "utf-8")

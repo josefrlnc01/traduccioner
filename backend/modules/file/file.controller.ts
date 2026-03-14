@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
-import { convertVideoToAudio } from "../audio/audio.service.js";
+import { convertVideoToAudio } from "../../shared/utils/video.js";
 import { translateText } from "../translation/translation.service.js";
 import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
@@ -16,7 +16,8 @@ export class FileController {
                 return res.status(400).json({ error: 'No se recibio ningun archivo en el campo audio' })
             }
 
-            const filePath = await FileService.createPath(file)
+            //Obtención de 
+            const filePath = await FileService.createPathForFile(file)
             const finalFilePath = await convertVideoToAudio(filePath)
             const fileText = await transcribeWhisperAudio(finalFilePath)
             if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
