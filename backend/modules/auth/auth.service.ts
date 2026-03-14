@@ -35,9 +35,7 @@ export class AuthService {
 
             return { user, token }
         } catch (error) {
-            if (error instanceof Error) {
-                throw new Error('Este usuario ya está registrado')
-            }
+    
             throw new Error('Hubo un error al crear el usuario')
         }
     }
