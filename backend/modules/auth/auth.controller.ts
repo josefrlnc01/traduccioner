@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { IUser } from "../user/user.model.js"
 import {  AuthService } from "./auth.service.js"
-import { registerSchema } from "./auth.schema.js"
+import { loginSchema, registerSchema } from "./auth.schema.js"
 import { ZodError } from "zod"
 import RefreshToken from "../tokens/refreshToken.model.js"
 
@@ -60,8 +60,9 @@ export class AuthController {
     static authenticateAndLogin = async (req: Request, res: Response) => {
         try {
             const { email, password } = req.body
+            const data = loginSchema.parse(req.body)
 
-            const { accessToken, refreshToken, user } = await AuthService.authJWT(email, password)
+            const { accessToken, refreshToken, user } = await AuthService.authJWT({data})
 
             res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
             res.send(accessToken)

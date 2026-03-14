@@ -7,6 +7,7 @@ import type { UserRegistrationForm } from "../user/user.types.js";
 import { checkPassword, hashPassword } from "../../shared/utils/auth.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
 import { refreshTokenKey, accessTokenKey } from "../../shared/utils/variables.js";
+import { AuthJwtProps } from "./auth.types.js";
 
 
 export class AuthService {
@@ -64,9 +65,9 @@ export class AuthService {
 
 
 
-    static authJWT = async (email: string, password: string) => {
+    static authJWT = async ({data}: AuthJwtProps) => {
         try {
-            const user = await User.findOne({ email })
+            const user = await User.findOne({password: data.password})
             if (!user) {
                 throw new Error('Usuario no registrado')
 
@@ -86,7 +87,7 @@ export class AuthService {
             }
 
 
-            const isValidPassword = await checkPassword(password, user.password)
+            const isValidPassword = await checkPassword(data.password, user.password)
 
             if (!isValidPassword) {
                 throw new Error('Contraseña incorrecta')
