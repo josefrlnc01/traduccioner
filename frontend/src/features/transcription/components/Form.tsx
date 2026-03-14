@@ -56,7 +56,22 @@ export default function Form() {
         setFileInputValue(formData)
     }
 
-    
+    //Drag and drop para archivos del usuario
+    const handleDrop = (event :  React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault()
+        const data = event.dataTransfer.files[0]
+        if (!data) return
+        const formData = new FormData()
+        formData.append('audio', data)
+        setFormData(formData)
+        
+        setFileInputValue(formData)
+    }
+
+    const handleDragOver = (event :  React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault()
+    }
+
     return (
         <>
         <section className="w-full grow flex flex-col justify-start items-center mb-15">
@@ -71,6 +86,8 @@ export default function Form() {
 
                     {!inputValue &&
                         <div id="targ" 
+                        onDrop={handleDrop}
+                        onDragOver={handleDragOver}
                         className="flex p-12 flex-col grow-2 gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
                             <img src={InputIcon} />
                             <label className="text-2xl font-bold">Sube tu archivo</label>
