@@ -59,9 +59,8 @@ export class AuthController {
 
     static authenticateAndLogin = async (req: Request, res: Response) => {
         try {
-            const { email, password } = req.body
             const data = loginSchema.parse(req.body)
-
+            console.log('data', data)
             const { accessToken, refreshToken, user } = await AuthService.authJWT({data})
 
             res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)

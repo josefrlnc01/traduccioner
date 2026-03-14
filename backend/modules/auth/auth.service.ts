@@ -67,7 +67,9 @@ export class AuthService {
 
     static authJWT = async ({data}: AuthJwtProps) => {
         try {
-            const user = await User.findOne({password: data.password})
+            console.log('data auth jwt', data.password)
+            const user = await User.findOne({email: data.email})
+            console.log('user', user)
             if (!user) {
                 throw new Error('Usuario no registrado')
 
