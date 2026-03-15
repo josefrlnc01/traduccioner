@@ -7,7 +7,7 @@ let frontendUrl: string | undefined
 if (isProd) {
     frontendUrl = getRequiredEnv('FRONTEND_URL')
 } else {
-    frontendUrl = 'http://localhost:5173'
+    frontendUrl = getRequiredEnv('FONTEND_URL_DEV')
 }
 
 export const corsMiddleware = () => cors({

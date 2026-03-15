@@ -18,8 +18,33 @@ export async function transcribeWhisperAudio(filePath:string):Promise<string | n
             model:'whisper-1'
         })
 
+
         if (!transcription) throw new Error("Error en la transcripción del audio")
-        return transcription.text
+
+
+            const formatted = await openAi.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+                {
+                    role: 'system',
+                    content: `Eres un editor de texto. Recibirás una transcripción de audio en bruto.
+                    Tu tarea es:
+                    - Añadir puntuación correcta
+                    - Añadir comas coherentemente
+                    - Dividir en párrafos semánticos coherentes
+                    - Corregir errores obvios de transcripción
+                    - NO cambiar el contenido ni añadir información
+                    Devuelve únicamente el texto formateado, sin comentarios.`
+                },
+                {
+                    role: 'user',
+                    content: transcription.text
+                }
+            ]
+        })
+
+        return formatted.choices[0].message.content ?? null
+        
     } catch (error) {
         console.error(error)
         return null
