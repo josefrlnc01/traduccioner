@@ -38,6 +38,9 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         generatePdf.mutate(subtitles)
     }
 
+    const formattedYoutubeVideoText = youtubeVideoText.split('. ').map(s => s.endsWith('.') ? s : s + '.')
+    const formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
+
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
             <SaveTranscriptionForm
@@ -60,9 +63,11 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         </h2>
                     </header>
                     <div className='grow bg-slate-800/40 p-4'>
-                        <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {youtubeVideoText}
+                        {formattedYoutubeVideoText.map(p => (
+                            <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                            {p}
                         </p>
+                        ))}
                     </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
@@ -87,9 +92,12 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             </h2>
                         </header>
                         <div className='grow bg-slate-800/40 p-4'>
-                            <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {translatedYoutubeVideo}
+                        {formatedTranslatedYoutubeVideo.map(p => (
+                            <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                {p}
                             </p>
+                        ))}
+                            
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button

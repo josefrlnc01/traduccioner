@@ -29,9 +29,8 @@ export async function transcribeWhisperAudio(filePath:string):Promise<string | n
                     role: 'system',
                     content: `Eres un editor de texto. Recibirás una transcripción de audio en bruto.
                     Tu tarea es:
-                    - Añadir puntuación correcta
                     - Añadir comas coherentemente
-                    - Dividir en párrafos semánticos coherentes
+                    - Dividir en párrafos semánticos coherentes mediante puntos
                     - Corregir errores obvios de transcripción
                     - NO cambiar el contenido ni añadir información
                     Devuelve únicamente el texto formateado, sin comentarios.`

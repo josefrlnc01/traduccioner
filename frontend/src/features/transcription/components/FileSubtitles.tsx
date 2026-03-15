@@ -59,6 +59,9 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
     }
+
+    const formattedFileText = fileText.split('. ').map(p => p.endsWith('.') ? p : p + '.')
+    const formattedTranslatedFiled = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
     
 
     return (
@@ -83,10 +86,12 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         </h2>
                     </header>
                     <div className='grow bg-slate-800/40 p-4'>
-                        <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {fileText}
+                        {formattedFileText.map(p => (
+                            <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                            {p}
                         </p>
-                    </div>
+                        ))}
+                        </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(fileText)}
@@ -109,9 +114,13 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                             </h2>
                         </header>
                         <div className='grow bg-slate-800/40 p-4'>
-                            <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {translatedFile}
-                            </p>
+                            
+                                {formattedTranslatedFiled.map(p => (
+                                    <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                    {p}
+                                     </p>
+                                ))}
+                           
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button
