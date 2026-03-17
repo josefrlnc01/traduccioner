@@ -9,6 +9,7 @@ export const useRefreshToken = () => {
     queryFn: getRefreshToken,
     retry: false,
     refetchOnWindowFocus: false,
+    //Si no hay token de login se ejecuta la query a refresh-token, si lo hay se usa el existente
     enabled: !tokenStore.get(),
     refetchInterval: () => (localStorage.getItem('isAuth') === 'true' ? 9 * 60 * 1000 : false),
     refetchIntervalInBackground: true,
