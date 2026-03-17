@@ -6,6 +6,8 @@ import ConfirmAccountView from "../features/auth/pages/ConfirmAccountView"
 import LoginView from "../features/auth/pages/LoginView"
 import RegisterView from "../features/auth/pages/RegisterView"
 import ResendTokenView from "../features/auth/pages/ResendTokenView"
+import LandingLayout from "@/landing/layout/LandingLayout"
+import LandingPage from "@/landing/pages/LandingPage"
 
 
 export default function Router() {
@@ -14,6 +16,9 @@ export default function Router() {
         <Routes>
             <Route element={<AppLayout/>}>
                 <Route path="/" element={<MainView/>} index/>
+            </Route>
+            <Route element={<LandingLayout/>}>
+              <Route path="/landing-page" element={<LandingPage/>} index/>
             </Route>
             <Route element={<AuthLayout/>}>
               <Route path="/auth/confirm-account" element={<ConfirmAccountView/>}/>
