@@ -18,7 +18,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
         setIsOpen(true)
     }
 
-    function openForSave () {
+    function openForSave() {
         setIsSavingFileTranscription(true)
         setIsOpen(true)
 
@@ -30,7 +30,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
             toast.error(error.message)
         }
     })
-    
+
     if (mutation.isError) {
 
         return (
@@ -62,21 +62,21 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
     const formattedFileText = fileText.split('. ').map(p => p.endsWith('.') ? p : p + '.')
     const formattedTranslatedFiled = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
-    
+
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
             <SaveTranscriptionForm
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            fileText={fileText}
-            youtubeVideoText={null}
-            translatedFile={translatedFile}
-            translatedYoutubeVideo={null}
-            isSavingFileTranscription={isSavingFileTranscription}
-            setIsSavingFileTranscription={setIsSavingFileTranscription}
-            isSavingYtTranscription={undefined}
-            setIsSavingYtTranscription={undefined}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                fileText={fileText}
+                youtubeVideoText={null}
+                translatedFile={translatedFile}
+                translatedYoutubeVideo={null}
+                isSavingFileTranscription={isSavingFileTranscription}
+                setIsSavingFileTranscription={setIsSavingFileTranscription}
+                isSavingYtTranscription={undefined}
+                setIsSavingYtTranscription={undefined}
             />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
@@ -85,13 +85,13 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>
                     </header>
-                    <div className='grow bg-slate-800/40 p-4'>
+                    <div className='grow bg-slate-800/40 p-8'>
                         {formattedFileText.map(p => (
-                            <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {p}
-                        </p>
+                            <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                {p}
+                            </p>
                         ))}
-                        </div>
+                    </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(fileText)}
@@ -113,14 +113,14 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                                 Traducción <span className="text-xs font-normal text-slate-500 ml-2">({language})</span>
                             </h2>
                         </header>
-                        <div className='grow bg-slate-800/40 p-4'>
-                            
-                                {formattedTranslatedFiled.map(p => (
-                                    <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                        <div className='grow bg-slate-800/40 p-8'>
+
+                            {formattedTranslatedFiled.map(p => (
+                                <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                     {p}
-                                     </p>
-                                ))}
-                           
+                                </p>
+                            ))}
+
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button

@@ -62,9 +62,9 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>
                     </header>
-                    <div className='grow bg-slate-800/40 p-4'>
+                    <div className='grow bg-slate-800/40 p-8'>
                         {formattedYoutubeVideoText.map(p => (
-                            <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                            <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                             {p}
                         </p>
                         ))}
@@ -91,9 +91,9 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 Traducción <span className="text-xs font-normal text-slate-500 ml-2">({language})</span>
                             </h2>
                         </header>
-                        <div className='grow bg-slate-800/40 p-4'>
+                        <div className='grow bg-slate-800/40 p-8'>
                         {formatedTranslatedYoutubeVideo.map(p => (
-                            <p key={p} className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                            <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 {p}
                             </p>
                         ))}
