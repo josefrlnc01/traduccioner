@@ -8,6 +8,8 @@ import fs from 'node:fs/promises'
 import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-video.types.js";
 import ytDlp from 'yt-dlp-exec'
 import { getVideoMinutes } from "../../shared/utils/video.js";
+import { getAudioDuration } from "../../shared/utils/audio.js";
+import User, { IUser } from "../user/user.model.js";
 
 export class YoutubeVideoService {
     static insertTransciption = async ({ data, user }: InsertTranscriptionProps) => {
@@ -127,10 +129,17 @@ export class YoutubeVideoService {
 
 
 
-    static getTranscriptionFromAudio = async (id: string): Promise<VideoSubtitles> => {
+    static getTranscriptionFromAudio = async (user:IUser): Promise<VideoSubtitles> => {
         const backendDir = process.cwd()
         const base = path.join(backendDir, 'audio')
         const filepath = base + '.mp3'
+        const freshUser = await User.findOne({
+            email: user.email
+        })
+        
+        if (!freshUser) {
+            throw new AppError('No se pudo verificar el usuario', 400)
+        }
 
         //Obtención del link mediante archivo creado previamente en controller para guardado de links
         const links = JSON.parse(await fs.readFile('link.json', 'utf-8')) as Record<string, unknown>
@@ -139,10 +148,16 @@ export class YoutubeVideoService {
 
         await this.downloadAudio(videoLink)
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
-        console.log(youtubeVideoText)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
+        const minutes = await getAudioDuration(filepath)
+        freshUser.minutesUsed += minutes
+        await freshUser.save()
+        
         return { youtubeVideoText }
     }
+
+
+
 }
 
 

@@ -4,7 +4,9 @@ export interface IUser extends Document {
     name: string,
     email: string,
     password: string | null,
-    provider: string
+    provider: string,
+    minutesUsed: number,
+    minutesResetAt: Date,
     confirmed: boolean
 }
 

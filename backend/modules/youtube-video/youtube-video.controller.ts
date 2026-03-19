@@ -11,7 +11,7 @@ import { AppError } from "../errors/AppError.js";
 export class YoutubeVideoController {
     static init = async (req: Request, res: Response) => {
         const { videoLink }: RequestProps = req.body
-
+        const user = req.user
         const lang = String(req.params.lang)
 
         //Guardado del link en archivo para usarlo posteriormente
@@ -35,7 +35,7 @@ export class YoutubeVideoController {
 
         try {
             //Obtención de transcripción del vídeo ya convertido en audio
-            const data = await YoutubeVideoService.getTranscriptionFromAudio(id)
+            const data = await YoutubeVideoService.getTranscriptionFromAudio(user)
             if (!data) {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })

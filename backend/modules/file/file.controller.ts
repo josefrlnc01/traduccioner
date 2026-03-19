@@ -13,17 +13,13 @@ export class FileController {
         try {
             const lang = String(req.params.lang)
             const file = req.file
-
+            const user = req.user
             if (!file) {
                 return res.status(400).json({ error: 'No se recibio ningun archivo en el campo audio' })
             }
             
             const finalFilePath = await convertVideoToAudio(file)
-            const audioDuration = await getAudioDuration(finalFilePath)
-            console.log('duración', audioDuration)
-
-            
-            const fileText = await transcribeWhisperAudio(finalFilePath)
+            const fileText = await FileService.incrementMinutes(finalFilePath, user)
             if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
             if (lang === 'not') {
                 return res.status(200).json({ fileText })
