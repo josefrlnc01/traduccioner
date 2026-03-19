@@ -14,7 +14,7 @@ export const checkQuota = async (req: Request, res: Response, next: NextFunction
             user: user._id, ip
         })
 
-        if (quota && quota.minutesUsed > 1.50) {
+        if (quota && quota.minutesUsed > 10) {
             return res.status(429).json({error: `No dispones de minutos de transcripción gratuita suficientes. Minutos: ${4 - quota.minutesUsed}`})
         }
 

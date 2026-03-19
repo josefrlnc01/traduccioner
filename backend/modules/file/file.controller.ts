@@ -28,9 +28,9 @@ export class FileController {
                 return res.status(200).json({ fileText })
             }
 
-            const translatedFile = await translateText(lang, fileText)
-            console.log(translatedFile)
-            return res.status(200).json({ fileText, translatedFile })
+            
+           
+            return res.status(200).json({ fileText })
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })

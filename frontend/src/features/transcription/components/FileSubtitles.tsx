@@ -63,13 +63,15 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     console.log('filetext', fileText)
     console.log('translated file', translatedFile)
 
-    const formattedFileText = fileText.split('. ').map(p => p.endsWith('.') ? p : p + '.')
+    
 
     if (translatedFile) {
         formattedTranslatedFile = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
     }
     
-
+    
+    console.log(fileText.map(s => `${s.start}: ${s.end}`))
+    const formattedFileText = fileText.map(s => `'[${s.start}: ${s.end}]  ${s.text}'`).join(`\n`)
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -93,15 +95,15 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         </h2>
                     </header>
                     <div className='grow bg-slate-800/40 p-8'>
-                        {formattedFileText.map(p => (
-                            <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {p}
+                        {fileText.map(s => (
+                            <p key={s.temperature} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-blue-900 text-sm'>[{s.start}:{s.end}]</span> {s.text}
                             </p>
                         ))}
                     </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
-                            onClick={() => handleGenerateTranscriptionPdf(fileText)}
+                            onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                         <Button

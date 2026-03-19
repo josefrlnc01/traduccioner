@@ -1,7 +1,7 @@
 import { tokenStore } from "@/lib/token.store"
 import axios, { isAxiosError } from "axios";
 import type { StoredYoutubeVideoTranscription, StoredYoutubeVideoTranslation } from "../types/yt-video.types";
-import type { StoredFileTranscription, StoredFileTranslation } from "../types/file.types";
+import type { StoredFileTranscription, StoredFileTranslation, WhisperSegment } from "../types/file.types";
 
 export type PromiseLink = {
     youtubeVideoText: string,
@@ -9,7 +9,7 @@ export type PromiseLink = {
 }
 
 export type PromiseFile = {
-    fileText: string,
+    fileText: WhisperSegment[],
     translatedFile: string
 }
 

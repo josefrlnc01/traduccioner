@@ -2,10 +2,12 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import OpenAi from 'openai'
 import fs from 'node:fs'
+import { formatTime } from "../../shared/utils/time.js";
+import { TranscriptionSegment } from "openai/resources/audio/transcriptions.mjs";
 
 
 
-export async function transcribeWhisperAudio(filePath:string):Promise<string | null>{
+export async function transcribeWhisperAudio(filePath: string): Promise<TranscriptionSegment[] | null> {
     try {
         const __fileName = fileURLToPath(import.meta.url)
         const __dirname = dirname(__fileName)
@@ -14,35 +16,21 @@ export async function transcribeWhisperAudio(filePath:string):Promise<string | n
         const openAi = new OpenAi()
 
         const transcription = await openAi.audio.transcriptions.create({
-            file:fs.createReadStream(filePath),
-            model:'whisper-1'
+            file: fs.createReadStream(filePath),
+            model: 'whisper-1',
+            response_format: 'verbose_json',
+            timestamp_granularities: ['segment']
         })
 
 
-        if (!transcription) throw new Error("Error en la transcripción del audio")
-            
-            const formatted = await openAi.chat.completions.create({
-            model: 'gpt-4o-mini',
-            messages: [
-                {
-                    role: 'system',
-                    content: `Eres un editor de texto. Recibirás una transcripción de audio en bruto.
-                    Tu tarea es:
-                    - Añadir comas coherentemente
-                    - Dividir en párrafos semánticos coherentes mediante puntos
-                    - Corregir errores obvios de transcripción
-                    - NO cambiar el contenido ni añadir información
-                    Devuelve únicamente el texto formateado, sin comentarios.`
-                },
-                {
-                    role: 'user',
-                    content: transcription.text
-                }
-            ]
-        })
+        if (!transcription.segments) throw new Error("Error en la transcripción del audio")
+            console.log('segments', transcription.segments)
+        const segmentText = transcription.segments
+            ?.map(s => `[${formatTime(s.start)}] ${s.text}`)
+            .join('\n')
 
-        return formatted.choices[0].message.content ?? null
-        
+        return transcription.segments ?? null
+
     } catch (error) {
         console.error(error)
         return null

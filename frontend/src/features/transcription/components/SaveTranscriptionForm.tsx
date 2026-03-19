@@ -3,11 +3,12 @@ import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useMutation } from '@tanstack/react-query'
 import { saveFileTranscription, saveFileTranslation, saveYoutubeTranscription, saveYoutubeTranslation } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
+import type { WhisperSegment } from '../types/file.types'
 
 type TranscriptionProps = {
     isOpen: boolean,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    fileText: string | null,
+    fileText: WhisperSegment[] | null,
     youtubeVideoText: string | null,
     translatedFile: string | null,
     translatedYoutubeVideo: string | null,
@@ -68,7 +69,7 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
         setTextAreaValue(e.target.value)
     }
 
-
+    
 
 
 
