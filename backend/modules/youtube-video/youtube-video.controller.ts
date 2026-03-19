@@ -10,6 +10,9 @@ import { AppError } from "../errors/AppError.js";
 
 export class YoutubeVideoController {
     static init = async (req: Request, res: Response) => {
+        const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
+        req.socket.remoteAddress || 'unknown').trim()
+        
         const { videoLink }: RequestProps = req.body
         const user = req.user
         const lang = String(req.params.lang)
@@ -35,7 +38,7 @@ export class YoutubeVideoController {
 
         try {
             //Obtención de transcripción del vídeo ya convertido en audio
-            const data = await YoutubeVideoService.getTranscriptionFromAudio(user)
+            const data = await YoutubeVideoService.getTranscriptionFromAudio(user, ip)
             if (!data) {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })

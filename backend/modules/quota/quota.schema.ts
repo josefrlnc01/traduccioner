@@ -4,7 +4,9 @@ export interface IQuota extends Document {
     user: Types.ObjectId,
     ip: string,
     requestCount: number,
-    resetAt: Date
+    resetAt: Date,
+    minutesUsed: number,
+    minutesResetAt: Date
 }
 
 const quotaSchema: Schema = new Schema({
@@ -20,6 +22,14 @@ const quotaSchema: Schema = new Schema({
     requestCount: {
         type: Number,
         default: 0
+    },
+    minutesUsed: {
+        type: Number,
+        default: 0
+    },
+    minutesResetAt: {
+        type: Date,
+        default: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
     },
     resetAt: {
         type: Date,

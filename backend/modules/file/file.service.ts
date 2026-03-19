@@ -8,6 +8,7 @@ import { AppError } from '../errors/AppError.js'
 import User, { IUser } from '../user/user.model.js'
 import { getAudioDuration } from '../../shared/utils/audio.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
+import Quota from '../quota/quota.schema.js'
 
 
 export class FileService {
@@ -90,21 +91,20 @@ export class FileService {
     }
 
 
-    static incrementMinutes = async (finalFilePath: string, user: IUser) => {
-            const freshUser = await User.findOne({
-                email: user.email
-            })
-
-            if (!freshUser) {
-                throw new AppError('Error al obtener usuario', 400)
-            }
+    static incrementMinutes = async (finalFilePath: string, user: IUser, ip: string) => {
+            //Obtención de la ip del dispositivo
             const audioDuration = await getAudioDuration(finalFilePath)
-            console.log('duración', audioDuration)
-            console.log(audioDuration)
-            console.log('minutesUsed actual:', user.minutesUsed, typeof user.minutesUsed)
+            await Quota.findOneAndUpdate(
+                {user: user._id, ip},
+                {
+                    $inc: {minutesUsed: audioDuration}
+                },
+                {upsert: true, new: true}
+            )
+
             const fileText = await transcribeWhisperAudio(finalFilePath)
-            freshUser.minutesUsed = (freshUser.minutesUsed ?? 0) + audioDuration
-            await freshUser.save()
+            
+            
             return fileText
     }
 }

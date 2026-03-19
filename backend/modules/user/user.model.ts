@@ -5,8 +5,6 @@ export interface IUser extends Document {
     email: string,
     password: string | null,
     provider: string,
-    minutesUsed: number,
-    minutesResetAt: Date,
     confirmed: boolean
 }
 
@@ -29,14 +27,6 @@ export const userSchema: Schema = new Schema({
         type: String,
         enum: ['local', 'google'],
         default: 'local'
-    },
-    minutesUsed: {
-        type: Number,
-        default: 0
-    },
-    minutesResetAt: {
-        type: Date,
-        default: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
     },
     confirmed: {
         type: Boolean,

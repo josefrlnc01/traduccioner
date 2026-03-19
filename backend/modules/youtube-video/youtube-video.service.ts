@@ -10,6 +10,7 @@ import ytDlp from 'yt-dlp-exec'
 import { getVideoMinutes } from "../../shared/utils/video.js";
 import { getAudioDuration } from "../../shared/utils/audio.js";
 import User, { IUser } from "../user/user.model.js";
+import Quota from "../quota/quota.schema.js";
 
 export class YoutubeVideoService {
     static insertTransciption = async ({ data, user }: InsertTranscriptionProps) => {
@@ -129,7 +130,7 @@ export class YoutubeVideoService {
 
 
 
-    static getTranscriptionFromAudio = async (user:IUser): Promise<VideoSubtitles> => {
+    static getTranscriptionFromAudio = async (user:IUser, ip: string): Promise<VideoSubtitles> => {
         const backendDir = process.cwd()
         const base = path.join(backendDir, 'audio')
         const filepath = base + '.mp3'
@@ -150,7 +151,15 @@ export class YoutubeVideoService {
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
         const minutes = await getAudioDuration(filepath)
-        freshUser.minutesUsed += minutes
+        
+        await Quota.findOneAndUpdate(
+                {user: user._id, ip},
+                {
+                    $inc: {minutesUsed: minutes}
+                },
+                {upsert: true, new: true}
+            )
+
         await freshUser.save()
         
         return { youtubeVideoText }

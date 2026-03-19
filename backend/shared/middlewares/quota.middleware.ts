@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Quota from "../../modules/quota/quota.schema.js";
+import User from "../../modules/user/user.model.js";
 
 export const checkQuota = async (req: Request, res: Response, next: NextFunction) =>  {
     const user = req.user
@@ -9,21 +10,12 @@ export const checkQuota = async (req: Request, res: Response, next: NextFunction
         'unknown').trim()
 
     try {
-        //Operación atómica de búsqueda
-        const quota = await Quota.findOneAndUpdate(
-            {user: user._id, ip},
-            {
-                $inc: {requestCount: 1},
-                $setOnInsert: {
-                    resetAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
-                }
-            },
-            {upsert:true, new: true}
-        )
+        const quota = await Quota.findOne({
+            user: user._id, ip
+        })
 
-
-        if (quota.requestCount > 1200) {
-            return res.status(429).json({error: 'No puedes hacer más de una traducción'})
+        if (quota && quota.minutesUsed > 1.50) {
+            return res.status(429).json({error: `No dispones de minutos de transcripción gratuita suficientes. Minutos: ${4 - quota.minutesUsed}`})
         }
 
         next()

@@ -11,6 +11,9 @@ import { getAudioDuration } from "../../shared/utils/audio.js";
 export class FileController {
     static init = async (req: Request, res: Response) => {
         try {
+            const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
+                    req.socket.remoteAddress ||
+                    'unknown').trim()
             const lang = String(req.params.lang)
             const file = req.file
             const user = req.user
@@ -19,7 +22,7 @@ export class FileController {
             }
             
             const finalFilePath = await convertVideoToAudio(file)
-            const fileText = await FileService.incrementMinutes(finalFilePath, user)
+            const fileText = await FileService.incrementMinutes(finalFilePath, user, ip)
             if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
             if (lang === 'not') {
                 return res.status(200).json({ fileText })
