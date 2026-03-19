@@ -91,7 +91,7 @@ export class FileService {
     }
 
 
-    static incrementMinutes = async (finalFilePath: string, user: IUser, ip: string) => {
+    static getTranscriptionFromAudio = async (finalFilePath: string, user: IUser, ip: string) => {
             //Obtención de la ip del dispositivo
             const audioDuration = await getAudioDuration(finalFilePath)
             await Quota.findOneAndUpdate(

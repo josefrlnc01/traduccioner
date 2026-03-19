@@ -22,7 +22,7 @@ export class FileController {
             }
             
             const finalFilePath = await convertVideoToAudio(file)
-            const fileText = await FileService.incrementMinutes(finalFilePath, user, ip)
+            const fileText = await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
             if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
             if (lang === 'not') {
                 return res.status(200).json({ fileText })
