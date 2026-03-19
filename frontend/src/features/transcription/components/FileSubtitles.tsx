@@ -62,7 +62,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     }
     
     
-    console.log(fileText.map(s => `${s.start}: ${s.end}`))
     const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
 
     return (

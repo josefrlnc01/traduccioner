@@ -58,7 +58,7 @@ export async function transcribeWhisperAudio(filePath: string): Promise<Transcri
         if (!responseText) throw new AppError('Error al formatear la transcripción', 400)
 
         const formattedSegments: TranscriptionFormatt[] = JSON.parse(responseText)
-
+        console.log('segments', formattedSegments)
         return formattedSegments ?? null
 
     } catch (error) {

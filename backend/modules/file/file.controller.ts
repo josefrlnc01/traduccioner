@@ -24,7 +24,7 @@ export class FileController {
             if (lang === 'not') {
                 return res.status(200).json({ fileText })
             }
-
+            
             return res.status(200).json({ fileText })
         } catch (error) {
             console.error(error)

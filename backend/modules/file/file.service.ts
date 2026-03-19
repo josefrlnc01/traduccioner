@@ -75,7 +75,7 @@ export class FileService {
 
             const fileText = await transcribeWhisperAudio(finalFilePath)
             
-            
+            await fs.unlink(finalFilePath)
             return fileText
     }
 }

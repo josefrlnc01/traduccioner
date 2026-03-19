@@ -26,6 +26,7 @@ export async function convertVideoToAudio (file: Express.Multer.File): Promise<s
             console.log('conversión realizada')
             await fs.unlink(file.path)
             resolve(finalFilePath)
+            
         })
         .on('error', (err) => {
             reject(err)
