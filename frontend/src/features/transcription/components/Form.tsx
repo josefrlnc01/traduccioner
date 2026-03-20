@@ -22,7 +22,7 @@ export default function Form() {
     const [formData, setFormData] = useState<FormData | null>(null)
 
 
-    function formatMinutes (decimal:number): string {
+    function formatMinutes(decimal: number): string {
         const mins = Math.floor(decimal)
         const secs = Math.floor((decimal % 1) * 60)
         return secs > 0 ? `${mins}m ${secs}s` : `${mins}min`
@@ -43,11 +43,11 @@ export default function Form() {
         setInputValue(e.target.value)
     }
 
-    
+
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        
+
         if (!inputValue && formData) {
             mutation.mutate({ link: null, lang: langForTranslate, formData })
             console.log('mutation data', mutation.data)
@@ -95,14 +95,22 @@ export default function Form() {
                     </p>
                 </aside>
                 <div className="w-2/4 flex items-center gap-2 mb-6">
-                    <div className="flex-1 bg-slate-800 rounded-full h-2">
+                    <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
-                            className="bg-blue-500 z-20 h-2 rounded-full transition-all"
+                            className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
                             style={{ width: `${(usedMinutes! / 10) * 100}%` }}
-                        />
+                        >
+                            <div
+                                className="shimmer absolute top-0 left-0 h-full w-1/3"
+                                style={{
+                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+                                    left: 0
+                                }}
+                            />
+                        </div>
                     </div>
                     <span className="text-slate-400 text-sm shrink-0">
-                        {formatMinutes(usedMinutes!)}/10 min usados
+                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10 min usados
                     </span>
                 </div>
                 <aside className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
@@ -118,7 +126,7 @@ export default function Form() {
                                 <label className="text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
                                 <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
-                                <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-slate-800 hover:bg-slate-900/80 transition-colors cursor-pointer">
+                                <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500  transition-colors ease duration-300 cursor-pointer">
                                     Seleccionar archivo
                                 </label>
 
@@ -144,7 +152,7 @@ export default function Form() {
                             <button
                                 type="submit"
                                 onClick={handleForm}
-                                className="bg-blue-600 w-full min-w-full pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors cursor-pointer">
+                                className="bg-blue-600 w-full min-w-full pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors ease duration-300 cursor-pointer">
                                 Transcribir</button>
                         </div>
 
