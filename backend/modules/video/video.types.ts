@@ -1,7 +1,8 @@
 import { TranscriptionFormatt } from "../transcription/whisper.service.js"
 
 export type VideoSubtitles = {
-    youtubeVideoText: TranscriptionFormatt[]
+    youtubeVideoText: TranscriptionFormatt[] | null,
+    usedMinutes: number
 }
 
 

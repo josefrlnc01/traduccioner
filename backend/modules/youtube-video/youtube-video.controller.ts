@@ -42,16 +42,16 @@ export class YoutubeVideoController {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })
             }
-            const { youtubeVideoText } = data
+            const { youtubeVideoText, usedMinutes } = data
 
-            //Si el usuario no elige un lenguaje para traducir solo devolvemos la transcripción
+            /*Si el usuario no elige un lenguaje para traducir solo devolvemos la transcripción
             if (lang === 'not') {
                 return res.json({ youtubeVideoText})
-            }
+            }*/
 
             //Obtención de traducción del video
             
-            return res.json({ youtubeVideoText })
+            return res.json({ youtubeVideoText, usedMinutes })
         } catch (err) {
             console.error('Error processing video:', err)
             return res.status(500).json({ error: 'Failed to process video' })

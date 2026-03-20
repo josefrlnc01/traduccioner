@@ -7,7 +7,7 @@ import FileSubtitles from './FileSubtitles'
 
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
-    
+
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
@@ -23,23 +23,25 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         )
     }
 
-    
+
     if (!mutation.data) return null
 
-    
+
 
     if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
 
 
-    
-    const { translatedYoutubeVideo, youtubeVideoText } = mutation.data
 
+    const { translatedYoutubeVideo } = mutation.data
+    const youtubeVideoText = mutation.data.youtubeVideoText
     let formatedTranslatedYoutubeVideo
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
     }
+    const formattedYoutubeVideoText = youtubeVideoText
+        .map(s => `[${s.start}:${s.end}] ${s.text}`)
+        .join('\n')
 
-    const formattedYoutubeVideoText = youtubeVideoText.split('. ').map(s => s.endsWith('.') ? s : s + '.')
     if (formatedTranslatedYoutubeVideo) {
         formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
     }
@@ -54,15 +56,15 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         </h2>
                     </header>
                     <div className='grow bg-slate-800/40 p-8'>
-                        {formattedYoutubeVideoText.map(p => (
-                            <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {p}
-                        </p>
+                        {youtubeVideoText.map(s => (
+                            <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
+                            </p>
                         ))}
                     </div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
-                            onClick={() => handleGenerateTranscriptionPdf(youtubeVideoText)}
+                            onClick={() => handleGenerateTranscriptionPdf(formattedYoutubeVideoText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                     </div>
@@ -76,12 +78,12 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             </h2>
                         </header>
                         <div className='grow bg-slate-800/40 p-8'>
-                        {formatedTranslatedYoutubeVideo && formatedTranslatedYoutubeVideo.map(p => (
-                            <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                {p}
-                            </p>
-                        ))}
-                            
+                            {formatedTranslatedYoutubeVideo && formatedTranslatedYoutubeVideo.map(p => (
+                                <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                    {p}
+                                </p>
+                            ))}
+
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button

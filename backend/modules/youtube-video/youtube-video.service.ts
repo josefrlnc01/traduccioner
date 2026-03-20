@@ -130,18 +130,11 @@ export class YoutubeVideoService {
 
 
 
-    static getTranscriptionFromAudio = async (user:IUser, ip: string): Promise<VideoSubtitles> => {
+    static getTranscriptionFromAudio = async (user:IUser, ip: string) => {
         const backendDir = process.cwd()
         const base = path.join(backendDir, 'audio')
         const filepath = base + '.mp3'
-        const freshUser = await User.findOne({
-            email: user.email
-        })
         
-        if (!freshUser) {
-            throw new AppError('No se pudo verificar el usuario', 400)
-        }
-
         //Obtención del link mediante archivo creado previamente en controller para guardado de links
         const links = JSON.parse(await fs.readFile('link.json', 'utf-8')) as Record<string, unknown>
         const videoLink: string | null = (links.key as string) || null
@@ -160,9 +153,11 @@ export class YoutubeVideoService {
                 {upsert: true, new: true}
             )
 
-        await freshUser.save()
+        const quota = await Quota.findOne({
+            user: user._id, ip
+        })
         
-        return { youtubeVideoText }
+        return { youtubeVideoText, usedMinutes: quota?.usedMinutes }
     }
 
 

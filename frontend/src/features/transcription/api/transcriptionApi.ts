@@ -4,7 +4,7 @@ import type { StoredYoutubeVideoTranscription, StoredYoutubeVideoTranslation } f
 import type { StoredFileTranscription, StoredFileTranslation, WhisperSegment } from "../types/file.types";
 
 export type PromiseLink = {
-    youtubeVideoText: string,
+    youtubeVideoText: WhisperSegment[],
     translatedYoutubeVideo: string,
     usedMinutes: number
 }
