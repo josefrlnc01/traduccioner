@@ -30,7 +30,7 @@ export default function Form() {
     >({
         mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData),
         onSuccess: (data) => {
-            setChanged(false)
+            
             setUsedMinues(data?.usedMinutes!)
         }
     })
@@ -41,16 +41,18 @@ export default function Form() {
 
         if (!inputValue && formData) {
             mutation.mutate({ link: null, lang: langForTranslate, formData })
-            console.log('mutation data', mutation.data)
+            setFileInputValue(null)
+            setChanged(false)
             return
         }
 
         mutation.mutate({ link: inputValue, lang: langForTranslate, formData: null })
+        setInputValue('')
+        setChanged(false)
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
-        setChanged(true)
     }
 
     const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
@@ -60,7 +62,7 @@ export default function Form() {
         const formData = new FormData()
         formData.append('audio', file)
         setFormData(formData)
-        setChanged(true)
+        
         console.log(formData)
         setFileInputValue(formData)
     }
@@ -162,7 +164,7 @@ export default function Form() {
 
                                 </div>}
                         </div>
-                        {changed && 
+                        {(changed && fileInputValue) && 
                         <span className="text-sm text-shadow-white font-semibold text-center">Archivo preparado</span>}
                         <button
                             type="submit"
