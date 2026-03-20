@@ -30,7 +30,7 @@ export async function generatePDF (text: string) {
 export async function generateSRT (segments: {start:number, end:number, text:string}[]) {
     const accessToken = tokenStore.get()
     try {
-        const {data} = await axios.post(`${baseUrl}/document/create-srt`, segments, {
+        const {data} = await axios.post(`${baseUrl}/document/create-srt`, {segments}, {
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization" : `Bearer ${accessToken}`

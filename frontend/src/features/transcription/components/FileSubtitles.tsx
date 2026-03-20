@@ -1,4 +1,4 @@
-import { generatePDF } from '@/features/document/api/documentApi'
+import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
@@ -10,6 +10,13 @@ import Subtitles from '../pages/SubtitlesView'
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const generatePdf = useMutation({
         mutationFn: generatePDF,
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
+    const generateSrt = useMutation({
+        mutationFn: generateSRT,
         onError: (error) => {
             toast.error(error.message)
         }
@@ -42,6 +49,10 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     const translatedFile = mutation.data.translatedFile
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
+    }
+
+    const handleGenereateTranscriptionSrt = (segments: {start: number, end: number, text: string}[]) => {
+        generateSrt.mutate(segments)
     }
     let formattedTranslatedFile
     console.log('filetext', fileText)
@@ -81,8 +92,11 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Descargar</button>
-                        
+                            type='button'>PDF</button>
+                        <button
+                            onClick={() => handleGenereateTranscriptionSrt(fileText)}
+                            className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>SRT</button>
                     </div>
 
                 </aside>

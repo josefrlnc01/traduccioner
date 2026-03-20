@@ -23,6 +23,7 @@ export class DocumentController {
     static createSRT = async (req: Request, res: Response) => {
         try {
             const {segments} = req.body
+            console.log(segments)
 
             const srt = await generateSrt(segments)
             res.setHeader("Content-Type", "text/plain")
