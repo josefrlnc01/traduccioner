@@ -22,7 +22,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
         )
     }
 
-    if (isError || !data) return <Navigate to={'/auth/login'} replace />
+    if (isError || !data) return <Navigate to={'/landing-page'} replace />
 
     console.log(data)
     if (data) {
