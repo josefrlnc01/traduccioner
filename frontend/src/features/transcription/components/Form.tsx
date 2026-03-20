@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
-import { ComboboxMultiple } from "./ComboboxMultiple";
 import { minutesStore } from "@/shared/stores/minutes.store";
-import { tokenStore } from "@/lib/token.store";
-import TranscriptionSkeleton from "./TranscriptionSkeleton";
 import { formatMinutes } from "@/shared/utils/minutes";
 
 export type MutationProps = {

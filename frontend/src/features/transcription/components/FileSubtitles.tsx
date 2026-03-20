@@ -1,22 +1,13 @@
 import { generatePDF } from '@/features/document/api/documentApi'
-import { saveFileTranscription } from '../api/transcriptionApi'
-import { useMutation, type UseMutationResult } from '@tanstack/react-query'
-
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/shared/components/ui/spinner'
 import Subtitles from '../pages/SubtitlesView'
-import { Link } from 'react-router'
-import { useState } from 'react'
-import { Button } from '@headlessui/react'
-import type { formatMinutes } from '@/shared/utils/minutes'
+
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
-    
-
-    
-
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {

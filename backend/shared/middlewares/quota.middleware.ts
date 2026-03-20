@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import Quota from "../../modules/quota/quota.schema.js";
-import User from "../../modules/user/user.model.js";
 
 export const checkQuota = async (req: Request, res: Response, next: NextFunction) =>  {
     const user = req.user

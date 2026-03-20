@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import User from "./user.model.js"
 import { AppError } from "../errors/AppError.js"
 import { UserService } from "./user.service.js"
 

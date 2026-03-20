@@ -1,9 +1,6 @@
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
 import OpenAi from 'openai'
 import fs from 'node:fs'
-import { formatTime } from "../../shared/utils/time.js";
-import { TranscriptionSegment } from "openai/resources/audio/transcriptions.mjs";
+
 import { AppError } from "../errors/AppError.js";
 
 export type TranscriptionFormatt = {

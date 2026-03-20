@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const awaitPhrases = [ 'Procesando audio...', 'Transcribiendo audio, puede tardar un poco...', 'Extrayendo texto...']
 

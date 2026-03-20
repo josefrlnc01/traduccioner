@@ -7,7 +7,6 @@ import FileSubtitles from './FileSubtitles'
 
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
-
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
@@ -15,7 +14,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         }
     })
     if (mutation.isError) {
-
         return (
             <aside className="p-4 text-red-400 md:text-center">
                 {mutation.error.message}
@@ -23,13 +21,9 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         )
     }
 
-
     if (!mutation.data) return null
 
-
-
     if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
-
 
 
     const { translatedYoutubeVideo } = mutation.data

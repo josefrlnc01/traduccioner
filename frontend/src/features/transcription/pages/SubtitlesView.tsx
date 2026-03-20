@@ -1,7 +1,5 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useState } from "react";
-import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
 import FileSubtitles from '../components/FileSubtitles';
 import YoutubeVideoSubtitles from '../components/YoutubeVideoSubtitles';
@@ -12,11 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function SubtitlesView({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     
-
-
-
     if (mutation.isError) {
-
         return (
             <aside className="p-4 text-red-400 md:text-center">
                 {mutation.error.message}
@@ -27,9 +21,6 @@ export default function SubtitlesView({ mutation, inputValue, fileInputValue, la
     if (mutation.isPending) {
         return <TranscriptionSkeleton/>
     }
-
-
-
 
     if (!mutation.data) return null
 
@@ -43,7 +34,6 @@ export default function SubtitlesView({ mutation, inputValue, fileInputValue, la
             />
         )
     }
-
 
     return (
 

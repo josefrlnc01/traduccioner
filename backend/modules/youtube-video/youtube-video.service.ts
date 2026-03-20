@@ -1,7 +1,6 @@
 import path from "node:path";
 import { AppError } from "../errors/AppError.js";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
-import { VideoSubtitles } from "../video/video.types.js";
 import YoutubeVideo from "./youtube-video.model.js";
 import VideoStored from "./youtube-video.model.js";
 import fs from 'node:fs/promises'
@@ -9,7 +8,7 @@ import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-vide
 import ytDlp from 'yt-dlp-exec'
 import { getVideoMinutes } from "../../shared/utils/video.js";
 import { getAudioDuration } from "../../shared/utils/audio.js";
-import User, { IUser } from "../user/user.model.js";
+import { IUser } from "../user/user.model.js";
 import Quota from "../quota/quota.schema.js";
 
 export class YoutubeVideoService {
