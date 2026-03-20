@@ -2,6 +2,9 @@ import pdf from 'html-pdf'
 import fs from 'node:fs/promises'
 import { AppError } from '../../modules/errors/AppError.js'
 
+import { getRequiredEnv } from './variables.js';
+import { writeFile } from 'node:fs/promises';
+
 export async function generatePdf (text: string) {
     console.log('text', text)
     const contenido = `<aside>
@@ -19,4 +22,23 @@ export async function generatePdf (text: string) {
         resolve(buffer)
     })
     })
+}
+
+
+export async function generateSrt (segments: {start: number, end:number, text:string}[]) {
+    return segments.map((segment,i) => {
+        const start = formatSRTTime(segment.start)
+        const end = formatSRTTime(segment.end)
+        return `${i + 1}\n${start} ---> ${end}\n ${segment.text.trim()}\n`
+    }).join('\n')
+}
+
+
+function formatSRTTime (seconds: number):string {
+    const date = new Date(seconds * 1000)
+    const hh = date.getUTCHours().toString().padStart(2, '0')
+    const mm = date.getUTCMinutes().toString().padStart(2, '0')
+    const ss = date.getUTCSeconds().toString().padStart(2, '0')
+    const ms = date.getUTCMilliseconds().toString().padStart(2, '0')
+    return `${hh}:${mm}:${ss},${ms}`
 }

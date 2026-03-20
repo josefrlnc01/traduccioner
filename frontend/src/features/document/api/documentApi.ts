@@ -28,3 +28,24 @@ export async function generatePDF (text: string) {
         }
     }
 }
+
+
+export async function generateSRT (segments: {start:number, end:number, text:string}[]) {
+    try {
+        const {data} = await axios.post(`${baseUrl}/document/create-srt`, segments, {
+            responseType: 'blob'
+        })
+        if (!data) {
+            throw new Error('Error en generación de srt')
+        }
+        const url = URL.createObjectURL(data)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'transcripción.srt'
+        a.click()
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}

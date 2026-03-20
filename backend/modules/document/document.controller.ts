@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { generatePdf } from "../../shared/utils/create-files.js";
+import { generatePdf, generateSrt } from "../../shared/utils/create-files.js";
 import { AppError } from "../errors/AppError.js";
 
 export class DocumentController {
@@ -18,6 +18,19 @@ export class DocumentController {
             }
             return res.status(500).json({error: 'Hubo un error al generar el pdf'})
         } 
+    }
+
+    static createSRT = async (req: Request, res: Response) => {
+        try {
+            const {segments} = req.body
+
+            const srt = await generateSrt(segments)
+            res.setHeader("Content-Type", "text/plain")
+            res.setHeader("Content-Disposition", "attachment; filename='archivo.srt'")
+            return res.status(201).send(srt)
+        } catch (error) {
+            return res.status(500).json({error: 'Hubo un error al generar el SRT'})
+        }
     }
 
 }   
