@@ -139,7 +139,7 @@ export default function Form() {
                                     className="hidden" />
 
                             </div>}
-                            {fileInputValue && inputValue && <span className="text-center text-sm text-gray-300">O</span>}
+                            {(!fileInputValue && !inputValue) && <span className="text-center text-sm text-gray-300">O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
                             {!fileInputValue &&
                                 <div className="w-full flex flex-col justify-around gap-2">
