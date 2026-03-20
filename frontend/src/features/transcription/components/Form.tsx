@@ -6,6 +6,7 @@ import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
 import { ComboboxMultiple } from "./ComboboxMultiple";
 import { minutesStore } from "@/shared/stores/minutes.store";
+import { tokenStore } from "@/lib/token.store";
 
 export type MutationProps = {
     link: string | null
@@ -14,16 +15,12 @@ export type MutationProps = {
 }
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
-    const [minutesUsed, setMinutesUsed] = useState<number | null>(null)
+    const [usedMinutes, setUsedMinues] = useState<number | null>(minutesStore.get())
     const [language, setLanguage] = useState<string | null>(null)
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const langForTranslate = getAbbreviateLanguage(language)
     const [formData, setFormData] = useState<FormData | null>(null)
 
-    useEffect(() => {
-        const minutes = minutesStore.get()
-        setMinutesUsed(minutes)
-    })
 
     function formatMinutes (decimal:number): string {
         const mins = Math.floor(decimal)
@@ -36,7 +33,11 @@ export default function Form() {
         Error,
         MutationProps
     >({
-        mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData)
+        mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData),
+        onSuccess: (data) => {
+            console.log('data mutation', data)
+            setUsedMinues(data?.usedMinutes!)
+        }
     })
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
@@ -46,9 +47,10 @@ export default function Form() {
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-
+        
         if (!inputValue && formData) {
             mutation.mutate({ link: null, lang: langForTranslate, formData })
+            console.log('mutation data', mutation.data)
             return
         }
 
@@ -96,11 +98,11 @@ export default function Form() {
                     <div className="flex-1 bg-slate-800 rounded-full h-2">
                         <div
                             className="bg-blue-500 z-20 h-2 rounded-full transition-all"
-                            style={{ width: `${(minutesUsed! / 10) * 100}%` }}
+                            style={{ width: `${(usedMinutes! / 10) * 100}%` }}
                         />
                     </div>
                     <span className="text-slate-400 text-sm shrink-0">
-                        {formatMinutes(minutesUsed!)}/10 min usados
+                        {formatMinutes(usedMinutes!)}/10 min usados
                     </span>
                 </div>
                 <aside className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">

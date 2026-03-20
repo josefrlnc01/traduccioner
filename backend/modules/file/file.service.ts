@@ -68,15 +68,17 @@ export class FileService {
             await Quota.findOneAndUpdate(
                 {user: user._id, ip},
                 {
-                    $inc: {minutesUsed: audioDuration.toFixed(2)}
+                    $inc: {usedMinutes: audioDuration.toFixed(2)}
                 },
                 {upsert: true, new: true}
             )
 
             const fileText = await transcribeWhisperAudio(finalFilePath)
-            
+            const quota = await Quota.findOne({
+                user: user._id, ip
+            })
             await fs.unlink(finalFilePath)
-            return fileText
+            return {fileText, usedMinutes: quota?.usedMinutes}
     }
 }
 

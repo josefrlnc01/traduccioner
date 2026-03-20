@@ -26,7 +26,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
 
     console.log(data)
     if (data) {
-        minutesStore.set(data.minutesUsed ?? null)
+
         return (
             <>
                 <SidebarProvider

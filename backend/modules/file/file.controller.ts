@@ -19,13 +19,14 @@ export class FileController {
             }
             
             const finalFilePath = await convertVideoToAudio(file)
-            const fileText = await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
-            if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
+            const {fileText, usedMinutes}= await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
+            if (!fileText && !usedMinutes) return res.status(400).json({ error: 'Error al obtener transcripción' })
             if (lang === 'not') {
-                return res.status(200).json({ fileText })
+                console.log('usedMinutes', usedMinutes)
+                return res.status(200).json({ fileText, usedMinutes })
             }
             
-            return res.status(200).json({ fileText })
+            return res.status(200).json({ fileText, usedMinutes })
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })

@@ -12,7 +12,7 @@ export const userReqSchema = z.object({
         name: z.string(),
     email: z.string()
     }),
-    minutesUsed: z.number()
+    usedMinutes: z.number().optional()
 })
 
 export const registrationFormSchema = z.object({

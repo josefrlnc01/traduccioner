@@ -6,11 +6,13 @@ import type { StoredFileTranscription, StoredFileTranslation, WhisperSegment } f
 export type PromiseLink = {
     youtubeVideoText: string,
     translatedYoutubeVideo: string,
+    usedMinutes: number
 }
 
 export type PromiseFile = {
     fileText: WhisperSegment[],
-    translatedFile: string
+    translatedFile: string,
+    usedMinutes: number
 }
 
 const urlBackend = import.meta.env.VITE_API_URL
@@ -42,8 +44,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { youtubeVideoText, translatedYoutubeVideo } = data
-            return { youtubeVideoText, translatedYoutubeVideo}
+            const { youtubeVideoText, translatedYoutubeVideo, usedMinutes } = data
+            return { youtubeVideoText, translatedYoutubeVideo, usedMinutes}
         } else {
             const response = await fetch(`${urlBackend}/file/${lang ? lang : 'not'}`, {
                 method: 'POST',
@@ -65,8 +67,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { fileText, translatedFile } = data
-            return { fileText, translatedFile }
+            const { fileText, translatedFile, usedMinutes } = data
+            return { fileText, translatedFile, usedMinutes }
         }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')

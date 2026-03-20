@@ -4,6 +4,7 @@ import type { RegistrationForm, UserLoginForm } from '../types/auth.types'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@/firebase'
 import { tokenStore } from '@/lib/token.store'
+import { minutesStore } from '@/shared/stores/minutes.store'
 
 
 const baseUrl = import.meta.env.VITE_API_URL
@@ -53,24 +54,19 @@ export async function authenticateGoogle() {
 
 
 export async function getUser(accessToken: string) {
-    try {
+    
         const { data } = await axios.get(`${baseUrl}/auth/user`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
+        console.log(data)
         const response = userReqSchema.safeParse(data)
 
         if (!response.success) throw new Error('Respuesta inválida del servidor');
-
+        minutesStore.set(response.data.usedMinutes!)
         return response.data
-
-
-    } catch (error) {
-        if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
-        }
-    }
+    
 }
 
 

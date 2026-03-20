@@ -148,7 +148,7 @@ export class AuthController {
         const quota = await Quota.findOne({
             user: req.user._id, ip
         })
-        return res.status(200).json({user: req.user, minutesUsed: quota?.minutesUsed})
+        return res.status(200).json({user: req.user, usedMinutes: quota?.usedMinutes})
     }
 
 }
