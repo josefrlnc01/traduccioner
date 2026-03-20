@@ -4,7 +4,7 @@ const baseUrl = import.meta.env.VITE_API_URL
 export async function generatePDF (text: string) {
     const accessToken = tokenStore.get()
     try {
-        const response = await fetch(`${baseUrl}/document/create`, 
+        const response = await fetch(`${baseUrl}/document/create-pdf`, 
             {
                 method: 'POST',
                 headers: {

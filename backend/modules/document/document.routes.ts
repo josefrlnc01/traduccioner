@@ -4,4 +4,4 @@ import { authenticate } from "../../shared/middlewares/auth.middleware.js";
 
 export const documentRoute = Router()
 
-documentRoute.post('/create', authenticate, DocumentController.createPDF)
+documentRoute.post('/create-pdf', authenticate, DocumentController.createPDF)
