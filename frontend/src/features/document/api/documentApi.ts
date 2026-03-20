@@ -4,19 +4,16 @@ const baseUrl = import.meta.env.VITE_API_URL
 export async function generatePDF (text: string) {
     const accessToken = tokenStore.get()
     try {
-        const response = await fetch(`${baseUrl}/document/create-pdf`, 
-            {
-                method: 'POST',
-                headers: {
-                'Content-Type' : 'application/json',
-                'Authorization' : `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({text: text}),
-            }
-        )
+        const {data} = await axios.post(`${baseUrl}/document/create-pdf`, {text}, {
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : `Bearer ${accessToken}`
+            },
+            withCredentials: true,
+            responseType: 'blob'
+        })
 
-        const blob = await response.blob()
-        const url = URL.createObjectURL(blob)
+        const url = URL.createObjectURL(data)
         const a = document.createElement('a')
         a.href = url
         a.download = 'archivo.pdf'
@@ -31,8 +28,14 @@ export async function generatePDF (text: string) {
 
 
 export async function generateSRT (segments: {start:number, end:number, text:string}[]) {
+    const accessToken = tokenStore.get()
     try {
         const {data} = await axios.post(`${baseUrl}/document/create-srt`, segments, {
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : `Bearer ${accessToken}`
+            },
+            withCredentials:true,
             responseType: 'blob'
         })
         if (!data) {
