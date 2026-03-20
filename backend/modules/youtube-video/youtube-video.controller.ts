@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { YoutubeVideoService } from "./youtube-video.service.js";
 import { youtubeVideoTranscriptionSchema, youtubeVideoTranslationSchema } from "./youtube-video.schema.js";
-import { DataOfId, RequestProps } from "../video/video.types.js";
+import { RequestProps, DataOfId } from "./youtube-video.types.js";
 import fs from "node:fs/promises"
 import getVideoId from "get-video-id";
 import { AppError } from "../errors/AppError.js";
