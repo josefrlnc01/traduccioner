@@ -5,30 +5,13 @@ import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
 import FileSubtitles from '../components/FileSubtitles';
 import YoutubeVideoSubtitles from '../components/YoutubeVideoSubtitles';
+import TranscriptionSkeleton from '../components/TranscriptionSkeleton';
 
 gsap.registerPlugin(ScrollTrigger)
 
 
 export default function SubtitlesView({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
-    const [phrase, setPhrase] = useState('')
-    const [index, setIndex] = useState(0)
-    const [fade, setFade] = useState(true)
     
-
-    const awaitPhrases = ['Cargando traducción, puede tardar un poco...', 'Procesando audio...', 'Extrayendo texto...']
-
-    useEffect(() => {
-        if (index >= awaitPhrases.length) return
-        const timeOut = setTimeout(() => {
-            setFade(false)
-            setTimeout(() => {
-                setIndex(prev => prev + 1)
-                setPhrase(awaitPhrases[index])
-                setFade(true)
-            }, 300)
-        }, 6000)
-        return () => clearTimeout(timeOut)
-    }, [index, awaitPhrases.length])
 
 
 
@@ -42,15 +25,7 @@ export default function SubtitlesView({ mutation, inputValue, fileInputValue, la
     }
 
     if (mutation.isPending) {
-        return (
-            <aside className="p-6 flex flex-col gap-4 items-center text-white justify-center">
-                <Spinner
-                    className="size-16 text-white"
-                />
-                <small className={`text-neutral-200 transition-opacity duration-300 ${fade ? "opacity-100" : "opacity-0"
-                    }`}>{phrase}</small>
-            </aside>
-        )
+        return <TranscriptionSkeleton/>
     }
 
 

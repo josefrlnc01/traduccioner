@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ComboboxMultiple } from "./ComboboxMultiple";
 import { minutesStore } from "@/shared/stores/minutes.store";
 import { tokenStore } from "@/lib/token.store";
+import TranscriptionSkeleton from "./TranscriptionSkeleton";
 
 export type MutationProps = {
     link: string | null
@@ -85,7 +86,9 @@ export default function Form() {
 
     return (
         <>
-            <section className="p-8 grow flex flex-col justify-center items-center mb-15">
+        
+            <section className="p-8 relative grow flex flex-col justify-center items-center mb-15">
+                
                 <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
                     <h2 className="text-xl font-semibold text-white">
                         Nueva transcripción
@@ -94,14 +97,14 @@ export default function Form() {
                         Sube un archivo de audio/vídeo o introduce un enlace de YouTube
                     </p>
                 </aside>
-                <div className="w-2/4 flex items-center gap-2 mb-6">
+                <div className= "w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
                             style={{ width: `${(usedMinutes! / 10) * 100}%` }}
                         >
                             <div
-                                className="shimmer absolute top-0 left-0 h-full w-1/3"
+                                className="shimmer absolute inset-y-0 h-full w-1/3"
                                 style={{
                                     background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
                                     left: 0
@@ -113,8 +116,8 @@ export default function Form() {
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10 min usados
                     </span>
                 </div>
-                <aside className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
-
+                <aside className="w-screen relative mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
+                   
                     <form className="w-full flex flex-col md:flex-row p-2 gap-6">
 
                         {!inputValue &&
@@ -157,8 +160,9 @@ export default function Form() {
                         </div>
 
                     </form>
+                    
                 </aside>
-                <SubtitlesView
+                 <SubtitlesView
                     mutation={mutation}
                     inputValue={inputValue}
                     fileInputValue={fileInputValue}
