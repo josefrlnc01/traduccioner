@@ -63,22 +63,31 @@ export class FileService {
 
 
     static getTranscriptionFromAudio = async (finalFilePath: string, user: IUser, ip: string) => {
+        try {
             //Obtención de la ip del dispositivo
             const audioDuration = await getAudioDuration(finalFilePath)
             await Quota.findOneAndUpdate(
-                {user: user._id, ip},
+                { user: user._id, ip },
                 {
-                    $inc: {usedMinutes: audioDuration.toFixed(2)}
+                    $inc: { usedMinutes: audioDuration.toFixed(2) }
                 },
-                {upsert: true, new: true}
+                { upsert: true, new: true }
             )
-
-            const fileText = await transcribeWhisperAudio(finalFilePath)
             const quota = await Quota.findOne({
                 user: user._id, ip
             })
+
+            if (quota?.usedMinutes! > 6) {
+                throw new AppError('No dispones de minutos de transcripción gratuita suficientes')
+            }
+            const fileText = await transcribeWhisperAudio(finalFilePath)
+
             await fs.unlink(finalFilePath)
-            return {fileText, usedMinutes: quota?.usedMinutes}
+            return { fileText, usedMinutes: quota?.usedMinutes }
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al transcribir el audio')
+        }
     }
 }
 
