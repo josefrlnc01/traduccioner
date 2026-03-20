@@ -34,12 +34,7 @@ export default function Form() {
             setUsedMinues(data?.usedMinutes!)
         }
     })
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-        setInputValue(e.target.value)
-        setChanged(true)
-    }
-
-
+    
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
@@ -53,13 +48,19 @@ export default function Form() {
         mutation.mutate({ link: inputValue, lang: langForTranslate, formData: null })
     }
 
-    const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        setInputValue(e.target.value)
         setChanged(true)
+    }
+
+    const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        
         const file = e.currentTarget.files?.[0]
         if (!file) return
         const formData = new FormData()
         formData.append('audio', file)
         setFormData(formData)
+        setChanged(true)
         console.log(formData)
         setFileInputValue(formData)
     }
@@ -72,6 +73,7 @@ export default function Form() {
         const formData = new FormData()
         formData.append('audio', data)
         setFormData(formData)
+        setChanged(true)
         setFileInputValue(formData)
     }
 
@@ -79,7 +81,8 @@ export default function Form() {
         event.preventDefault()
     }
 
-    console.log(mutation.data)
+    console.log('fileinput', fileInputValue)
+    console.log('input', inputValue)
 
     return (
         <>
@@ -121,7 +124,7 @@ export default function Form() {
                             <div id="targ"
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className={`flex p-12 flex-col grow-2 gap-4 md:gap-1 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
+                                className={`flex p-12 flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
                                 <img src={InputIcon} />
                                 <label className="text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
@@ -132,7 +135,10 @@ export default function Form() {
 
                                 <input type="file"
                                     onChange={handleInputFile}
-                                    onClick={(e) => e.currentTarget.value = ''}
+                                    onClick={(e) => {
+                                        e.currentTarget.value = ''
+                                        setFileInputValue(null)
+                                    }}
                                     name="audio"
                                     id="fileUpload"
                                     accept="video/*,audio/*"
@@ -146,13 +152,18 @@ export default function Form() {
                                 <div className="w-full flex flex-col justify-around gap-2">
                                     <label className=" text-gray-400 pl-1">Introduce un enlace de youtube</label>
                                     <input onChange={handleInput}
+                                        onClick={(e) => {
+                                            e.currentTarget.value = ''
+                                            setInputValue('')
+                                        }}
                                         placeholder="Pega tu enlace aquí"
                                         type='text'
-                                        className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl  bg-slate-800 hover:bg-slate-800/80 transition-colors' />
+                                        className='min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-gray-300 rounded-xl focus:outline-none  bg-slate-800 hover:bg-slate-800/80 transition-colors duration-100 ease-in' />
 
                                 </div>}
                         </div>
-                        
+                        {changed && 
+                        <span className="text-sm text-shadow-white font-semibold text-center">Archivo preparado</span>}
                         <button
                             type="submit"
                             onClick={handleForm}
