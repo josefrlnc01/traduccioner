@@ -2,9 +2,11 @@ import z from "zod";
 import { isSecureLink } from '../../shared/utils/link.js'
 
 export const youtubeVideoTranscriptionSchema = z.object({
-    title: z.string(),
-    comment: z.string(),
-    youtubeVideoText: z.string()
+    segments: z.array(z.object({
+        start: z.number(),
+        end: z.number(),
+        text: z.string()
+    }))
 })
 
 export const youtubeVideoTranslationSchema = z.object({

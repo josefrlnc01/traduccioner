@@ -10,29 +10,31 @@ import { getVideoMinutes } from "../../shared/utils/video.js";
 import { getAudioDuration } from "../../shared/utils/audio.js";
 import { IUser } from "../user/user.model.js";
 import Quota from "../quota/quota.schema.js";
-
+type YoutubeInfo = {
+  title: string
+}
 export class YoutubeVideoService {
-    static insertTransciption = async ({ data, user }: InsertTranscriptionProps) => {
+    static insertTranscription = async ({ youtubeVideoText, user, title }: InsertTranscriptionProps) => {
         try {
             //Comprobación de documento existente
             const videoExists = await VideoStored.findOne({
                 user: user._id,
-                youtubeVideoText: data.youtubeVideoText
+                title: title
             })
 
             if (videoExists) {
                 throw new AppError('Este video ya está guardado', 409)
             }
-
+            console.log(youtubeVideoText)
             //Guardado
-            const video = new VideoStored()
-            video.title = data.title
-            video.comment = data.comment
-            video.youtubeVideoText = data.youtubeVideoText
-            video.user = user._id
+            await VideoStored.create({
+                title: title,
+                segments: youtubeVideoText,
+                user: user._id
+            })
 
-            await video.save()
         } catch (error: any) {
+            console.error(error)
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al guardar el vídeo')
         }
@@ -56,7 +58,6 @@ export class YoutubeVideoService {
             const translation = new YoutubeVideo()
 
             translation.title = data.title
-            translation.comment = data.comment
             translation.translatedYoutubeVideo = data.translatedYoutubeVideo
             translation.user = user._id
             await translation.save()
@@ -74,6 +75,7 @@ export class YoutubeVideoService {
             const response = await fetch(url)
             if (response) {
                 const data = await response.json()
+
                 return (data)
             }
         } catch {
@@ -82,7 +84,7 @@ export class YoutubeVideoService {
     }
 
 
-    static downloadAudio = async (link: string | null): Promise<string | null> => {
+    static downloadAudio = async (link: string | null): Promise<YoutubeInfo> => {
         const ffmpegPath = process.env.NODE_ENV === 'production' ? process.env.FFMPEG_PATH : process.env.FFMPEG_PATH_LOCAL
         try {
             //Creación de dirección de archivo de audio de youtube descargado
@@ -99,18 +101,23 @@ export class YoutubeVideoService {
 
             //Descarga del audio en la ruta especificada
             //Uso de ytDlp + ffmpeg
-            await ytDlp(url, {
+
+            const info: YoutubeInfo = await ytDlp(url, {
+                dumpSingleJson: true,  // devuelve toda la info del vídeo como JSON
+                skipDownload: true       // sin descargar nada
+            })
+            const downloaded = await ytDlp(url, {
                 output: base + '.%(ext)s', // Permite que yt-dlp use la extensión correcta
                 format: 'bestaudio',
                 audioFormat: 'mp3',
                 extractAudio: true,
                 ffmpegLocation: ffmpegPath
             })
-
-            return filepath
+            console.log(info.title)
+            return { title: info.title }
         } catch (err) {
             console.error('Error downloading audio:', err)
-            return null
+            throw new Error('Hubo un error al descargar el video')
         }
     }
 
@@ -152,14 +159,16 @@ export class YoutubeVideoService {
             user: user._id, ip
         })
 
-        if (quota?.usedMinutes! > 6) {
-            throw new AppError('No dispones de minutos de transcripción gratuita suficientes')
+        if (quota?.usedMinutes! > 1200) {
+            throw new AppError('No dispones de minutos de transcripción gratuita suficientes', 429)
         }
-        await this.downloadAudio(videoLink)
+        const {title} = await this.downloadAudio(videoLink)
+
+        console.log('titulo', title)
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
 
-        return { youtubeVideoText, usedMinutes: quota?.usedMinutes }
+        return { youtubeVideoText, usedMinutes: quota?.usedMinutes, title }
     }
 
 

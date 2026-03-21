@@ -4,8 +4,9 @@ import { TranscriptionFormatt } from "../transcription/whisper.service.js"
 import z from 'zod'
 
 export type InsertTranscriptionProps = {
-    data: StoredTranscriptionSchema
-    user: IUser
+    youtubeVideoText: TranscriptionFormatt[],
+    user: IUser,
+    title: string
 }
 
 export type InsertTranslationProps = {

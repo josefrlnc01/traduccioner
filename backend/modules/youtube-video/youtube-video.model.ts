@@ -1,15 +1,13 @@
-import mongoose, {Document, Schema, Types} from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 
 export interface IYoutubeVideo extends Document {
     title: string,
-    segments: [
-        {
-            start: number,
-            end: number,
-            text: string
-        }
-    ],
+    segments: {
+        start: number,
+        end: number,
+        text: string
+    }[],
     translatedYoutubeVideo: string | null
     user: Types.ObjectId
 }
@@ -22,9 +20,9 @@ const youtubeVideoSchema: Schema = new Schema({
     },
     segments: [
         {
-            start: {type: Number, required: true},
-            end: {type: Number, required: true},
-            text: {type: String, required: true}
+            start: { type: Number, required: true },
+            end: { type: Number, required: true },
+            text: { type: String, required: true }
         }
     ],
     translatedYoutubeVideo: {
@@ -34,7 +32,7 @@ const youtubeVideoSchema: Schema = new Schema({
     user: {
         type: Types.ObjectId,
         ref: 'User',
-        required: true 
+        required: true
     }
 })
 

@@ -26,13 +26,16 @@ export class YoutubeVideoController {
             const error = new Error('No se pudo procesar el id correctamente')
             return res.status(400).json({ error: error.message })
         }
-
+        
+        
+        
         //Comprobación de longitud
         const isValid = await YoutubeVideoService.isValidLength(id)
         if (!isValid) {
             const message = "El vídeo es muy largo"
             return res.status(403).json(message)
-        }
+        }   
+
 
         try {
             //Obtención de transcripción del vídeo ya convertido en audio
@@ -41,8 +44,8 @@ export class YoutubeVideoController {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })
             }
-            const { youtubeVideoText, usedMinutes } = data
-
+            const { youtubeVideoText, usedMinutes, title } = data
+            await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title})
             /*Si el usuario no elige un lenguaje para traducir solo devolvemos la transcripción
             if (lang === 'not') {
                 return res.json({ youtubeVideoText})
@@ -62,7 +65,7 @@ export class YoutubeVideoController {
         try {
             const user = req.user
             const data = youtubeVideoTranscriptionSchema.parse(req.body)
-            await YoutubeVideoService.insertTransciption({ data, user })
+            
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             if (error instanceof AppError) {

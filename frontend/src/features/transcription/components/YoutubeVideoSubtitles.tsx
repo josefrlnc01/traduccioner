@@ -28,6 +28,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     const { translatedYoutubeVideo } = mutation.data
     const youtubeVideoText = mutation.data.youtubeVideoText
+    console.log('video', youtubeVideoText)
     let formatedTranslatedYoutubeVideo
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
@@ -35,6 +36,8 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const formattedYoutubeVideoText = youtubeVideoText
         .map(s => `[${s.start}:${s.end}] ${s.text}`)
         .join('\n')
+
+    
 
     if (formatedTranslatedYoutubeVideo) {
         formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
