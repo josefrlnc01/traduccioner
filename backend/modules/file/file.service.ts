@@ -11,23 +11,22 @@ import Quota from '../quota/quota.schema.js'
 
 export class FileService {
 
-    static insertTranscription = async ({ data, user }: InsertFileTranscriptionProps) => {
+    static insertTranscription = async ({ fileText, user, title }: InsertFileTranscriptionProps) => {
         try {
             const fileExists = await FileModel.findOne({
                 user: user,
-                fileText: data.fileText
+                segments: fileText
             })
 
             if (fileExists) {
                 throw new Error('Este documento ya existe')
             }
 
-            const transcription = new FileModel()
-            transcription.title = data.title
-            transcription.fileText = data.fileText
-            transcription.comment = data.comment
-            transcription.user = user._id
-            await transcription.save()
+            await FileModel.create({
+                title: title,
+                segments: fileText
+            })
+            
         } catch (error: any) {
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al guardar la transcripción')
@@ -49,7 +48,7 @@ export class FileService {
             const translation = new FileModel()
 
             translation.title = data.title
-            translation.comment = data.comment
+            
             translation.translatedFile = data.translatedFile
 
             translation.user = user._id

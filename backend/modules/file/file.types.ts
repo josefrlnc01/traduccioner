@@ -1,9 +1,11 @@
+import { TranscriptionFormatt } from "../transcription/whisper.service.js"
 import { IUser } from "../user/user.model.js"
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js"
 import z from 'zod'
 export type InsertFileTranscriptionProps = {
-    data: StoredFileTranscriptionSchema,
-    user: IUser
+    fileText: TranscriptionFormatt[],
+    user: IUser,
+    title: string
 }
 
 export type InsertFileTranslationProps = {

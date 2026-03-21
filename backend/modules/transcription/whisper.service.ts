@@ -9,7 +9,7 @@ export type TranscriptionFormatt = {
     text:string
 }
 
-export async function transcribeWhisperAudio(filePath: string): Promise<TranscriptionFormatt[] | null> {
+export async function transcribeWhisperAudio(filePath: string): Promise<TranscriptionFormatt[]> {
     try {
         const openAi = new OpenAi()
 
@@ -60,6 +60,6 @@ export async function transcribeWhisperAudio(filePath: string): Promise<Transcri
 
     } catch (error) {
         console.error(error)
-        return null
+        throw new Error('Hubo un erro al transcribir el audio')
     }
 }
