@@ -14,7 +14,7 @@ export default function FeaturesSection() {
                     </div>
                     <div className="w-full">
                         <h4 className='text-xl font-bold mb-3'>Transcripción automática con IA</h4>
-                        <p className='text-gray-400 text-sm leading-relaxed'>Convierte cualquier vídeo de YouTube o archivo de audio/vídeo de tu dispositivo en texto en segundos usando Whisper de OpenAI</p>
+                        <p className='text-gray-400 text-sm leading-relaxed'>Convierte cualquier vídeo de YouTube o archivo de audio/vídeo de tu dispositivo en texto en segundos usando Whisper de OpenAI.</p>
                     </div>
                 </div>
                 <div className='p-8 rounded-custom flex flex-col justify-start items-center bg-[#111827] border border-solid border-[#1f2937] rounded-md'>
@@ -23,7 +23,7 @@ export default function FeaturesSection() {
                     </div>
                     <div className="w-full">
                         <h4 className='text-xl font-bold mb-3'>Traducción multiidioma instantánea</h4>
-                        <p className='text-gray-400 text-sm leading-relaxed'>Traduce el contenido transcrito a español, inglés, francés e italiano en el mismo flujo, sin pasos extra</p>
+                        <p className='text-gray-400 text-sm leading-relaxed'>Traduce el contenido transcrito a español, inglés, francés e italiano en el mismo flujo, sin pasos extra.</p>
                     </div>
                 </div>
 
@@ -34,8 +34,8 @@ export default function FeaturesSection() {
                         </svg>
                     </div>
                     <div className="w-full">
-                        <h4 className='text-xl font-bold mb-3'>Exporta tu contenido en PDF</h4>
-                        <p className='text-gray-400 text-sm leading-relaxed'>Descarga cualquier transcripción o traducción como documento PDF con un solo clic</p>
+                        <h4 className='text-xl font-bold mb-3'>Exporta/Descarga tu contenido</h4>
+                        <p className='text-gray-400 text-sm leading-relaxed'>Descarga y comparte tus documentos en segundos.</p>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@ export default function FeaturesSection() {
                     </div>
                     <div className="w-full">
                         <h4 className='text-xl font-bold mb-3'>Guarda y gestiona tu historial</h4>
-                        <p className='text-gray-400 text-sm leading-relaxed'>Almacena tus transcripciones y traducciones con título y comentarios para acceder a ellas cuando quieras</p>
+                        <p className='text-gray-400 text-sm leading-relaxed'>Almacena tus transcripciones y traducciones con título y comentarios para acceder a ellas cuando quieras.</p>
                     </div>
                 </div>
             </aside>

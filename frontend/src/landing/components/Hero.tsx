@@ -12,7 +12,7 @@ export default function Hero() {
       <aside className="w-full flex flex-col justify-center gap-2 items-center mb-4">
         <div className="flex justify-center items-center bg-[#0d59f2]/10 border border-solid border-[#0d59f2]/20 gap-2 px-3 py-1 rounded-full text-xs font-bold text-blue-700/90">
           <span className="flex h-2 w-2 rounded-full bg-[#0d59f2]"></span>
-          Impulsado por Whisper v3
+          Impulsado por Whisper v1
         </div>
         <h2 className='text-4xl text-center lg:text-7xl text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
         <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 mb-10 leading-relaxed'>Sube tu archivo y obtén resultados en cuestión de minutos. Soporte de múltiples idiomas, traducción automática.</p>

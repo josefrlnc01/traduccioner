@@ -31,7 +31,7 @@ export default function HowItWorks() {
                         <span className="text-3xl font-black">3</span>
                     </div>
                     <h4 className="text-xl font-bold mb-2">Edita y Exporta</h4>
-                    <p className="text-gray-400 text-sm px-4">Revisa el texto, traduce si es necesario y guárdalo en línea o descárgalo en formato PDF.</p>
+                    <p className="text-gray-400 text-sm px-4">Revisa el texto, traduce si es necesario y guárdalo en línea o descárgalo en diferentes formatos (PDF, SRT, VTT, TXT...).</p>
                 </div>
 
             </aside>
