@@ -3,7 +3,13 @@ import mongoose, {Document, Types, Schema} from "mongoose";
 interface IFileStored extends Document {
     title: string,
     comment: string | null
-    fileText: string | null,
+    segments: [
+        {
+            start: number,
+            end: number,
+            text: string
+        }
+    ]
     translatedFile: string | null
     user: Types.ObjectId
 }
@@ -18,10 +24,13 @@ const fileSchema: Schema = new Schema({
         type: String,
         required: false
     },
-    fileText: {
-        type: String,
-        required: false
-    },
+    segments: [
+        {
+            start: {type: Number, required: true},
+            end: {type: Number, required: true},
+            text: {type: String, required: true}
+        }
+    ],
     translatedFile: {
         type: String,
         required: false

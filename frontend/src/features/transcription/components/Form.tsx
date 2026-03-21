@@ -14,7 +14,7 @@ export type MutationProps = {
 }
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
-    const [usedMinutes, setUsedMinues] = useState<number | null>(minutesStore.get())
+    const [usedMinutes, setUsedMinues] = useState<number | null>(minutesStore.get() ?? 0)
     const [language, setLanguage] = useState<string | null>(null)
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const langForTranslate = getAbbreviateLanguage(language)
