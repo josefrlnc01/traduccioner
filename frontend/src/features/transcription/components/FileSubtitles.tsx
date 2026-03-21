@@ -51,14 +51,14 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
         generatePdf.mutate(text)
     }
 
-    const handleGenereateTranscriptionSrt = (segments: {start: number, end: number, text: string}[]) => {
+    const handleGenereateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
         generateSrt.mutate(segments)
     }
     let formattedTranslatedFile
     console.log('filetext', fileText)
     console.log('translated file', translatedFile)
 
-    
+
 
     if (translatedFile) {
         formattedTranslatedFile = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
@@ -67,13 +67,16 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
     const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
 
-    function formatTimestamps (timestamp: string) {
-        return `00:00:${timestamp}`
+    function formatTime(seconds: number) {
+        const hrs = Math.floor(seconds / 3600)
+        const mins = Math.floor((seconds % 3600) / 60)
+        const secs = Math.floor(seconds % 60)
+        return `[${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}]`
     }
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
-            
+
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                     <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
@@ -84,7 +87,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     <div className='grow bg-slate-800/40 p-8'>
                         {fileText.map(s => (
                             <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{formatTimestamps(s.end.toFixed())}]</span> {s.text}
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.end.toFixed()))}</span> {s.text}
                             </p>
                         ))}
                     </div>

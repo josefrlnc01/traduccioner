@@ -103,7 +103,7 @@ export default function Form() {
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
-                            style={{ width: `${(usedMinutes! / 10) * 100}%` }}
+                            style={{ width: `${(usedMinutes! / 6) * 100}%` }}
                         >
                             <div
                                 className="shimmer absolute inset-y-0 h-full w-1/3"
@@ -115,7 +115,7 @@ export default function Form() {
                         </div>
                     </div>
                     <span className="text-slate-400 text-sm shrink-0">
-                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10 min usados
+                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 6 min usados
                     </span>
                 </div>
                 <aside className="w-screen relative mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
