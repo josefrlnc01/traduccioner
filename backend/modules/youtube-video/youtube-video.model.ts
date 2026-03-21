@@ -3,7 +3,6 @@ import mongoose, {Document, Schema, Types} from "mongoose";
 
 export interface IYoutubeVideo extends Document {
     title: string,
-    comment: string | null
     segments: [
         {
             start: number,
@@ -20,10 +19,6 @@ const youtubeVideoSchema: Schema = new Schema({
     title: {
         type: String,
         required: true
-    },
-    comment : {
-        type: String,
-        required:  false
     },
     segments: [
         {

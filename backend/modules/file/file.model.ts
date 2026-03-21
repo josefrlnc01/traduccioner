@@ -2,7 +2,6 @@ import mongoose, {Document, Types, Schema} from "mongoose";
 
 interface IFileStored extends Document {
     title: string,
-    comment: string | null
     segments: [
         {
             start: number,
@@ -19,10 +18,6 @@ const fileSchema: Schema = new Schema({
     title: {
         type: String,
         required: true
-    },
-    comment: {
-        type: String,
-        required: false
     },
     segments: [
         {
