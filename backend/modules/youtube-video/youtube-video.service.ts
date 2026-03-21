@@ -159,7 +159,7 @@ export class YoutubeVideoService {
             user: user._id, ip
         })
 
-        if (quota?.usedMinutes! > 1200) {
+        if (quota?.usedMinutes! > 6) {
             throw new AppError('No dispones de minutos de transcripción gratuita suficientes', 429)
         }
         const {title} = await this.downloadAudio(videoLink)
