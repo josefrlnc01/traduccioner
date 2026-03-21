@@ -2,7 +2,6 @@ import { getUser } from "@/features/auth/api/authApi";
 import { useQuery } from "@tanstack/react-query";
 import { useRefreshToken } from "@/features/token/hooks/useRefreshToken";
 import { tokenStore } from "@/lib/token.store";
-import { minutesStore } from "@/shared/stores/minutes.store";
 
 export const useAuth = () => {
     const {
