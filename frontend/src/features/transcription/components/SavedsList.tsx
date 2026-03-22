@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getSaveds } from '../api/savedsApi'
 import { toast } from 'react-toastify'
 import { file } from 'zod'
+import { Link } from 'react-router'
 
 export type Saveds = {
    _id: string,
@@ -37,12 +38,14 @@ export default function SavedsList() {
 
   
   return (
-    <section className='w-4/5 min-w-4/5'>
-        <ul>
+    <section className='w-1/2 min-w-1/2 m-auto flex flex-col justify-center items-center mb-10'>
+        <div className='w-full flex flex-col gap-4'>
           {files.map(file => (
-            <li key={file._id}>${file.title}</li>
+            <Link to={`/saveds/${file._id}`} className='bg-slate-800/70 p-6 rounded-md hover:bg-slate-700/90 hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
+              {file.title}
+            </Link>
           ))}
-        </ul>
+        </div>
     </section>
   )
 }
