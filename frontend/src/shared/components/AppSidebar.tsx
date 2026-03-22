@@ -6,14 +6,7 @@ import { Home, Languages, LogOut } from "lucide-react"
 import { useNavigate } from "react-router"
 
 export function AppSidebar() {
-  const queryClient = useQueryClient()
-  const navigate = useNavigate()
-
-  const handleLogOut = async () => {
-    await logOut()
-    queryClient.invalidateQueries({ queryKey: ['user'] })
-    navigate('/auth/login')
-  }
+  
 
 
   return (
@@ -59,10 +52,7 @@ export function AppSidebar() {
                 asChild
                 className="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-400 text-sm font-medium transition-all duration-200 hover:bg-red-500/10 hover:text-red-400"
               >
-                <a onClick={handleLogOut} className="cursor-pointer">
-                  <LogOut className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
-                  <span>Cerrar sesión</span>
-                </a>
+                
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
