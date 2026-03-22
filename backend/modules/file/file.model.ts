@@ -1,6 +1,6 @@
 import mongoose, {Document, Types, Schema} from "mongoose";
 
-interface IFileStored extends Document {
+export interface IFileStored extends Document {
     title: string,
     segments: [
         {

@@ -1,5 +1,5 @@
 import { AppError } from "../errors/AppError.js"
-import FileModel from "../file/file.model.js"
+import FileModel, { IFileStored } from "../file/file.model.js"
 import { IUser } from "../user/user.model.js"
 import YoutubeVideo from "../youtube-video/youtube-video.model.js"
 
@@ -11,14 +11,14 @@ export class SavedsService {
                 throw new AppError('Error al obtener el usuario', 404)
             }
 
-            const userFiles = await FileModel.find({
+            const userFiles:IFileStored[] = await FileModel.find({
                 user: user
-            })
+            }).select('title segments user')
 
             if (!userFiles) {
                 throw new AppError('No hay documentos guardados', 404)
             }
-
+    
             return userFiles
         } catch (error) {
             if (error instanceof AppError) throw error
@@ -34,7 +34,8 @@ export class SavedsService {
 
             const userYoutubeFiles = await YoutubeVideo.find({
                 user: user
-            })
+            }).select('title segments user')
+
 
             if (!userYoutubeFiles) {
                 throw new AppError('No hay documentos guardados', 404)

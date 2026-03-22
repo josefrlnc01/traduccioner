@@ -36,7 +36,7 @@ export class YoutubeVideoService {
         } catch (error: any) {
             console.error(error)
             if (error instanceof AppError) throw error
-            throw new Error('Hubo un error al guardar el vídeo')
+            return null
         }
     }
 
