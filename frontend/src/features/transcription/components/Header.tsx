@@ -17,7 +17,7 @@ export default function Header() {
   const handleLogOut = async () => {
     await logOut()
     queryClient.invalidateQueries({ queryKey: ['user'] })
-    navigate('/auth/login')
+    navigate('/landing-page')
   }
 
 
