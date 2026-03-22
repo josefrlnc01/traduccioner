@@ -24,7 +24,7 @@ export class YoutubeVideoService {
                 title: title
             })
             if (videoExists) {
-                throw new AppError('Este video ya está guardado', 409)
+                return null
             }
 
             const id = uuidv4()

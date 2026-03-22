@@ -15,14 +15,14 @@ export class FileService {
         try {
             const fileExists = await FileModel.findOne({
                 user: user,
-                segments: fileText
+                title: title
             })
 
             const id = uuidv4()
 
 
             if (fileExists) {
-                throw new Error('Este documento ya existe')
+                return null
             }
 
             await FileModel.create({
@@ -35,7 +35,7 @@ export class FileService {
             
         } catch (error: any) {
             if (error instanceof AppError) throw error
-            throw new Error('Hubo un error al guardar la transcripción')
+            return null
         }
     }
 
