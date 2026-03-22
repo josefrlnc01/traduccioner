@@ -22,6 +22,7 @@
     "music-metadata": "^11.12.3",
     "nodemailer": "^8.0.1",
     "subtitle": "^4.2.2",
+    "uuid": "^13.0.0",
     "youtube-captions-scraper": "^2.0.3",
     "yt-dlp-exec": "^1.0.2",
     "yt-dlp-wrap": "^2.3.12",

@@ -3,6 +3,7 @@ import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface IYoutubeVideo extends Document {
     title: string,
+    fileId: string,
     segments: {
         start: number,
         end: number,
@@ -16,6 +17,10 @@ export interface IYoutubeVideo extends Document {
 //Esquema videos de youtube introducidos por el usuario
 const youtubeVideoSchema: Schema = new Schema({
     title: {
+        type: String,
+        required: true
+    },
+    fileId: {
         type: String,
         required: true
     },

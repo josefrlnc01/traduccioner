@@ -10,6 +10,8 @@ import { getVideoMinutes } from "../../shared/utils/video.js";
 import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
 import { IUser } from "../user/user.model.js";
 import Quota from "../quota/quota.schema.js";
+import {v4 as uuidv4} from 'uuid'
+
 type YoutubeInfo = {
   title: string
 }
@@ -21,14 +23,16 @@ export class YoutubeVideoService {
                 user: user._id,
                 title: title
             })
-
             if (videoExists) {
                 throw new AppError('Este video ya está guardado', 409)
             }
+
+            const id = uuidv4()
             console.log(youtubeVideoText)
             //Guardado
             await VideoStored.create({
                 title: title,
+                fileId: id,
                 segments: youtubeVideoText,
                 duration: duration,
                 user: user._id

@@ -18,7 +18,7 @@ export class SavedsService {
             if (!userFiles) {
                 throw new AppError('No hay documentos guardados', 404)
             }
-    
+
             return userFiles
         } catch (error) {
             if (error instanceof AppError) throw error
@@ -45,6 +45,22 @@ export class SavedsService {
         } catch (error: any) {
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al obtener documentos de vídeos de youtube')
+        }
+    }
+
+
+    static getFile = async (id: string ) => {
+        try {
+            const file = await FileModel.findById(id)
+            if (!file) {
+                const youtubeFile = await YoutubeVideo.findById(id)
+                return youtubeFile
+            }
+
+            return file
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al obtener el documento')
         }
     }
 }

@@ -7,7 +7,7 @@ import { IUser } from '../user/user.model.js'
 import { getAudioDuration } from '../../shared/utils/audio.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
 import Quota from '../quota/quota.schema.js'
-
+import {v4 as uuidv4} from 'uuid'
 
 export class FileService {
 
@@ -18,12 +18,16 @@ export class FileService {
                 segments: fileText
             })
 
+            const id = uuidv4()
+
+
             if (fileExists) {
                 throw new Error('Este documento ya existe')
             }
 
             await FileModel.create({
                 title: title,
+                fileId: id,
                 segments: fileText,
                 duration: duration,
                 user: user._id

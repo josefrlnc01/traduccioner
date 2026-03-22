@@ -2,6 +2,7 @@ import mongoose, {Document, Types, Schema} from "mongoose";
 
 export interface IFileStored extends Document {
     title: string,
+    fileId : string,
     segments: [
         {
             start: number,
@@ -19,6 +20,10 @@ const fileSchema: Schema = new Schema({
     title: {
         type: String,
         required: true
+    },
+    fileId: {
+        type: String,
+        required: true,
     },
     segments: [
         {

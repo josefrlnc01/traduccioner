@@ -5,3 +5,4 @@ import { SavedsController } from "./saveds.controller.js";
 export const savedsRoute = Router()
 
 savedsRoute.get('/', authenticate, SavedsController.getSaveds)
+savedsRoute.get('/:id', authenticate, SavedsController.getSavedById)
