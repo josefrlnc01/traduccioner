@@ -44,8 +44,8 @@ export class YoutubeVideoController {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })
             }
-            const { youtubeVideoText, usedMinutes, title } = data
-            await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title})
+            const { youtubeVideoText, usedMinutes, title, audioDuration } = data
+            await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
             /*Si el usuario no elige un lenguaje para traducir solo devolvemos la transcripción
             if (lang === 'not') {
                 return res.json({ youtubeVideoText})

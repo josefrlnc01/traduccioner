@@ -6,7 +6,8 @@ import z from 'zod'
 export type InsertTranscriptionProps = {
     youtubeVideoText: TranscriptionFormatt[],
     user: IUser,
-    title: string
+    title: string,
+    duration: string | null
 }
 
 export type InsertTranslationProps = {

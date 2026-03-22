@@ -5,7 +5,8 @@ import z from 'zod'
 export type InsertFileTranscriptionProps = {
     fileText: TranscriptionFormatt[],
     user: IUser,
-    title: string
+    title: string,
+    duration: string
 }
 
 export type InsertFileTranslationProps = {

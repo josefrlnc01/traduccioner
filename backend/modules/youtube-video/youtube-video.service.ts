@@ -7,14 +7,14 @@ import fs from 'node:fs/promises'
 import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-video.types.js";
 import ytDlp from 'yt-dlp-exec'
 import { getVideoMinutes } from "../../shared/utils/video.js";
-import { getAudioDuration } from "../../shared/utils/audio.js";
+import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
 import { IUser } from "../user/user.model.js";
 import Quota from "../quota/quota.schema.js";
 type YoutubeInfo = {
   title: string
 }
 export class YoutubeVideoService {
-    static insertTranscription = async ({ youtubeVideoText, user, title }: InsertTranscriptionProps) => {
+    static insertTranscription = async ({ youtubeVideoText, user, title, duration }: InsertTranscriptionProps) => {
         try {
             //Comprobación de documento existente
             const videoExists = await VideoStored.findOne({
@@ -30,6 +30,7 @@ export class YoutubeVideoService {
             await VideoStored.create({
                 title: title,
                 segments: youtubeVideoText,
+                duration: duration,
                 user: user._id
             })
 
@@ -148,6 +149,7 @@ export class YoutubeVideoService {
 
 
         const minutes = await getAudioDuration(filepath)
+        const formattedAudioDuration = formatMinutes(minutes)
         await Quota.findOneAndUpdate(
             { user: user._id, ip },
             {
@@ -168,7 +170,7 @@ export class YoutubeVideoService {
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
 
-        return { youtubeVideoText, usedMinutes: quota?.usedMinutes, title }
+        return { youtubeVideoText, usedMinutes: quota?.usedMinutes, title, audioDuration: formattedAudioDuration }
     }
 
 

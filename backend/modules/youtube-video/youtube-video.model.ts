@@ -8,6 +8,7 @@ export interface IYoutubeVideo extends Document {
         end: number,
         text: string
     }[],
+    duration: string | null,
     translatedYoutubeVideo: string | null
     user: Types.ObjectId
 }
@@ -25,6 +26,10 @@ const youtubeVideoSchema: Schema = new Schema({
             text: { type: String, required: true }
         }
     ],
+    duration: {
+        type: String,
+        required: false
+    },
     translatedYoutubeVideo: {
         type: String,
         required: false

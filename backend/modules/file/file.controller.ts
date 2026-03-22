@@ -3,6 +3,7 @@ import { convertVideoToAudio } from "../../shared/utils/video.js";
 import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
 import { AppError } from "../errors/AppError.js";
+import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
 
 
 export class FileController {
@@ -19,10 +20,12 @@ export class FileController {
             }
             
             const finalFilePath = await convertVideoToAudio(file)
+            const audioDuration = await getAudioDuration(finalFilePath)
+            const formattedAudioDuration = formatMinutes(audioDuration)
             const {fileText, usedMinutes}= await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
             if (!fileText && !usedMinutes) return res.status(400).json({ error: 'Error al obtener transcripción' })
 
-            await FileService.insertTranscription({ fileText, user, title: file.originalname })
+            await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: formattedAudioDuration })
             if (lang === 'not') {
                 console.log('usedMinutes', usedMinutes)
                 return res.status(200).json({ fileText, usedMinutes })

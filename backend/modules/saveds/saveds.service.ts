@@ -11,9 +11,9 @@ export class SavedsService {
                 throw new AppError('Error al obtener el usuario', 404)
             }
 
-            const userFiles:IFileStored[] = await FileModel.find({
+            const userFiles = await FileModel.find({
                 user: user
-            }).select('title segments user')
+            })
 
             if (!userFiles) {
                 throw new AppError('No hay documentos guardados', 404)
@@ -34,7 +34,7 @@ export class SavedsService {
 
             const userYoutubeFiles = await YoutubeVideo.find({
                 user: user
-            }).select('title segments user')
+            })
 
 
             if (!userYoutubeFiles) {

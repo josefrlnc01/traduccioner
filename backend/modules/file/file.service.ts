@@ -11,7 +11,7 @@ import Quota from '../quota/quota.schema.js'
 
 export class FileService {
 
-    static insertTranscription = async ({ fileText, user, title }: InsertFileTranscriptionProps) => {
+    static insertTranscription = async ({ fileText, user, title, duration }: InsertFileTranscriptionProps) => {
         try {
             const fileExists = await FileModel.findOne({
                 user: user,
@@ -24,7 +24,9 @@ export class FileService {
 
             await FileModel.create({
                 title: title,
-                segments: fileText
+                segments: fileText,
+                duration: duration,
+                user: user._id
             })
             
         } catch (error: any) {
