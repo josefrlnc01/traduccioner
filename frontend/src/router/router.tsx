@@ -8,6 +8,7 @@ import RegisterView from "../features/auth/pages/RegisterView"
 import ResendTokenView from "../features/auth/pages/ResendTokenView"
 import LandingLayout from "@/landing/layout/LandingLayout"
 import LandingPage from "@/landing/pages/LandingPage"
+import SavedsView from "@/features/transcription/pages/SavedsView"
 
 
 export default function Router() {
@@ -16,6 +17,7 @@ export default function Router() {
         <Routes>
             <Route element={<AppLayout/>}>
                 <Route path="/" element={<MainView/>} index/>
+                <Route path="/saveds/:id" element={<SavedsView/>}/>
             </Route>
             <Route element={<LandingLayout/>}>
               <Route path="/landing-page" element={<LandingPage/>} index/>
