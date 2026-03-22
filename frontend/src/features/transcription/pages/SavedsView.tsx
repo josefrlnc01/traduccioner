@@ -42,7 +42,7 @@ export default function SavedsView() {
         generateSrt.mutate(segments)
     }
 
-    
+
 
     if (error) {
         return (
@@ -53,8 +53,7 @@ export default function SavedsView() {
     }
 
     if (data) {
-        console.log(data[0])
-        const formattedFileText = data[0].segments.map((s: {start:number, end:number, text:string}) => {
+        const formattedFileText = data[0].segments.map((s: { start: number, end: number, text: string }) => {
             return `[${s.start}:${s.end}] ${s.text}`
         }).join('\n')
         return (
@@ -67,17 +66,16 @@ export default function SavedsView() {
                                 {data[0].title}<span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                             </h2>
                             <div className='flex justify-center items-center gap-4'>
+
+                                <DropdownMenuBasic id={data[0].fileId} />
                                 <Link className='bg-red-500 pt-2 pb-2 pl-4 pr-4 rounded-xl hover:bg-red-500/80 transition-colors ease duration-200 ' to={`/`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-
-
-                            </Link>
-                            <DropdownMenuBasic id={data[0].fileId}/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </Link>
                             </div>
-                            
+
                         </header>
                         <div className='grow bg-slate-800/40 p-8'>
                             {data[0].segments.map((s: { start: number, end: number, text: string }) => (
@@ -87,14 +85,14 @@ export default function SavedsView() {
                             ))}
                         </div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] rounded-b-2xl p-3'>
-                             <button
-                            onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
-                            className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>PDF</button>
-                        <button
-                            onClick={() => handleGenerateTranscriptionSrt(data[0].segments)}
-                            className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>SRT</button>
+                            <button
+                                onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
+                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                type='button'>PDF</button>
+                            <button
+                                onClick={() => handleGenerateTranscriptionSrt(data[0].segments)}
+                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                type='button'>SRT</button>
                         </div>
 
                     </aside>

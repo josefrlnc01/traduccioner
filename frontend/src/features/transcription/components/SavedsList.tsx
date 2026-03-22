@@ -37,7 +37,7 @@ export default function SavedsList() {
 
   useEffect(() => {
     getSavedsFN.mutate()
-  }, [])
+  }, [files])
 
   console.log(files)
 
