@@ -9,7 +9,7 @@ export default function Hero() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0d59f2]/30 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 blur-[120px] rounded-full"></div>
       </div>
-      <aside className="w-full flex flex-col justify-center gap-2 items-center mb-4">
+      <aside className="w-full md:w-3/4 lg:w-2/4 flex flex-col justify-center gap-2 items-center mb-4">
         <div className="flex justify-center items-center bg-[#0d59f2]/10 border border-solid border-[#0d59f2]/20 gap-2 px-3 py-1 rounded-full text-xs font-bold text-blue-700/90">
           <span className="flex h-2 w-2 rounded-full bg-[#0d59f2]"></span>
           Impulsado por Whisper v1
@@ -22,8 +22,8 @@ export default function Hero() {
           Empieza gratis
         </button>
       </aside>
-      <aside className="w-full">
-        <div className="w-2/4 h-64 m-auto  bg-slate-800/20 rounded-md">
+      <aside className="w-full md:w-3/4 lg:w-2/4 h-64">
+        <div className="w-full md:w-3/4 lg:w-2/4 h-64 m-auto  bg-slate-800/20 rounded-md">
           <div className="bg-brand-card/50 h-full rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
             <div className="flex items-center gap-1 h-32">
               <div className="w-2 bg-brand-primary rounded-full animate-[bounce_1.2s_infinite]"></div>
