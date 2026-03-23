@@ -9,7 +9,7 @@ export default function Header() {
         <div className=' flex justify-start'>
           <button
           onClick={() => navigate('/auth/login')}
-          className='pt-2 pb-2 pr-4 pl-4 bg-blue-600 cursor-pointer hover:bg-blue-500/90 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in'
+          className='pt-2 pb-2 pr-4 pl-4 bg-blue-600 cursor-pointer hover:bg-blue-700 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in'
           >Iniciar sesión</button>
         </div>
       </div>

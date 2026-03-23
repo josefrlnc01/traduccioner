@@ -18,7 +18,7 @@ export default function Hero() {
         <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 mb-10 leading-relaxed'>Sube tu archivo y obtén resultados en cuestión de minutos. Soporte de múltiples idiomas, traducción automática.</p>
         <button
           onClick={() => navigate('/auth/register')}
-          className='pt-2 pb-2 pr-4 pl-4 bg-blue-600 cursor-pointer hover:bg-blue-500/90 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in'>
+          className='pt-2 pb-2 pr-4 pl-4 bg-blue-600 cursor-pointer hover:bg-blue-700 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in'>
           Empieza gratis
         </button>
       </aside>

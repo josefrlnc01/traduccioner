@@ -6,7 +6,7 @@ export default function Footer() {
             <aside className='w-screen pt-5 pb-7 pr-14 pl-14 flex flex-col gap-8'>
                 <div className='w-full flex flex-wrap justify-between gap-8 text-sm text-gray-400'>
                     <div className='grow-0'>
-                        <h2 className='text-lg font-bold self-start'>AudWave</h2>
+                        <h2 className='text-lg font-bold self-start'><span>Aud</span><span className="text-blue-500">Wave</span></h2>
                     </div>
                     <div>
                         <nav className='flex gap-2 text-md'>
