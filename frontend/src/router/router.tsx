@@ -6,8 +6,8 @@ import ConfirmAccountView from "../features/auth/pages/ConfirmAccountView"
 import LoginView from "../features/auth/pages/LoginView"
 import RegisterView from "../features/auth/pages/RegisterView"
 import ResendTokenView from "../features/auth/pages/ResendTokenView"
-import LandingLayout from "@/landing/layout/LandingLayout"
-import LandingPage from "@/landing/pages/LandingPage"
+import LandingLayout from "@/pages/landing/layout/LandingLayout"
+import LandingPage from "@/pages/landing/LandingPage"
 import SavedsView from "@/features/transcription/pages/SavedsView"
 
 
