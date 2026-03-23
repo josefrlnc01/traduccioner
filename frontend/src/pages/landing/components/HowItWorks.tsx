@@ -7,8 +7,8 @@ export default function HowItWorks() {
                 <h4 className="text-3xl text-center font-bold text-white">¿Cómo funciona?</h4>
                 <p className="max-w-2xl mx-auto text-sm md:text-lg text-gray-500 text-center leading-relaxed">3 pasos para una transcripción eficiente de tus audios.</p>
             </aside>
-            <aside className="relative flex p-0 md:p-10 lg:p-14 gap-20 flex-col md:flex-row justify-between items-start">
-                <div className="hidden md:block absolute top-26 left-0 md:w-full h-0.5 bg-gradient-to-r from-[#0d59f2]/10 via-[#0d59f2]/40 to-[#0d59f2]/10 -z-10"></div>
+            <aside className="relative flex p-0 md:p-10 lg:p-14 gap-20 flex-col lg:flex-row justify-between items-start md:items-center">
+                <div className="hidden lg:block absolute top-26 left-0 md:w-full h-0.5 bg-gradient-to-r from-[#0d59f2]/10 via-[#0d59f2]/40 to-[#0d59f2]/10 -z-10"></div>
                 <div className="flex-1 text-center">
                     <div className="w-24 h-24 rounded-full bg-[#0a0e17] border-4 border-[#0d59f2]/40 flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-brand-primary/20">
                         <span className="text-3xl font-black">1</span>

@@ -1,12 +1,12 @@
 
 export default function Pricing() {
     return (
-        <section className='bg-slate-800/30 w-screen min-w-screen p-6 flex flex-col justify-center items-center grow gap-4'>
+        <section className='bg-slate-800/30 w-full min-w-full p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14 md:py-10 lg:py-4'>
             <aside>
                 <h3 className='text-3xl text-white font-bold text-center'>Planes diseñados a medida</h3>
                 <p className='max-w-2xl mx-auto text-sm md:text-lg text-gray-500 text-center leading-relaxed'>Escoge lo que mejor se adapte a tus necesidades.</p>
             </aside>
-            <aside className='grid grid-cols-1 md:grid-cols-3 gap-8 w-3/4 max-w-3/4 m-auto p-14'>
+            <aside className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8 w-full md:w-3/4 md:max-w-3/4 lg:w-3/4 ld:max-w-3/4 m-auto p-0 md:p-10 lg:p-14'>
                 <div className="p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-105 hover:border-[#0d59f2] transition-all">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-400 uppercase tracking-widest">Básico</h3>
