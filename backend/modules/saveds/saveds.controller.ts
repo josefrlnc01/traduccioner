@@ -4,6 +4,7 @@ import { AppError } from "../errors/AppError.js";
 import { IFileStored } from "../file/file.model.js";
 import { IYoutubeVideo } from "../youtube-video/youtube-video.model.js";
 import { FileService } from "../file/file.service.js";
+import { generateSummary } from "../transcription/summary-ia.service.js";
 interface Params {
     id: string
 }
@@ -63,6 +64,27 @@ export class SavedsController {
             await SavedsService.edit(title, id)
 
             return res.status(200).send('Documento editado correctamente')
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
+        }
+    }
+
+
+    static generateIaSummary = async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params as {id: string}
+            const file = await SavedsService.getFile(id)
+            const textSegments = file[0].segments.map(s => {
+                return {
+                    text: s.text
+                }
+            })
+            const summary = await generateSummary(textSegments)
+            console.log(summary)
+            return res.send(summary)
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({error: error.message})

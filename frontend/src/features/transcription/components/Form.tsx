@@ -18,7 +18,7 @@ export default function Form() {
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
     
-    
+    console.log(inputValue)
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,

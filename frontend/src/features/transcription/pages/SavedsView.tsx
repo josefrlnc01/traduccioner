@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import { getSaved } from '../api/savedsApi'
+import { generateIaSummary, getSaved } from '../api/savedsApi'
 import { toast } from 'react-toastify'
 import { Link, useParams } from 'react-router'
 import Header from '../components/Header'
@@ -10,18 +10,33 @@ import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
 import { DropdownMenuBasic } from '@/components/ui/DropdownMenuBasic'
 import EditFileDialog from '../components/EditFileDialog'
 import { motion } from 'motion/react'
+import Summary from '../components/Summary'
 
 
 
 export default function SavedsView() {
     const params = useParams()
     const [isOpen, setIsOpen] = useState(false)
+    const [summary, setSummary] = useState('')
+    const [isReadySummary, setIsReadySummary] = useState(false)
     const id = params.id
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),
         enabled: !!id
     })
+
+     const generateSumary = useMutation({
+        mutationFn: generateIaSummary,
+        onSuccess: (data) => {
+            setIsReadySummary(true)
+            setSummary(data)
+        },
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
 
     const generatePdf = useMutation({
         mutationFn: generatePDF,
@@ -44,6 +59,11 @@ export default function SavedsView() {
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
         generateSrt.mutate(segments)
     }
+
+     const handleGenerateSummary = () => {
+        generateSumary.mutate(id!)
+    }
+
 
 
 
@@ -106,9 +126,14 @@ export default function SavedsView() {
                                 onClick={() => handleGenerateTranscriptionSrt(data[0].segments)}
                                 className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>SRT</button>
+                                <button
+                                onClick={handleGenerateSummary}
+                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                type='button'>Resumen</button>
                         </div>
 
                     </motion.aside>
+                    {summary && <Summary summary={summary}/>}
                 </section>
                 <Footer />
             </>

@@ -70,6 +70,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
 
     const handleTranslate = () => {
+        console.log('handle translate')
         const formData = {
             lang,
             youtubeVideoText

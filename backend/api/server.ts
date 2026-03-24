@@ -21,7 +21,7 @@ app.use(cookieParser())
 app.use(corsMiddleware())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
-
+console.log('GOOGLE_APPLICATION_CREDENTIALS:', process.env.GOOGLE_APPLICATION_CREDENTIALS)
 
 app.use('/auth', authRoute)
 app.use('/yt-video', youtubeVideoRoute)

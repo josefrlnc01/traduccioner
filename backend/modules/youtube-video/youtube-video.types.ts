@@ -24,7 +24,6 @@ export type VideoSubtitles = {
 
 export type RequestProps = {
     videoLink: string
-    lang: string
 }
 
 

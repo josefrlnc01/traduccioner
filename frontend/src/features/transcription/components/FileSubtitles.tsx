@@ -10,6 +10,7 @@ import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
 import { useDocumentAction } from '../hooks/useDocumentAction'
 import { container, item } from '../stores/motion'
+import { generateIaSummary } from '../api/savedsApi'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
@@ -29,7 +30,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
             toast.error(error.message)
         }
     })
-
 
 
     if (mutation.isError) {
@@ -69,6 +69,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         generateSrt.mutate(segments)
     }
 
+   
 
     const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
 
@@ -163,6 +164,8 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                     </div>
 
                 </aside>
+
+                {}
             </section>
         </section>
     )

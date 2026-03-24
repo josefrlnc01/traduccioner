@@ -28,6 +28,7 @@ export class TranslationService {
             if (!translatedSegments) throw new AppError('No se pudo obtener la traducción', 400)
             return translatedSegments
         } catch (error) {
+            console.error(error)
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error durante la traducción')
         }

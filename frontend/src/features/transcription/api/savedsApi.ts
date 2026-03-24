@@ -88,3 +88,22 @@ export async function editTitle ({id, title}: EditTitleProps) {
         }
     }
 }
+
+
+export async function generateIaSummary (id: string) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${urlBackend}/saveds/${id}/summary`, {}, {
+            withCredentials: true,
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            }
+        })
+
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
