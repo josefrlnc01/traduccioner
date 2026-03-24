@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Quota from "../../modules/quota/quota.schema.js";
+import User from "../../modules/user/user.model.js";
 
 export const checkQuota = async (req: Request, res: Response, next: NextFunction) =>  {
     const user = req.user
@@ -13,8 +14,19 @@ export const checkQuota = async (req: Request, res: Response, next: NextFunction
             user: user._id, ip
         })
 
-        if (quota && quota.usedMinutes >= 6) {
+
+
+
+        if (quota && user.suscription === 'free'  && quota.usedMinutes >= 6) {
             return res.status(429).json({error: `No dispones de minutos de transcripción gratuita suficientes.`})
+        }
+
+        if (quota && user.suscription === 'pro' && quota.usedMinutes >= 180) {
+            return res.status(429).json({error: `No dispones de minutos de transcripción suficientes.`})
+        }
+
+        if (quota && user.suscription === 'business' && quota.usedMinutes >= 600) {
+            return res.status(429).json({error: `Ya has gastado todos los minutos de transcripción.`})
         }
 
         next()

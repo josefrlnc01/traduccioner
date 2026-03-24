@@ -4,6 +4,7 @@ export interface IUser extends Document {
     name: string,
     email: string,
     password: string | null,
+    suscription: string,
     provider: string,
     confirmed: boolean
 }
@@ -22,6 +23,11 @@ export const userSchema: Schema = new Schema({
     password: {
         type: String,
         required: false
+    },
+    suscription: {
+        type: String,
+        enum: ['free', 'pro', 'business'],
+        default: 'free'
     },
     provider: {
         type: String,
