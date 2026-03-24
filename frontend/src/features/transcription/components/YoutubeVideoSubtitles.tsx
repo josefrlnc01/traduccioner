@@ -9,6 +9,7 @@ import { translateText, translateYoutubeText } from '@/features/translation/tran
 import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
 import { Spinner } from '@/components/ui/spinner'
+import { useDocumentAction } from '../hooks/useDocumentAction'
 
 const container = {
     hidden: {},
@@ -29,12 +30,8 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const [translation, setTranslation] = useState<Translated>([])
     const [selectedLang, setSelectedLang] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
-    const generatePdf = useMutation({
-        mutationFn: generatePDF,
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
+    const {generatePdf, generateSrt} = useDocumentAction()
+    
 
     const generateTranslation = useMutation({
         mutationFn: translateYoutubeText,
@@ -73,6 +70,10 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
     }
+
+    const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
+        generateSrt.mutate(segments)
+    }
     const formattedYoutubeVideoText = youtubeVideoText
         .map(s => `[${s.start}:${s.end}] ${s.text}`)
         .join('\n')
@@ -92,6 +93,8 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         generateTranslation.mutate(formData)
         setIsTranslating(true)
     }
+
+
 
 
     return (
@@ -159,7 +162,11 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(formattedYoutubeVideoText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Descargar</button>
+                            type='button'>PDF</button>
+                        <button
+                            onClick={() => handleGenerateTranscriptionSrt(youtubeVideoText)}
+                            className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>SRT</button>
                     </div>
 
                 </aside>

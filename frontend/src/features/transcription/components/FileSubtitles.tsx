@@ -11,6 +11,7 @@ import { translateText } from '@/features/translation/translationApi'
 import type { Saveds } from './SavedsList'
 import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
+import { useDocumentAction } from '../hooks/useDocumentAction'
 const container = {
     hidden: {},
     show: {
@@ -31,14 +32,8 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     const [translation, setTranslation] = useState<Translated>([])
     const [selectedLang, setSelectedLang] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
-    const generatePdf = useMutation({
-        mutationFn: generatePDF,
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
-
-    
+   
+    const {generatePdf, generateSrt} = useDocumentAction()
 
     const generateTranslation = useMutation({
         mutationFn: translateText,
@@ -52,13 +47,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     })
 
 
-
-    const generateSrt = useMutation({
-        mutationFn: generateSRT,
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
 
     if (mutation.isError) {
 
