@@ -61,7 +61,6 @@ export class FileService {
             await translation.save()
         } catch (error: any) {
             if (error instanceof AppError) throw error
-            console.log(error)
             throw new Error('Hubo un error al guardar la traducción')
         }
     }
@@ -102,7 +101,6 @@ async function fileExists() {
         const backendDir = process.cwd();
         const base = path.join(backendDir, 'archivos');
         const filepath = base + '.json';
-        console.log(filepath)
         await fs.access(filepath);
         return true;
     }

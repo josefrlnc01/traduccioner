@@ -2,11 +2,9 @@ import pdf from 'html-pdf'
 import fs from 'node:fs/promises'
 import { AppError } from '../../modules/errors/AppError.js'
 
-import { getRequiredEnv } from './variables.js';
-import { writeFile } from 'node:fs/promises';
+
 
 export async function generatePdf (text: string) {
-    console.log('text', text)
     const contenido = `<aside>
         ${text}
         </aside>`

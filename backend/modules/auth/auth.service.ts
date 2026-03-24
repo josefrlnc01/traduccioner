@@ -70,9 +70,7 @@ export class AuthService {
 
     static authJWT = async ({ data }: AuthJwtProps) => {
         try {
-            console.log('data auth jwt', data.password)
             const user = await User.findOne({ email: data.email })
-            console.log('user', user)
             if (!user) {
                 throw new AppError('Credenciales incorrectas', 404)
 
@@ -136,7 +134,6 @@ export class AuthService {
                 email: email
             })
             let user
-            console.log('decoded token', decodedToken)
             //Parte de login
             if (userExists) {
                 user = userExists
@@ -193,8 +190,6 @@ export class AuthService {
     static generateTokenForPassword = async (email: string) => {
         try {
             const user = await User.findOne({email})
-            
-            console.log('user', user)
             if (!user) {
                 throw new AppError('Credenciales incorrectas', 400)
             }

@@ -6,7 +6,6 @@ export class UserController {
     static deleteUser = async (req: Request, res: Response) => {
         try {
             const user = req.user
-            console.log(user)
             await UserService.delete(user)
             return res.status(200).send('Cuenta eliminada correctamente')
         } catch (error) {

@@ -1,11 +1,11 @@
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { generatePDF } from '@/features/document/api/documentApi'
+
 import FileSubtitles from './FileSubtitles'
 import { motion } from 'motion/react'
 import { useState } from 'react'
-import { translateText, translateYoutubeText } from '@/features/translation/translationApi'
+import { translateYoutubeText } from '@/features/translation/translationApi'
 import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
 import { Spinner } from '@/components/ui/spinner'
@@ -25,7 +25,7 @@ const item = {
     show: { opacity: 1, y: 0 }
 }
 
-export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue}: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
     const [translation, setTranslation] = useState<Translated>([])
     const [selectedLang, setSelectedLang] = useState(false)
@@ -59,13 +59,9 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         mutation={mutation}
         inputValue={inputValue}
         fileInputValue={fileInputValue}
-        language={language}
     />
 
-
-
     const youtubeVideoText = mutation.data.youtubeVideoText
-    console.log('video', youtubeVideoText)
 
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)

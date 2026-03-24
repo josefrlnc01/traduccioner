@@ -1,5 +1,4 @@
 import { authenticateAccount, authenticateGoogle } from '@/features/auth/api/authApi'
-import { tokenStore } from '@/lib/token.store'
 import ErrorMessage from '@/components/ErrorMessage'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
@@ -45,9 +44,6 @@ export default function LoginView() {
         e.preventDefault()
         loginGoogle.mutate()
     }
-
-
-    console.log(tokenStore.get())
 
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
@@ -160,7 +156,7 @@ export default function LoginView() {
                         type='submit'
                         value='Iniciar sesión'
                         className='w-full py-3 rounded-xl
-                    bg-gradient-to-r from-blue-500 to-indigo-500
+                    bg-linear-to-r from-blue-500 to-indigo-500
                     text-white font-semibold
                     hover:scale-[1.02] transition cursor-pointer'
                     />

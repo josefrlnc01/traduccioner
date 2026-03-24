@@ -1,12 +1,9 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
-import { formatMinutes } from "@/shared/utils/minutes"
-
 import { useQueryClient } from "@tanstack/react-query"
 import { LogOut, Menu } from "lucide-react"
-import { Menubar } from "radix-ui"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router"
 
 export default function Header() {

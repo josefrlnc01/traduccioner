@@ -3,7 +3,6 @@ import { parseFile } from 'music-metadata'
 export async function getAudioDuration(filePath: string): Promise<number> {
     const metadata = await parseFile(filePath)
     const minutes = await convertToMinutes(metadata.format.duration ?? 0)
-    console.log('minutos', minutes)
     return Number(minutes)
 }
 

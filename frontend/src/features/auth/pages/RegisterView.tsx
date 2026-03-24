@@ -172,7 +172,7 @@ export default function RegisterView() {
                         )}
                     </div>
                     <input type="submit" className="w-full py-3 rounded-xl
-                    bg-gradient-to-r from-blue-500 to-indigo-500
+                    bg-linear-to-r from-blue-500 to-indigo-500
                     text-white font-semibold
                     hover:scale-[1.02] transition cursor-pointer" value={'Registrarme'} />
 

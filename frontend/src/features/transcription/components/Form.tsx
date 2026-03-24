@@ -2,7 +2,6 @@ import { useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
-import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { minutesStore } from "@/shared/stores/minutes.store";
 import { formatMinutes } from "@/shared/utils/minutes";
@@ -14,9 +13,7 @@ export type MutationProps = {
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [usedMinutes, setUsedMinues] = useState<number | null>(minutesStore.get() ?? 0)
-    
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
-    
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
@@ -44,7 +41,6 @@ export default function Form() {
             setChanged(false)
             return
         }
-
         mutation.mutate({ link: inputValue, formData: null })
         setInputValue('')
         setChanged(false)
@@ -55,14 +51,11 @@ export default function Form() {
     }
 
     const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-        
         const file = e.currentTarget.files?.[0]
         if (!file) return
         const formData = new FormData()
         formData.append('audio', file)
         setFormData(formData)
-        
-        console.log(formData)
         setFileInputValue(formData)
     }
 
@@ -82,8 +75,6 @@ export default function Form() {
         event.preventDefault()
     }
 
-    console.log('fileinput', fileInputValue)
-    console.log('input', inputValue)
 
     return (
         <>

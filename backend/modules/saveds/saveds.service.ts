@@ -95,12 +95,9 @@ export class SavedsService {
 
     static edit = async (title: string, id: string) => {
         try {
-            console.log('id', id)
             const file = await FileModel.findOne({
                 fileId: id
             })
-
-            console.log('file', file)
             if (!file) {
                 const youtubeFile = await YoutubeVideo.findOne({
                     fileId: id

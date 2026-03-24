@@ -28,7 +28,6 @@ export class YoutubeVideoService {
             }
 
             const id = uuidv4()
-            console.log(youtubeVideoText)
             //Guardado
             await VideoStored.create({
                 title: title,
@@ -57,7 +56,6 @@ export class YoutubeVideoService {
             if (fileExists) {
                 throw new AppError('Este documento ya está guardado')
             }
-            console.log('data translation', data)
 
             //Guardado
             const translation = new YoutubeVideo()
@@ -118,7 +116,6 @@ export class YoutubeVideoService {
                 extractAudio: true,
                 ffmpegLocation: ffmpegPath
             })
-            console.log(info.title)
             return { title: info.title }
         } catch (err) {
             console.error('Error downloading audio:', err)
@@ -170,7 +167,6 @@ export class YoutubeVideoService {
         }
         const {title} = await this.downloadAudio(videoLink)
 
-        console.log('titulo', title)
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
 

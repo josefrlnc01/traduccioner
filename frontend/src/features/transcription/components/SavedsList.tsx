@@ -1,10 +1,6 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { getSaveds } from '../api/savedsApi'
-import { toast } from 'react-toastify'
-import { file } from 'zod'
 import { Link } from 'react-router'
-import { DropdownMenuBasic } from '@/components/ui/DropdownMenuBasic'
 
 export type Saveds = {
   _id: string,

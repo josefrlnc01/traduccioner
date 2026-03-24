@@ -55,7 +55,6 @@ export class FileController {
     static saveTranslation = async (req: Request, res: Response) => {
         try {
             const data = fileTranslationSchema.parse(req.body)
-            console.log('body', req.body)
             const user = req.user
             await FileService.insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')

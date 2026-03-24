@@ -62,9 +62,7 @@ export class AuthController {
     static authenticateAndLogin = async (req: Request, res: Response) => {
         try {
             const data = loginSchema.parse(req.body)
-            console.log('data', data)
             const { accessToken, refreshToken, user } = await AuthService.authJWT({ data })
-
             res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
             res.send(accessToken)
         } catch (error) {
@@ -82,7 +80,6 @@ export class AuthController {
             const decodedToken = await admin.auth().verifyIdToken(googleToken)
             const email = decodedToken?.email
             const name = decodedToken.name
-            console.log(decodedToken)
             if (!email || !name) return res.status(400).json({ error: 'Nombre o email no encontrados' })
             const { refreshToken, accessToken, user, newUser, } = await AuthService.authJWTGoogle({ email, name, decodedToken })
             if (newUser) {
@@ -93,7 +90,6 @@ export class AuthController {
             }
 
         } catch (error) {
-            console.log(error)
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({ error: error.message })
             }
@@ -145,7 +141,6 @@ export class AuthController {
     static forgotPassword = async (req: Request, res: Response) => {
         try {
             const email = req.body.formData.email
-            console.log('email', email)
             await AuthService.generateTokenForPassword(email)
 
             return res.send('Revisa tu email para ver las instrucciones')
@@ -162,12 +157,10 @@ export class AuthController {
     static validatePasswordToken = async (req: Request, res: Response) => {
         try {
             const { token } = req.body
-            console.log('token', token)
             AuthService.isValidTokenForNewPassword(token)
 
             return res.send('Token válido, puedes cambiar tu contraseña')
         } catch (error:any) {
-            console.log(error)
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({ error: error.message })
             }
@@ -179,10 +172,7 @@ export class AuthController {
     static updatePassword = async (req: Request, res: Response) => {
         try {
             const {token} = req.params as {token: string}
-            console.log('token', token)
             const { password, password_confirmation } = req.body.formData
-            console.log(req.body)
-            console.log('password', password, 'password confirm', password_confirmation)
             await AuthService.generateNewPassword(password, password_confirmation, token)
 
             return res.send('Contraseña cambiada correctamente')

@@ -8,7 +8,6 @@ import { formatTime } from '@/shared/utils/minutes'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { translateText } from '@/features/translation/translationApi'
-import type { Saveds } from './SavedsList'
 import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
 import { useDocumentAction } from '../hooks/useDocumentAction'
@@ -27,12 +26,11 @@ const item = {
 
 
 
-export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
     const [translation, setTranslation] = useState<Translated>([])
     const [selectedLang, setSelectedLang] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
-   
     const {generatePdf, generateSrt} = useDocumentAction()
 
     const generateTranslation = useMutation({
@@ -70,7 +68,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
     if (!mutation.data) return null
 
-    if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
+    if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} />
     const fileText = mutation.data.fileText
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)

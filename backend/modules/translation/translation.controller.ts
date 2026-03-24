@@ -7,8 +7,6 @@ export class TranslationController {
         try {
             const {lang} = req.params as {lang: string}
             const {fileText} = req.body
-            console.log('recibido')
-            console.log(req.body)
             const translatedFile = await TranslationService.translateText(lang, fileText)
             return res.send(translatedFile)
         } catch (error) {
@@ -24,8 +22,6 @@ export class TranslationController {
         try {
             const {lang} = req.params as {lang: string}
             const {youtubeVideoText} = req.body
-            console.log('recibido')
-            console.log(req.body)
             const translatedFile = await TranslationService.translateText(lang, youtubeVideoText)
             return res.send(translatedFile)
         } catch (error) {

@@ -12,7 +12,6 @@ export class TranslationService {
 
     static translateText = async (lang: string | null = null, segments: { start: number, end: number, text: string }[]) => {
         try {
-            console.log('lenguaje', lang)
             if (!lang) throw new AppError('Debes especificar un lenguaje', 400)
 
             const translatedSegments = await Promise.all(

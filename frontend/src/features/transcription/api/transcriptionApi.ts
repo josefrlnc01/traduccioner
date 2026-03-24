@@ -32,7 +32,6 @@ export async function sendLink(link: string | null,  formData: FormData | null):
             })
 
             if (!response.ok) {
-                console.log(response.status)
                 if (response.status === 429) {
                     throw new Error('No dispones de minutos de transcripción gratuita suficientes')
                 } else if (response.status === 400) {
@@ -125,7 +124,6 @@ export async function saveYoutubeTranslation ({title, translatedYoutubeVideo, co
 
 export async function saveFileTranscription ({title, fileText, comment}: StoredFileTranscription) {
     const accessToken = tokenStore.get()
-    console.log('saveFile')
     try {
         const {data} = await axios.post(`${baseUrl}/file/save-transcription`, {
             title,

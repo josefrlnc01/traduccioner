@@ -4,8 +4,6 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Navigate } from 'react-router'
 import { Outlet } from 'react-router'
 import { Spinner } from '@/components/ui/spinner'
-import { SidebarProvider } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/AppSidebar'
 
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
@@ -22,7 +20,6 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
 
     if (isError || !data) return <Navigate to={'/landing-page'} replace />
 
-    console.log(data)
     if (data) {
 
         return (

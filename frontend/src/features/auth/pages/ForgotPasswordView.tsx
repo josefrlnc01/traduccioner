@@ -1,6 +1,5 @@
 import ErrorMessage from '@/components/ErrorMessage';
 import { useMutation } from '@tanstack/react-query';
-import React from 'react'
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { toast } from 'react-toastify';
@@ -87,7 +86,7 @@ export default function ForgotPasswordView() {
                         rounded-xl
                         font-semibold
                         text-white
-                        bg-gradient-to-r
+                        bg-linear-to-r
                         from-blue-500 
                         to-indigo-500
                         hover:from-blue-600

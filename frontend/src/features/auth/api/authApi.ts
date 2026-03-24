@@ -45,7 +45,6 @@ export async function authenticateGoogle() {
         tokenStore.set(data.accessToken)
         return data
     } catch (error) {
-        console.log(error)
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
         }
@@ -60,7 +59,6 @@ export async function getUser(accessToken: string) {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
-        console.log(data)
         const response = userReqSchema.safeParse(data)
 
         if (!response.success) throw new Error('Respuesta inválida del servidor');
@@ -74,7 +72,6 @@ export async function getUser(accessToken: string) {
 export async function confirmAccount(token: string) {
     try {
         const { data } = await axios.post<string>(`${baseUrl}/auth/confirm-account`, { token })
-        console.log(data)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -90,7 +87,6 @@ export async function authenticateAccount(formData: UserLoginForm) {
         const { data } = await axios.post(`${baseUrl}/auth/authenticate-account`, formData, {
             withCredentials: true
         })
-        console.log('data', data)
         localStorage.setItem('isAuth', 'true')
         tokenStore.set(data)
         return data
@@ -105,7 +101,6 @@ export async function authenticateAccount(formData: UserLoginForm) {
 
 export async function resendToken(email: string) {
     try {
-        console.log('formdata', email)
         const { data } = await axios.post<string>(`${baseUrl}/auth/resend-confirmation-token`, { email })
         return data
     } catch (error) {

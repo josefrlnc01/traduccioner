@@ -72,7 +72,6 @@ export class YoutubeVideoController {
         try {
             const user = req.user
             const data = youtubeVideoTranslationSchema.parse(req.body)
-            console.log('data save translation', data)
             await YoutubeVideoService.insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')
         } catch (error) {

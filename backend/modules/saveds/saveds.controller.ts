@@ -28,9 +28,7 @@ export class SavedsController {
     static getSavedById = async (req: Request, res: Response) => {
         try {
             const {id} = req.params as {id : string}
-            console.log('param id', id)
             const file = await SavedsService.getFile(id)
-            console.log('file', file)
             return res.status(200).json(file)
         } catch (error) {
             console.error(error)
@@ -62,9 +60,6 @@ export class SavedsController {
         try {
             const {id} = req.params as {id: string}
             const {title} = req.body
-            console.log(req.body)
-            console.log(title)
-            console.log(id)
             await SavedsService.edit(title, id)
 
             return res.status(200).send('Documento editado correctamente')
