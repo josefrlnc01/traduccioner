@@ -10,27 +10,17 @@ import { languages } from '../stores/languages'
 import { Spinner } from '@/components/ui/spinner'
 import { useDocumentAction } from '../hooks/useDocumentAction'
 import { container, item } from '../stores/motion'
+import { useTranslate } from '@/features/translation/useTranslate'
 
 
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue}: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
-    const [translation, setTranslation] = useState<Translated>([])
     const [selectedLang, setSelectedLang] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
     const {generatePdf, generateSrt} = useDocumentAction()
+    const {youtubeTranslation, generateYoutubeTranslation} = useTranslate()
     
-
-    const generateYoutubeTranslation = useMutation({
-        mutationFn: translateYoutubeText,
-        onSuccess: (data) => {
-            setTranslation(data)
-            setIsTranslating(false)
-        },
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
 
 
     if (mutation.isError) {
@@ -122,7 +112,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         initial='hidden'
                         animate='show'
                         className='grow bg-slate-800/40 p-8'>
-                        {translation.length === 0 && youtubeVideoText.map((s, i) => (
+                        {youtubeTranslation.length === 0 && youtubeVideoText.map((s, i) => (
                             <motion.p
                                 key={i}
                                 variants={item}
@@ -132,7 +122,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
                             </motion.p>
                         ))}
-                        {translation.length > 0 && translation.map((s, i) => (
+                        {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
                             <motion.p
                                 key={i}
                                 variants={item}

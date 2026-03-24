@@ -11,25 +11,17 @@ import { languages } from '../stores/languages'
 import { useDocumentAction } from '../hooks/useDocumentAction'
 import { container, item } from '../stores/motion'
 import { generateIaSummary } from '../api/savedsApi'
+import { useTranslate } from '@/features/translation/useTranslate'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
-    const [translation, setTranslation] = useState<Translated>([])
+   
     const [selectedLang, setSelectedLang] = useState(false)
-    const [isTranslating, setIsTranslating] = useState(false)
+    
     const { generatePdf, generateSrt } = useDocumentAction()
-
-    const generateTranslation = useMutation({
-        mutationFn: translateText,
-        onSuccess: (data) => {
-            setTranslation(data)
-            setIsTranslating(false)
-        },
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
+    const {translation, isTranslating, generateFileTranslation} = useTranslate()
+    
 
 
     if (mutation.isError) {
@@ -84,8 +76,8 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
             lang,
             fileText
         }
-        generateTranslation.mutate(formData)
-        setIsTranslating(true)
+        generateFileTranslation.mutate(formData)
+
     }
 
 
