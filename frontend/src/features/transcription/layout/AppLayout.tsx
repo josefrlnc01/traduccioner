@@ -4,7 +4,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Navigate } from 'react-router'
 import { Outlet } from 'react-router'
 import { Spinner } from '@/components/ui/spinner'
-import { SidebarProvider } from '@/shared/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/AppSidebar'
 
 
@@ -27,9 +27,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
 
         return (
             <>
-                <SidebarProvider
-                    defaultOpen={false}>
-                    <AppSidebar />
+                
                     
                     <main className='min-w-screen max-w-screen overflow-x-hidden max-h-screen min-h-screen bg-[#101622] text-white'>
                         
@@ -42,7 +40,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                         pauseOnHover={false}
                         pauseOnFocusLoss={false}
                     />
-                </SidebarProvider>
+                
             </>
         )
     }
