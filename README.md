@@ -10,6 +10,7 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![OpenAI](https://img.shields.io/badge/OpenAI-Whisper-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
 
+<img width="1897" height="901" alt="Screenshot 2026-03-24 120728" src="https://github.com/user-attachments/assets/343d3070-06c5-43f6-ade2-d619890aaecf" />
 
 
 </div>
