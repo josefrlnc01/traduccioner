@@ -1,7 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
-import { useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { LogOut, Menu } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router"
@@ -14,10 +14,15 @@ export default function Header() {
   if (!data) return
   const [open, setIsOpen] = useState(false)
 
+  const logout = useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      queryClient.clear()
+      navigate('/landing-page')
+    }
+  })
   const handleLogOut = async () => {
-    await logOut()
-    queryClient.invalidateQueries({ queryKey: ['user'] })
-    navigate('/landing-page')
+    logout.mutate()
   }
 
 

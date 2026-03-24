@@ -31,7 +31,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     const [translation, setTranslation] = useState<Translated>([])
     const [selectedLang, setSelectedLang] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
-    const {generatePdf, generateSrt} = useDocumentAction()
+    const { generatePdf, generateSrt } = useDocumentAction()
 
     const generateTranslation = useMutation({
         mutationFn: translateText,
@@ -68,8 +68,13 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
     if (!mutation.data) return null
 
-    if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} />
+    if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles
+        mutation={mutation}
+        inputValue={inputValue}
+        fileInputValue={fileInputValue} />
     const fileText = mutation.data.fileText
+
+
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
     }
