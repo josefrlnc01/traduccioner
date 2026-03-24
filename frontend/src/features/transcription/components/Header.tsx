@@ -3,7 +3,6 @@ import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { LogOut, Menu } from "lucide-react"
-import { useState } from "react"
 import { useNavigate } from "react-router"
 
 export default function Header() {
