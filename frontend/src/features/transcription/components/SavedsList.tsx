@@ -22,7 +22,7 @@ export type Saveds = {
 
 export default function SavedsList() {
   
-  const {data, isPending} = useQuery({
+  const {data} = useQuery({
     queryFn: getSaveds,
     queryKey: ['allSaveds']
   })

@@ -7,7 +7,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteSaved } from "@/features/transcription/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
@@ -18,10 +18,12 @@ type DropdownProps = {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export function DropdownMenuBasic({ id,  setIsOpen }: DropdownProps) {
+    const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFN = useMutation({
         mutationFn: deleteSaved,
         onSuccess: (data) => {
+            queryClient.invalidateQueries({queryKey: ['allSaveds']})
             toast.success(data)
         },
         onError: (error) => {
