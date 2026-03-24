@@ -5,26 +5,53 @@ import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/components/ui/spinner'
 import Subtitles from '../pages/SubtitlesView'
 import { formatTime } from '@/shared/utils/minutes'
-import {motion} from 'motion/react'
+import { motion } from 'motion/react'
+import { useState } from 'react'
+import { translateText } from '@/features/translation/translationApi'
+import type { Saveds } from './SavedsList'
+import type { Translated } from '../types/translared.types'
+import { languages } from '../stores/languages'
 const container = {
     hidden: {},
     show: {
-        transition: {staggerChildren: 0.30}
+        transition: { staggerChildren: 0.30 }
     }
 }
 
 const item = {
-    hidden: {opacity: 0, y: 20},
-    show: {opacity: 1, y: 0}
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
 }
 
+
+
+
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+    const [lang, setLang] = useState('')
+    const [translation, setTranslation] = useState<Translated>([])
+    const [selectedLang, setSelectedLang] = useState(false)
+    const [isTranslating, setIsTranslating] = useState(false)
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
             toast.error(error.message)
         }
     })
+
+    
+
+    const generateTranslation = useMutation({
+        mutationFn: translateText,
+        onSuccess: (data) => {
+            setTranslation(data)
+            setIsTranslating(false)
+        },
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
+
 
     const generateSrt = useMutation({
         mutationFn: generateSRT,
@@ -57,7 +84,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
     if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
     const fileText = mutation.data.fileText
-    const translatedFile = mutation.data.translatedFile
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
     }
@@ -65,20 +91,27 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
         generateSrt.mutate(segments)
     }
-    let formattedTranslatedFile
-    console.log('filetext', fileText)
-    console.log('translated file', translatedFile)
 
-
-
-    if (translatedFile) {
-        formattedTranslatedFile = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
-    }
-    console.log(mutation.data.usedMinutes)
 
     const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
 
-    
+    const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLang(true)
+        setLang(e.target.value)
+    }
+
+
+    const handleTranslate = () => {
+        const formData = {
+            lang,
+            fileText
+        }
+        generateTranslation.mutate(formData)
+        setIsTranslating(true)
+    }
+
+
+    console.log('translation', translation)
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -89,24 +122,60 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>
+                        <div className="flex items-center justify-center gap-2">
+                            <select
+                                onChange={handleSelect}
+                                className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                            >
+                                <option defaultValue={''} disabled>Traducir a...</option>
+                                {languages.map(lang => (
+                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                ))}
+                            </select>
+
+                            <button
+                                onClick={handleTranslate}
+                                disabled={!selectedLang || isTranslating}
+                                className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                            >
+                                {isTranslating ? (
+                                    <>
+                                        <Spinner className="size-3" />
+                                        Traduciendo
+                                    </>
+                                ) : (
+                                    'Traducir'
+                                )}
+                            </button>
+                        </div>
                     </header>
-                    <motion.div 
-                    className='grow bg-slate-800/40 p-8' 
-                    variants={container} 
-                    initial='hidden' 
-                    animate='show'>
-                        {fileText.map((s, i) => (
-                            <motion.p 
-                            key={i} 
-                            whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
-                                transition={{ duration: 0.15 }} 
-                            variants={item} 
-                            className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                    <motion.div
+                        className='grow bg-slate-800/40 p-8'
+                        variants={container}
+                        initial='hidden'
+                        animate='show'>
+                        {translation.length === 0 && fileText.map((s, i) => (
+                            <motion.p
+                                key={i}
+                                whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                transition={{ duration: 0.15 }}
+                                variants={item}
+                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
+                            </motion.p>
+                        ))}
+                        {translation.length > 0 && translation.map((s, i) => (
+                            <motion.p
+                                key={i}
+                                whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                transition={{ duration: 0.15 }}
+                                variants={item}
+                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
                             </motion.p>
                         ))}
                     </motion.div>
-                  
+
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
@@ -119,29 +188,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     </div>
 
                 </aside>
-                {(fileInputValue && language && translatedFile) &&
-                    <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
-                        <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
-                            <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
-                                Traducción <span className="text-xs font-normal text-slate-500 ml-2">({language})</span>
-                            </h2>
-                        </header>
-                        <div className='grow bg-slate-800/40 p-8'>
-
-                            {formattedTranslatedFile && formattedTranslatedFile.map(p => (
-                                <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                    {p}
-                                </p>
-                            ))}
-
-                        </div>
-                        <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
-                            <button
-                                onClick={() => handleGenerateTranscriptionPdf(translatedFile)}
-                                className='p-3 pl-4 pr-4 grow text-white font-bold rounded-md bg-blue-700 hover:bg-blue-900 transition-colors cursor-pointer'
-                                type='button'>Descargar</button>
-                        </div>
-                    </aside>}
             </section>
         </section>
     )

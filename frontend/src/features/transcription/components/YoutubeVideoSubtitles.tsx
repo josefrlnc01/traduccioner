@@ -4,6 +4,11 @@ import { toast } from 'react-toastify'
 import { generatePDF } from '@/features/document/api/documentApi'
 import FileSubtitles from './FileSubtitles'
 import { motion } from 'motion/react'
+import { useState } from 'react'
+import { translateText, translateYoutubeText } from '@/features/translation/translationApi'
+import type { Translated } from '../types/translared.types'
+import { languages } from '../stores/languages'
+import { Spinner } from '@/components/ui/spinner'
 
 const container = {
     hidden: {},
@@ -19,13 +24,30 @@ const item = {
     show: { opacity: 1, y: 0 }
 }
 
-export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language, isOpenFile, setIsOpenFile }: SubtitlesViewProps) {
+export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+    const [lang, setLang] = useState('')
+    const [translation, setTranslation] = useState<Translated>([])
+    const [selectedLang, setSelectedLang] = useState(false)
+    const [isTranslating, setIsTranslating] = useState(false)
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
             toast.error(error.message)
         }
     })
+
+    const generateTranslation = useMutation({
+        mutationFn: translateYoutubeText,
+        onSuccess: (data) => {
+            setTranslation(data)
+            setIsTranslating(false)
+        },
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
+
     if (mutation.isError) {
         return (
             <aside className="p-4 text-red-400 md:text-center">
@@ -36,19 +58,18 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     if (!mutation.data) return null
 
-    if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles 
-    mutation={mutation} 
-    inputValue={inputValue} 
-    fileInputValue={fileInputValue} 
-    language={language} 
-    isOpenFile={isOpenFile} 
-    setIsOpenFile={setIsOpenFile} />
+    if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles
+        mutation={mutation}
+        inputValue={inputValue}
+        fileInputValue={fileInputValue}
+        language={language}
+    />
 
 
-    const { translatedYoutubeVideo } = mutation.data
+
     const youtubeVideoText = mutation.data.youtubeVideoText
     console.log('video', youtubeVideoText)
-    let formatedTranslatedYoutubeVideo
+
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
     }
@@ -57,10 +78,21 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         .join('\n')
 
 
-
-    if (formatedTranslatedYoutubeVideo) {
-        formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
+    const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLang(true)
+        setLang(e.target.value)
     }
+
+
+    const handleTranslate = () => {
+        const formData = {
+            lang,
+            youtubeVideoText
+        }
+        generateTranslation.mutate(formData)
+        setIsTranslating(true)
+    }
+
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -70,6 +102,32 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>
+                        <div className="flex items-center justify-center gap-2">
+                            <select
+                                onChange={handleSelect}
+                                className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                            >
+                                <option defaultValue={''} disabled>Traducir a...</option>
+                                {languages.map(lang => (
+                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                ))}
+                            </select>
+
+                            <button
+                                onClick={handleTranslate}
+                                disabled={!selectedLang || isTranslating}
+                                className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                            >
+                                {isTranslating ? (
+                                    <>
+                                        <Spinner className="size-3" />
+                                        Traduciendo
+                                    </>
+                                ) : (
+                                    'Traducir'
+                                )}
+                            </button>
+                        </div>
                     </header>
                     <motion.div
                         variants={container}
@@ -95,28 +153,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                     </div>
 
                 </aside>
-                {((inputValue || fileInputValue) && language && translatedYoutubeVideo) &&
-                    <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
-                        <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
-                            <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
-                                Traducción <span className="text-xs font-normal text-slate-500 ml-2">({language})</span>
-                            </h2>
-                        </header>
-                        <div className='grow bg-slate-800/40 p-8'>
-                            {formatedTranslatedYoutubeVideo && formatedTranslatedYoutubeVideo.map(p => (
-                                <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                    {p}
-                                </p>
-                            ))}
 
-                        </div>
-                        <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
-                            <button
-                                onClick={() => handleGenerateTranscriptionPdf(translatedYoutubeVideo)}
-                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                                type='button'>Descargar</button>
-                        </div>
-                    </aside>}
             </section>
         </section>
     )

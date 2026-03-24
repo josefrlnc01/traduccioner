@@ -11,6 +11,7 @@ import { documentRoute } from '../modules/document/document.routes.js'
 import { savedsRoute } from '../modules/saveds/saveds.routes.js'
 import admin from 'firebase-admin'
 import { userRoutes } from '../modules/user/user.routes.js'
+import { translationRoutes } from '../modules/translation/translation.routes.js'
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT 
@@ -27,6 +28,7 @@ app.use('/yt-video', youtubeVideoRoute)
 app.use('/file', fileRoute)
 app.use('/document', documentRoute)
 app.use('/saveds', savedsRoute)
+app.use('/translation', translationRoutes)
 app.use('/user', userRoutes)
 
 admin.initializeApp({

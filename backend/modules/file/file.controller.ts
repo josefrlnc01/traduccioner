@@ -6,6 +6,7 @@ import { AppError } from "../errors/AppError.js";
 import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
 
 
+
 export class FileController {
     static init = async (req: Request, res: Response) => {
         try {
@@ -32,7 +33,7 @@ export class FileController {
             }
             
             
-            return res.status(200).json({ fileText, usedMinutes })
+            return res.status(200).json({ fileText, usedMinutes})
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({error: error.message})
