@@ -4,3 +4,4 @@ import { TranslationController } from "./translation.controller.js";
 export const translationRoutes = Router()
 
 translationRoutes.post('/:lang', TranslationController.getTranslation)
+translationRoutes.post('/youtube/:lang', TranslationController.getYoutubeTranslation)

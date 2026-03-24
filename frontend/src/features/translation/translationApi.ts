@@ -33,7 +33,7 @@ export async function translateText ({lang, fileText}: TranslateTextProps) {
 
 export async function translateYoutubeText ({lang, youtubeVideoText}: TranslateYoutubeTextProps) {
     try {
-        const {data} = await axios.post(`${urlBackend}/translation/${lang}`, {youtubeVideoText})
+        const {data} = await axios.post(`${urlBackend}/translation/youtube/${lang}`, {youtubeVideoText})
 
         return data
     } catch (error) {

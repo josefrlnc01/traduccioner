@@ -18,4 +18,21 @@ export class TranslationController {
             return res.status(500).json({error: 'Hubo un error al traducir el documento'})
         }
     }
+
+
+    static getYoutubeTranslation = async (req: Request, res: Response) => {
+        try {
+            const {lang} = req.params as {lang: string}
+            const {youtubeVideoText} = req.body
+            console.log('recibido')
+            console.log(req.body)
+            const translatedFile = await TranslationService.translateText(lang, youtubeVideoText)
+            return res.send(translatedFile)
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al traducir el documento'})
+        }
+    }
 }
