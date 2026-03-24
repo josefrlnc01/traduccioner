@@ -5,8 +5,18 @@ import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/shared/components/ui/spinner'
 import Subtitles from '../pages/SubtitlesView'
 import { formatTime } from '@/shared/utils/minutes'
+import {motion} from 'motion/react'
+const container = {
+    hidden: {},
+    show: {
+        transition: {staggerChildren: 0.30}
+    }
+}
 
-
+const item = {
+    hidden: {opacity: 0, y: 20},
+    show: {opacity: 1, y: 0}
+}
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const generatePdf = useMutation({
@@ -74,19 +84,29 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
 
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
-                <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
+                <aside className='border border-solid border-[#ffffff1a] h-auto min-h-auto w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                     <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
                         <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>
                     </header>
-                    <div className='grow bg-slate-800/40 p-8'>
-                        {fileText.map(s => (
-                            <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.end.toFixed()))}</span> {s.text}
-                            </p>
+                    <motion.div 
+                    className='grow bg-slate-800/40 p-8' 
+                    variants={container} 
+                    initial='hidden' 
+                    animate='show'>
+                        {fileText.map((s, i) => (
+                            <motion.p 
+                            key={i} 
+                            whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                transition={{ duration: 0.15 }} 
+                            variants={item} 
+                            className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
+                            </motion.p>
                         ))}
-                    </div>
+                    </motion.div>
+                  
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}

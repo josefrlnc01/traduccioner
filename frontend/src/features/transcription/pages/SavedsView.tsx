@@ -9,6 +9,9 @@ import Footer from '../components/Footer'
 import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
 import { DropdownMenuBasic } from '@/components/ui/DropdownMenuBasic'
 import EditFileDialog from '../components/EditFileDialog'
+import { motion } from 'motion/react'
+
+
 
 export default function SavedsView() {
     const params = useParams()
@@ -59,17 +62,21 @@ export default function SavedsView() {
         }).join('\n')
         return (
             <>
-            {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!}/>}
+                {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} />}
                 <Header />
                 <section className='w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20'>
-                    <aside className='w-[90%] md:w-2/3 lg:w-1/2 mx-auto flex flex-col rounded-2xl bg-[#ffffff08] shadow-2xl'>
+                    <motion.aside
+                        initial={{ opacity: 0, scale: 0.97 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        className='w-[90%] md:w-2/3 lg:w-1/2 mx-auto flex flex-col rounded-2xl bg-[#ffffff08] shadow-2xl'>
                         <header className='flex justify-between items-center w-full rounded-t-2xl p-4 bg-slate-700/40  border-b border-slate-800'>
                             <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                                 {data[0].title}<span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                             </h2>
                             <div className='flex justify-center items-center gap-4'>
 
-                                <DropdownMenuBasic id={data[0].fileId}  setIsOpen={setIsOpen} />
+                                <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} />
                                 <Link className='bg-red-500 pt-2 pb-2 pl-4 pr-4 rounded-xl hover:bg-red-500/80 transition-colors ease duration-200 ' to={`/`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -79,13 +86,18 @@ export default function SavedsView() {
                             </div>
 
                         </header>
-                        <div className='grow bg-slate-800/40 p-8'>
+                        <motion.div
+                            className='grow bg-slate-800/40 p-8'>
                             {data[0].segments.map((s: { start: number, end: number, text: string }) => (
-                                <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <motion.p
+                                    whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                    transition={{ duration: 0.15 }}
+                                    key={s.start}
+                                    className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                     <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.end.toFixed()))}</span> {s.text}
-                                </p>
+                                </motion.p>
                             ))}
-                        </div>
+                        </motion.div>
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] rounded-b-2xl p-3'>
                             <button
                                 onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
@@ -97,7 +109,7 @@ export default function SavedsView() {
                                 type='button'>SRT</button>
                         </div>
 
-                    </aside>
+                    </motion.aside>
                 </section>
                 <Footer />
             </>

@@ -3,10 +3,23 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import { generatePDF } from '@/features/document/api/documentApi'
 import FileSubtitles from './FileSubtitles'
+import { motion } from 'motion/react'
 
+const container = {
+    hidden: {},
+    show: {
+        transition: {
+            staggerChidlren: 0.30
+        }
+    }
+}
 
+const item = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 }
+}
 
-export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language, isOpenFile, setIsOpenFile }: SubtitlesViewProps) {
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
@@ -23,7 +36,13 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     if (!mutation.data) return null
 
-    if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
+    if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles 
+    mutation={mutation} 
+    inputValue={inputValue} 
+    fileInputValue={fileInputValue} 
+    language={language} 
+    isOpenFile={isOpenFile} 
+    setIsOpenFile={setIsOpenFile} />
 
 
     const { translatedYoutubeVideo } = mutation.data
@@ -37,7 +56,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         .map(s => `[${s.start}:${s.end}] ${s.text}`)
         .join('\n')
 
-    
+
 
     if (formatedTranslatedYoutubeVideo) {
         formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
@@ -52,13 +71,22 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>
                     </header>
-                    <div className='grow bg-slate-800/40 p-8'>
-                        {youtubeVideoText.map(s => (
-                            <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                    <motion.div
+                        variants={container}
+                        initial='hidden'
+                        animate='show'
+                        className='grow bg-slate-800/40 p-8'>
+                        {youtubeVideoText.map((s, i) => (
+                            <motion.p
+                                key={i}
+                                variants={item}
+                                whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                transition={{ duration: 0.15 }}
+                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
-                            </p>
+                            </motion.p>
                         ))}
-                    </div>
+                    </motion.div>
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(formattedYoutubeVideoText)}
