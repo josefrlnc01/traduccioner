@@ -175,7 +175,7 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
                                 transition={{ duration: 0.15 }}
                                 variants={item}
                                 className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{s.start.toFixed(2)}:{s.end.toFixed(2)}</span> {s.text}
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
                     </motion.div>
