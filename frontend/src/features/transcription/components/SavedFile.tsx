@@ -90,38 +90,43 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
         <aside className='w-full md:w-3/4 lg:w-2/4 h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
             <header className='flex justify-between items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
-                <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
-                    {data[0].title}
-                    <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
-                </h2>
-                <div className="flex items-center justify-center gap-2">
-                    <select
-                        onChange={handleSelect}
-                        className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
-                    >
-                        <option defaultValue={''} disabled>Traducir a...</option>
-                        {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                            <option key={lang.value} value={lang.value}>{lang.label}</option>
-                        ))}
-                        {user.suscription === 'free' && freeUserLanguages.map(lang => (
-                            <option key={lang.value} value={lang.value}>{lang.label}</option>
-                        ))}
-                    </select>
+                <div className='grow-0 flex items-center gap-4'>
+                    <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
+                        {data[0].title}
+                        <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
+                    </h2>
+                    <div className="flex items-center justify-center gap-2">
+                        <select
+                            onChange={handleSelect}
+                            className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                        >
 
-                    <button
-                        onClick={handleTranslate}
-                        disabled={!selectedLang || isTranslating}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
-                    >
-                        {isTranslating ? (
-                            <>
-                                <Spinner className="size-3" />
-                                Traduciendo
-                            </>
-                        ) : (
-                            'Traducir'
-                        )}
-                    </button>
+                            {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
+                                <>
+                                    <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
+                                </>
+
+                            ))}
+                            {user.suscription === 'free' && freeUserLanguages.map(lang => (
+                                <option key={lang.value} value={lang.value}>{lang.label}</option>
+                            ))}
+                        </select>
+
+                        <button
+                            onClick={handleTranslate}
+                            disabled={!selectedLang || isTranslating}
+                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                        >
+                            {isTranslating ? (
+                                <>
+                                    <Spinner className="size-3" />
+                                    Traduciendo
+                                </>
+                            ) : (
+                                'Traducir'
+                            )}
+                        </button>
+                    </div>
                 </div>
                 <div className='flex items-center justify-center gap-2'>
                     <button

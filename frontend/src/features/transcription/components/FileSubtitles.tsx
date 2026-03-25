@@ -109,7 +109,7 @@ console.log(open)
                                     >
                                         <option defaultValue={''} disabled>Traducir a...</option>
                                         {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                            <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                            <option key={lang.value}>{lang.label}</option>
                                         ))}
                                         {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                             <option key={lang.value} value={lang.value}>{lang.label}</option>

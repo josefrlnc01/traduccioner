@@ -50,6 +50,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         generateSrt.mutate(segments)
     }
     const formattedYoutubeVideoText = youtubeVideoText
+        .segments
         .map(s => `[${s.start}:${s.end}] ${s.text}`)
         .join('\n')
 
@@ -64,7 +65,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         console.log('handle translate')
         const formData = {
             lang,
-            youtubeVideoText
+            youtubeVideoText: youtubeVideoText.segments
         }
         generateYoutubeTranslation.mutate(formData)
         setIsTranslating(true)
@@ -78,37 +79,43 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full max-w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                     <header className='flex justify-between items-center  w-full px-5 py-4 bg-linear-to-r from-slate-800/80 to-slate-700/40 border-b border-slate-700/50'>
-                        <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
-                            Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
-                        </h2>
-                        <div className="flex items-center justify-center gap-2">
-                            <select
-                                onChange={handleSelect}
-                                className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
-                            >
-                                <option defaultValue={''} disabled>Traducir a...</option>
-                                {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                ))}
-                                {user.suscription === 'free' && freeUserLanguages.map(lang => (
-                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                ))}
-                            </select>
+                        <div className='grow-0 flex items-center gap-4'>
+                            <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
+                                {youtubeVideoText.title}
+                                <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
+                            </h2>
+                            <div className="flex items-center justify-center gap-2">
+                                <select
+                                    onChange={handleSelect}
+                                    className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                >
 
-                            <button
-                                onClick={handleTranslate}
-                                disabled={!selectedLang || isTranslating}
-                                className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
-                            >
-                                {isTranslating ? (
-                                    <>
-                                        <Spinner className="size-3" />
-                                        Traduciendo
-                                    </>
-                                ) : (
-                                    'Traducir'
-                                )}
-                            </button>
+                                    {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
+                                        <>
+                                            <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
+                                        </>
+
+                                    ))}
+                                    {user.suscription === 'free' && freeUserLanguages.map(lang => (
+                                        <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                    ))}
+                                </select>
+
+                                <button
+                                    onClick={handleTranslate}
+                                    disabled={!selectedLang || isTranslating}
+                                    className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                                >
+                                    {isTranslating ? (
+                                        <>
+                                            <Spinner className="size-3" />
+                                            Traduciendo
+                                        </>
+                                    ) : (
+                                        'Traducir'
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </header>
                     <motion.div
@@ -116,7 +123,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         initial='hidden'
                         animate='show'
                         className='grow bg-slate-800/40 p-8'>
-                        {youtubeTranslation.length === 0 && youtubeVideoText.map((s, i) => (
+                        {youtubeTranslation.length === 0 && youtubeVideoText.segments.map((s, i) => (
                             <motion.p
                                 key={i}
                                 variants={item}
@@ -143,7 +150,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>PDF</button>
                         <button
-                            onClick={() => handleGenerateTranscriptionSrt(youtubeVideoText)}
+                            onClick={() => handleGenerateTranscriptionSrt(youtubeVideoText.segments)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>SRT</button>
                     </div>
