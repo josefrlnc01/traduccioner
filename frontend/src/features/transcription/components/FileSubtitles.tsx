@@ -87,7 +87,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] h-auto min-h-auto w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
-                    <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
+                    <header className='flex justify-between items-center w-full px-5 py-4 bg-linear-to-r from-slate-800/80 to-slate-700/40 border-b border-slate-700/50'>
                         <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                             Transcripción <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                         </h2>

@@ -14,17 +14,15 @@ import Summary from '../components/SummarySection'
 import SummarySection from '../components/SummarySection'
 import { isAxiosError } from 'axios'
 import { tokenStore } from '@/lib/token.store'
+import { useSummary } from '../hooks/useSummary'
 
 
 
 export default function SavedsView() {
-    const params = useParams()
     const [isOpen, setIsOpen] = useState(false)
     const [isReadySummary, setIsReadySummary] = useState(false)
-    const [summary, setSummary] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+    const {summary, isLoading, handleGenerateIaSummary, id} = useSummary()
     
-    const id = params.id
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),
@@ -58,52 +56,7 @@ export default function SavedsView() {
 
     
     
-    const handleGenerateIaSummary = async () => {
-        const urlBackend = import.meta.env.VITE_API_URL
-        const accessToken = tokenStore.get()
-        setIsLoading(true)
-        setSummary('')
-        try {
-            const response = await fetch(`${urlBackend}/saveds/${id}/summary`, {
-                method: 'POST',
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-            )
-
-            const reader = response.body!.getReader()
-            const decoder = new TextDecoder()
-
-            while (true) {
-                const { done, value } = await reader.read()
-
-                if (done) break
-
-
-                const chunk = decoder.decode(value)
-                const lines = chunk.split('\n\n').filter(Boolean)
-
-                for (const line of lines) {
-                    if (line.startsWith('data: ')) {
-                        const data = line.replace('data: ', '')
-
-                        if (data === '[DONE]') return
-                        const { text } = JSON.parse(data)
-                        setSummary(prev => prev + text)
-                    }
-                }
-            }
-
-
-            setIsLoading(false)
-
-        } catch (error) {
-            if (isAxiosError(error) && error.response) {
-                throw new Error(error.response.data.error)
-            }
-        }
-    }
+   
 
 
 
@@ -130,7 +83,7 @@ export default function SavedsView() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3, ease: 'easeOut' }}
                         className='w-[90%] md:w-2/3 lg:w-1/2 mx-auto flex flex-col rounded-2xl bg-[#ffffff08] shadow-2xl'>
-                        <header className='flex justify-between items-center w-full rounded-t-2xl p-4 bg-slate-700/40  border-b border-slate-800'>
+                        <header className='flex justify-between items-center w-full rounded-tl-xl rounded-tr-xl px-5 py-4 bg-linear-to-r from-slate-800/80 to-slate-700/40 border-b border-slate-700/50'>
                             <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
                                 {data[0].title}<span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                             </h2>
