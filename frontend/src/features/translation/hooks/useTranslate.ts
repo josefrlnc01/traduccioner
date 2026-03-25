@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
-import { translateText, translateYoutubeText } from "./translationApi"
+import { translateText, translateYoutubeText } from "../translationApi"
 import { useState } from "react"
-import type { Translated } from "../transcription/types/translared.types"
+import type { Translated } from "@/features/transcription/types/translared.types"
 import { toast } from "react-toastify"
 
 export const useTranslate = () => {

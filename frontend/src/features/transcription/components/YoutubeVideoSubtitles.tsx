@@ -10,7 +10,7 @@ import { languages } from '../stores/languages'
 import { Spinner } from '@/components/ui/spinner'
 import { useDocumentAction } from '../hooks/useDocumentAction'
 import { container, item } from '../stores/motion'
-import { useTranslate } from '@/features/translation/useTranslate'
+import { useTranslate } from '@/features/translation/hooks/useTranslate'
 import { formatTime } from '@/shared/utils/minutes'
 
 
