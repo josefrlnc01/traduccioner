@@ -15,7 +15,7 @@ export class SavedsController {
 
             const files = await SavedsService.getFiles(user)
             const youtubeFiles = await SavedsService.getYoutubeFiles(user)
-            
+
             return res.status(200).json({ files, youtubeFiles })
         } catch (error) {
             if (error instanceof AppError) {
@@ -28,7 +28,7 @@ export class SavedsController {
 
     static getSavedById = async (req: Request, res: Response) => {
         try {
-            const {id} = req.params as {id : string}
+            const { id } = req.params as { id: string }
             const file = await SavedsService.getFile(id)
             return res.status(200).json(file)
         } catch (error) {
@@ -43,53 +43,65 @@ export class SavedsController {
 
     static deleteOne = async (req: Request, res: Response) => {
         try {
-            const {id} = req.params as {id: string}
+            const { id } = req.params as { id: string }
 
             await SavedsService.delete(id)
 
             return res.status(200).send('Documento eliminado correctamente')
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(error.statusCode).json({error: error.message})
+                return res.status(error.statusCode).json({ error: error.message })
             }
-            return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
+            return res.status(500).json({ error: 'Hubo un error al eliminar el documento' })
         }
     }
 
 
     static editTitle = async (req: Request, res: Response) => {
         try {
-            const {id} = req.params as {id: string}
-            const {title} = req.body
+            const { id } = req.params as { id: string }
+            const { title } = req.body
             await SavedsService.edit(title, id)
 
             return res.status(200).send('Documento editado correctamente')
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(error.statusCode).json({error: error.message})
+                return res.status(error.statusCode).json({ error: error.message })
             }
-            return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
+            return res.status(500).json({ error: 'Hubo un error al eliminar el documento' })
         }
     }
 
 
     static generateIaSummary = async (req: Request, res: Response) => {
         try {
-            const {id} = req.params as {id: string}
+            const { id } = req.params as { id: string }
             const file = await SavedsService.getFile(id)
             const textSegments = file[0].segments.map(s => {
                 return {
                     text: s.text
                 }
             })
-            const summary = await generateSummary(textSegments)
-            console.log(summary)
-            return res.send(summary)
+            const stream = await generateSummary(textSegments)
+            res.setHeader('Content-Type', 'text/event-stream')
+            res.setHeader('Cache-Control', 'no-cache')
+            res.setHeader('Connection', 'keep-alive')
+
+            for await (const chunk of stream) {
+                const text = chunk.choices[0]?.delta.content ?? ''
+
+                if (text) {
+                    res.write(`data: ${JSON.stringify({text})}\n\n`)
+                }
+            }
+
+            res.write(`data: [DONE]\n\n`)
+            res.end()
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(error.statusCode).json({error: error.message})
+                return res.status(error.statusCode).json({ error: error.message })
             }
-            return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
+            return res.status(500).json({ error: 'Hubo un error al eliminar el documento' })
         }
     }
 }

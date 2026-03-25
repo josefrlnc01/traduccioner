@@ -10,15 +10,20 @@ import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
 import { DropdownMenuBasic } from '@/components/ui/DropdownMenuBasic'
 import EditFileDialog from '../components/EditFileDialog'
 import { motion } from 'motion/react'
-import Summary from '../components/Summary'
+import Summary from '../components/SummarySection'
+import SummarySection from '../components/SummarySection'
+import { isAxiosError } from 'axios'
+import { tokenStore } from '@/lib/token.store'
 
 
 
 export default function SavedsView() {
     const params = useParams()
     const [isOpen, setIsOpen] = useState(false)
-    const [summary, setSummary] = useState('')
     const [isReadySummary, setIsReadySummary] = useState(false)
+    const [summary, setSummary] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    
     const id = params.id
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
@@ -26,16 +31,7 @@ export default function SavedsView() {
         enabled: !!id
     })
 
-     const generateSumary = useMutation({
-        mutationFn: generateIaSummary,
-        onSuccess: (data) => {
-            setIsReadySummary(true)
-            setSummary(data)
-        },
-        onError: (error) => {
-            toast.error(error.message)
-        }
-    })
+    
 
 
     const generatePdf = useMutation({
@@ -60,8 +56,53 @@ export default function SavedsView() {
         generateSrt.mutate(segments)
     }
 
-     const handleGenerateSummary = () => {
-        generateSumary.mutate(id!)
+    
+    
+    const handleGenerateIaSummary = async () => {
+        const urlBackend = import.meta.env.VITE_API_URL
+        const accessToken = tokenStore.get()
+        setIsLoading(true)
+        setSummary('')
+        try {
+            const response = await fetch(`${urlBackend}/saveds/${id}/summary`, {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`
+                }
+            }
+            )
+
+            const reader = response.body!.getReader()
+            const decoder = new TextDecoder()
+
+            while (true) {
+                const { done, value } = await reader.read()
+
+                if (done) break
+
+
+                const chunk = decoder.decode(value)
+                const lines = chunk.split('\n\n').filter(Boolean)
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const data = line.replace('data: ', '')
+
+                        if (data === '[DONE]') return
+                        const { text } = JSON.parse(data)
+                        setSummary(prev => prev + text)
+                    }
+                }
+            }
+
+
+            setIsLoading(false)
+
+        } catch (error) {
+            if (isAxiosError(error) && error.response) {
+                throw new Error(error.response.data.error)
+            }
+        }
     }
 
 
@@ -127,13 +168,13 @@ export default function SavedsView() {
                                 className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>SRT</button>
                                 <button
-                                onClick={handleGenerateSummary}
+                                onClick={handleGenerateIaSummary}
                                 className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>Resumen</button>
                         </div>
 
                     </motion.aside>
-                    {summary && <Summary summary={summary}/>}
+                    {<SummarySection summary={summary} isLoading={isLoading}/>}
                 </section>
                 <Footer />
             </>

@@ -5,8 +5,9 @@ const openAi =  new OpenAI()
 export async function generateSummary (segments: {text:string}[]) {
     try {
         const fullText = segments.map((s) => s.text).join('')
-        const response = await openAi.chat.completions.create({
+        const stream = await openAi.chat.completions.create({
             model: 'gpt-4o-mini',
+            stream: true,
             messages: [
                 {
                     role: 'system',
@@ -25,10 +26,9 @@ export async function generateSummary (segments: {text:string}[]) {
                 }
             ]
         })
-        const summary = response.choices[0].message.content
-        if (!summary) throw new AppError('Error al generar el resumen', 400)
 
-        return summary
+        
+        return stream
     } catch (error) {
         if (error instanceof AppError) throw error
         throw new Error('Hubo un error durante el resumen de la transcripción')
