@@ -20,19 +20,16 @@ export class FileService {
 
             const id = uuidv4()
 
-
-            if (fileExists) {
-                return null
-            }
-
-            await FileModel.create({
+            const savedFile = await FileModel.create({
                 title: title,
                 fileId: id,
                 segments: fileText,
                 duration: duration,
                 user: user._id
             })
+
             
+            return savedFile
         } catch (error: any) {
             if (error instanceof AppError) throw error
             return null

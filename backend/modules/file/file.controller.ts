@@ -25,10 +25,10 @@ export class FileController {
             const {fileText, usedMinutes}= await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
             if (!fileText && !usedMinutes) return res.status(400).json({ error: 'Error al obtener transcripción' })
 
-            await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: formattedAudioDuration })
+            const savedFile = await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: formattedAudioDuration })
+            console.log('saved', savedFile)
             
-            
-            return res.status(200).json({ fileText, usedMinutes, user})
+            return res.status(200).json({ fileText: savedFile, usedMinutes, user})
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({error: error.message})

@@ -1,7 +1,9 @@
+import type { SavedFile } from "../components/SavedFile"
+
 export type StoredFileTranscription = {
     title: string,
     comment: string | null
-    fileText: WhisperSegment[],
+    fileText: SavedFile,
 }
 
 export type StoredFileTranslation = {

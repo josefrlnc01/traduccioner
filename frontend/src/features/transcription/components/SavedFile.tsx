@@ -13,7 +13,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { freeUserLanguages, languages } from '../stores/languages'
 import type { User } from '../types/user.types'
 
-type SavedFile = {
+export type SavedFile = {
     duration: string
     fileId: string
     segments: {

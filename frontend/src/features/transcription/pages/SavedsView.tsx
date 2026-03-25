@@ -17,11 +17,12 @@ import { tokenStore } from '@/lib/token.store'
 import { useSummary } from '../hooks/useSummary'
 import { container, item } from '../stores/motion'
 import SavedFile from '../components/SavedFile'
+import { useEditFile } from '../hooks/useEditFIle'
 
 
 
 export default function SavedsView() {
-    const [isOpen, setIsOpen] = useState(false)
+    const {isOpen, setIsOpen} = useEditFile()
     const [isReadySummary, setIsReadySummary] = useState(false)
     const { id } = useSummary()
     
