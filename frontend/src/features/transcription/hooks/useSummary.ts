@@ -43,10 +43,11 @@ export const useSummary = () => {
                         setSummary(prev => prev + text)
                     }
                 }
+                setIsLoading(false)
             }
 
 
-            setIsLoading(false)
+            
 
         } catch (error) {
             if (isAxiosError(error) && error.response) {

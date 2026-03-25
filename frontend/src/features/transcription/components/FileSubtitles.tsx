@@ -16,12 +16,12 @@ import { formatTime } from '@/shared/utils/minutes'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
-    const [lang, setLang] = useState('')
+    
    
-    const [selectedLang, setSelectedLang] = useState(false)
+    
     
     const { generatePdf, generateSrt } = useDocumentAction()
-    const {translation, isTranslating, generateFileTranslation} = useTranslate()
+    const {translation, isTranslating, generateFileTranslation, selectedLang, setSelectedLang, lang, setLang } = useTranslate()
     
 
 

@@ -8,6 +8,9 @@ import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
 import { toast } from 'react-toastify'
 import { useSummary } from '../hooks/useSummary'
 import SummarySection from './SummarySection'
+import { useTranslate } from '@/features/translation/hooks/useTranslate'
+import { Spinner } from '@/components/ui/spinner'
+import { languages } from '../stores/languages'
 
 type SavedFile = {
     duration: string
@@ -18,7 +21,8 @@ type SavedFile = {
         text: string
     }[],
     title: string
-    user: string
+    user: string,
+    origin: string,
     __v: number
     _id: string
 }
@@ -32,6 +36,7 @@ type SavedFileProps = {
 export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
     const navigate = useNavigate()
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
+    const { translation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
@@ -54,17 +59,63 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
         generateSrt.mutate(segments)
     }
 
+     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLang(true)
+        setLang(e.target.value)
+    }
+
+    const handleTranslate = () => {
+        if (data[0].origin === 'file') {
+            const formData = {
+            lang,
+            fileText: data[0].segments
+        }
+        generateFileTranslation.mutate(formData)
+        } else {
+            const formData = {
+            lang,
+            youtubeVideoText: data[0].segments
+        }
+        generateYoutubeTranslation.mutate(formData)
+        }
+    }
+    
     const formattedFileText = data[0].segments.map(s => `${formatTime(Number(s.start.toFixed(2)))}:${formatTime(Number(s.end.toFixed(2)))} ${s.text}`).join('\n')
 
     return (
         <aside className='w-full md:w-3/4 lg:w-2/4 h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
-            {/* Header */}
             <header className='flex justify-between items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                 <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
                     {data[0].title}
                     <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                 </h2>
+                <div className="flex items-center justify-center gap-2">
+                    <select
+                        onChange={handleSelect}
+                        className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                    >
+                        <option defaultValue={''} disabled>Traducir a...</option>
+                        {languages.map(lang => (
+                            <option key={lang.value} value={lang.value}>{lang.label}</option>
+                        ))}
+                    </select>
+
+                    <button
+                        onClick={handleTranslate}
+                        disabled={!selectedLang || isTranslating}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                    >
+                        {isTranslating ? (
+                            <>
+                                <Spinner className="size-3" />
+                                Traduciendo
+                            </>
+                        ) : (
+                            'Traducir'
+                        )}
+                    </button>
+                </div>
                 <div className='flex items-center justify-center gap-2'>
                     <button
                         onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
@@ -96,30 +147,35 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
                 </div>
             </header>
 
-            {/* Body - dos columnas */}
             <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
 
-                {/* columna izquierda - transcripción */}
                 <div className='flex flex-col flex-1 border-r border-slate-700/50'>
                     <div className='px-5 py-3 border-b border-slate-700/30'>
                         <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
                     </div>
                     <motion.div
-                        className='flex-1 overflow-y-auto p-5 space-y-1 max-h-96'
+                        className='grow bg-slate-800/40 p-8'
                         variants={container}
                         initial='hidden'
-                        animate='show'
-                    >
-                        {data[0].segments.map((s: { start: number, end: number, text: string }) => (
+                        animate='show'>
+                        {translation.length === 0 && data[0].segments.map((s, i) => (
                             <motion.p
-                                key={s.start}
-                                variants={item}
+                                key={i}
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
-                                className='text-sm text-gray-200 leading-relaxed rounded-md px-2 py-1'
-                            >
-                                <span className='text-[#0d59f2] text-xs mr-2 font-mono'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span>
-                                {s.text}
+                                variants={item}
+                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
+                            </motion.p>
+                        ))}
+                        {translation.length > 0 && translation.map((s, i) => (
+                            <motion.p
+                                key={i}
+                                whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                transition={{ duration: 0.15 }}
+                                variants={item}
+                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{s.start.toFixed(2)}:{s.end.toFixed(2)}</span> {s.text}
                             </motion.p>
                         ))}
                     </motion.div>

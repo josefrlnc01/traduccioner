@@ -12,6 +12,7 @@ export type Saveds = {
     text: string
   }[],
   duration: string,
+  origin:string,
   user: string,
 }[]
 

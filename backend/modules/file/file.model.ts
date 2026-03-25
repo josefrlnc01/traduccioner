@@ -11,7 +11,8 @@ export interface IFileStored extends Document {
         }
     ],
     duration: string | null,
-    translatedFile: string | null
+    translatedFile: string | null,
+    origin: string,
     user: Types.ObjectId
 }
 
@@ -39,6 +40,10 @@ const fileSchema: Schema = new Schema({
     translatedFile: {
         type: String,
         required: false
+    },
+    origin: {
+        type: String,
+        default: 'file'
     },
     user: {
         type: Types.ObjectId,
