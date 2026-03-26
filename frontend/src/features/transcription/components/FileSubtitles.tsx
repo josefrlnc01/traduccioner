@@ -26,14 +26,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     const { summary, handleGenerateIaSummary } = useSummary()
     const { isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
-    const { generatePdf,
-        generateSrt,
-        generateTxt,
-        generateVtt,
-        generateDocX,
-        generateJson,
-        generateCsv } = useDocumentAction()
-
+    
     const { translation,
         isTranslating,
         setIsTranslating,
@@ -73,60 +66,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     console.log(mutation.data)
     const fileText = mutation.data.fileText
     const user = mutation.data.user
-    console.log(fileText)
-
-
-    const handleGenerateTranscriptionPdf = (text: string) => {
-        generatePdf.mutate(text)
-    }
-
-    const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: fileText.title
-        }
-        generateSrt.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {
-        generateTxt.mutate(segments)
-    }
-
-    const handleGenerateTranscriptionVtt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: fileText.title
-        }
-        generateVtt.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionDocX = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: fileText.title
-        }
-        generateDocX.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: fileText.title
-        }
-        generateJson.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: fileText.title
-        }
-        generateCsv.mutate(formData)
-    }
-
-
-
-    const formattedFileText = fileText.segments.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
+    
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)

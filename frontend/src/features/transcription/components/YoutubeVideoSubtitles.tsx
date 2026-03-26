@@ -23,14 +23,6 @@ import EditFileDialog from './EditFileDialog'
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
     const [selectedLang, setSelectedLang] = useState(false)
-
-    const { generatePdf,
-        generateSrt,
-        generateTxt,
-        generateVtt,
-        generateDocX,
-        generateJson,
-        generateCsv } = useDocumentAction()
     const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
@@ -53,61 +45,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     console.log(mutation.data)
     const youtubeVideoText = mutation.data.youtubeVideoText
     const user = mutation.data.user
-    const handleGenerateTranscriptionPdf = (subtitles: string) => {
-        generatePdf.mutate(subtitles)
-    }
-
-    const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: youtubeVideoText.title
-        }
-        generateSrt.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {
-        generateTxt.mutate(segments)
-    }
-
-    const handleGenerateTranscriptionVtt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: youtubeVideoText.title
-        }
-        generateVtt.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionDocX = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: youtubeVideoText.title
-        }
-        generateDocX.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: youtubeVideoText.title
-        }
-        generateJson.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: youtubeVideoText.title
-        }
-        generateCsv.mutate(formData)
-    }
-
-
-
-    const formattedYoutubeVideoText = youtubeVideoText
-        .segments
-        .map(s => `[${s.start}:${s.end}] ${s.text}`)
-        .join('\n')
-
+    
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
