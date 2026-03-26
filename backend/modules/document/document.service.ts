@@ -8,7 +8,8 @@ import assert from "node:assert"
 import fsSync from 'node:fs'
 
 export class DocumentService {
-    static generatePdf = async (text: string) => {
+    static generatePdf = async (segments:{start: number, end:number, text: string}[]) => {
+        const text = segments.map(s => `${formatTime(s.start)}:${formatTime(s.end)} ${s.text}`)
         const contenido = `<aside>
                 ${text}
                 </aside>`

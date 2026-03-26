@@ -48,8 +48,12 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
         generateJson,
         generateCsv } = useDocumentAction()
 
-    const handleGenerateTranscriptionPdf = (text: string) => {
-        generatePdf.mutate(text)
+    const handleGenerateTranscriptionPdf = (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: data.title
+        }
+        generatePdf.mutate(formData)
     }
 
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
@@ -61,7 +65,11 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
     }
 
     const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {
-        generateTxt.mutate(segments)
+        const formData = {
+            segments,
+            title: data.title
+        }
+        generateTxt.mutate(formData)
     }
 
     const handleGenerateTranscriptionVtt = (segments: { start: number, end: number, text: string }[]) => {
@@ -140,7 +148,7 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
                     onClick={() => handleGenerateTranscriptionTxt(data.segments)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">TXT</DropdownMenuItem>
                     <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionPdf(formattedText)}
+                    onClick={() => handleGenerateTranscriptionPdf(data.segments)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">PDF</DropdownMenuItem>
                     <DropdownMenuItem 
                     onClick={() => handleGenerateTranscriptionSrt(data.segments)}

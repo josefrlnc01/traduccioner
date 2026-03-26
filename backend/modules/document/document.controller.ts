@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { DocumentService } from "./document.service.js";
 import { AppError } from "../errors/AppError.js";
+import { formatTime } from "../../shared/utils/time.js";
 
 export class DocumentController {
     static createPDF = async (req: Request, res: Response) => {
         try {
-            const { text } = req.body
-            const buffer = await DocumentService.generatePdf(text)
+            const { segments } = req.body as {segments: {start:number,end:number,text:string}[]}
+            
+            const buffer = await DocumentService.generatePdf(segments)
             res.setHeader("Content-Type", "application/pdf")
             res.setHeader("Content-Disposition", 'attachment; filename="archivo.pdf"')
             return res.status(201).send(buffer)

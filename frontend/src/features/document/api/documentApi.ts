@@ -12,10 +12,10 @@ type DocumentProps = {
 }
 
 
-export async function generatePDF(text: string) {
+export async function generatePDF({segments, title}: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
-        const { data } = await axios.post(`${baseUrl}/document/create-pdf`, { text }, {
+        const { data } = await axios.post(`${baseUrl}/document/create-pdf`, { segments }, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${accessToken}`
@@ -27,7 +27,7 @@ export async function generatePDF(text: string) {
         const url = URL.createObjectURL(data)
         const a = document.createElement('a')
         a.href = url
-        a.download = 'archivo.pdf'
+        a.download = `${title.replace('.mp4', '')}.pdf`
         a.click()
         URL.revokeObjectURL(url)
     } catch (error) {
@@ -90,7 +90,7 @@ export async function generateVTT({segments, title}: DocumentProps) {
 }
 
 
-export async function generateTXT(segments: { start: number, end: number, text: string }[]) {
+export async function generateTXT({segments, title}: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
         const { data } = await axios.post(`${baseUrl}/document/create-txt`, { segments }, {
@@ -107,7 +107,7 @@ export async function generateTXT(segments: { start: number, end: number, text: 
         const url = URL.createObjectURL(data)
         const a = document.createElement('a')
         a.href = url
-        a.download = 'transcripción.txt'
+        a.download = `${title.replace('.mp4', '')}.txt`
         a.click()
     } catch (error) {
         if (isAxiosError(error) && error.response) {
