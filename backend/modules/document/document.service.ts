@@ -47,7 +47,7 @@ export class DocumentService {
         return segments.map((segment) => {
             const start = formatTime(segment.start)
             const end = formatTime(segment.end)
-            return `${start}${end} ${segment.text}`
+            return `${start}:${end} ${segment.text}`
         }).join('\n')
     }
 
