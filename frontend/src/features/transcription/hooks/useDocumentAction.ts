@@ -1,4 +1,4 @@
-import { generatePDF, generateSRT } from "@/features/document/api/documentApi"
+import { generatePDF, generateSRT, generateTXT } from "@/features/document/api/documentApi"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
@@ -17,5 +17,12 @@ export const useDocumentAction = () => {
         }
     })
 
-    return  {generatePdf, generateSrt}
+    const generateTxt = useMutation({
+        mutationFn: generateTXT,
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
+    return  {generatePdf, generateSrt, generateTxt}
 }

@@ -52,3 +52,30 @@ export async function generateSRT (segments: {start:number, end:number, text:str
         }
     }
 }
+
+
+export async function generateTXT (segments: {start:number, end:number, text:string}[]) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${baseUrl}/document/create-txt`, {segments}, {
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization" : `Bearer ${accessToken}`
+            },
+            withCredentials:true,
+            responseType: 'blob'
+        })
+        if (!data) {
+            throw new Error('Error en generación de srt')
+        }
+        const url = URL.createObjectURL(data)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'transcripción.txt'
+        a.click()
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
