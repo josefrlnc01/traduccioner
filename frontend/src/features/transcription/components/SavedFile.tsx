@@ -43,7 +43,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const navigate = useNavigate()
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
     const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
-    const {generatePdf, generateSrt, generateTxt, generateVtt} = useDocumentAction()
+    const {generatePdf, generateSrt, generateTxt, generateVtt, generateDocX} = useDocumentAction()
 
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
@@ -67,6 +67,14 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
             title: data[0].title
         }
         generateVtt.mutate(formData)
+    }
+
+    const handleGenerateTranscriptionDocX = (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: data[0].title
+        }
+        generateDocX.mutate(formData)
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -175,6 +183,15 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         VTT
+                    </button>
+                    <button
+                        onClick={() => handleGenerateTranscriptionDocX(data[0].segments)}
+                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                    >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        DOCX
                     </button>
 
                     <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} />

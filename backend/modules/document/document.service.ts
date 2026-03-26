@@ -2,7 +2,7 @@ import { AppError } from "../errors/AppError.js"
 import pdf from 'html-pdf'
 import fs from 'node:fs/promises'
 import { formatSRTTime, formatTime, formatVTTTime } from "../../shared/utils/time.js"
-
+import { Document, Packer, Paragraph, TextRun } from "docx"
 
 export class DocumentService {
     static generatePdf = async (text: string) => {
@@ -49,5 +49,32 @@ export class DocumentService {
             const end = formatTime(segment.end)
             return `${start}${end} ${segment.text}`
         }).join('\n')
+    }
+
+
+    static generateDocX = async (segments:{start:number, end: number, text:string}[]) => {
+        const paragraphs = segments.map(seg => 
+            new Paragraph({
+                children: [
+                    new TextRun(`${formatTime(Number(seg.start.toFixed(2)))} ${Number(seg.end.toFixed(2))}`),
+                    new TextRun({
+                        text: seg.text,
+                        bold: true
+                    })
+                ]
+
+            })
+        )
+
+        const doc = new Document({
+            sections: [
+                {children: paragraphs}
+            ]
+        })
+
+        const buffer = await Packer.toBuffer(doc)
+
+
+        return buffer
     }
 }

@@ -116,3 +116,28 @@ export async function generateTXT(segments: { start: number, end: number, text: 
     }
 }
 
+
+
+export async function generateDOCX({segments, title}: DocumentProps) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${baseUrl}/document/create-docx`, {segments}, {
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            },
+            withCredentials: true,
+            responseType: 'blob'
+        })
+
+        const url = URL.createObjectURL(data)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${title.replace('.mp4', '')}.docx`
+        a.click()
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
