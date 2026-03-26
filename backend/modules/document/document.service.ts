@@ -1,7 +1,7 @@
 import { AppError } from "../errors/AppError.js"
 import pdf from 'html-pdf'
 import fs from 'node:fs/promises'
-import { formatSRTTime, formatTime } from "../../shared/utils/time.js"
+import { formatSRTTime, formatTime, formatVTTTime } from "../../shared/utils/time.js"
 
 
 export class DocumentService {
@@ -30,6 +30,16 @@ export class DocumentService {
             const end = formatSRTTime(segment.end)
             return `${i + 1}\n${start} ---> ${end}\n ${segment.text.trim()}\n`
         }).join('\n')
+    }
+
+
+    static generateVtt = async (segments: { start: number, end: number, text: string }[]) => {
+        const body = segments.map(s => `
+            ${formatVTTTime(s.start)} ---> ${formatVTTTime(s.end)}
+            ${s.text}
+            `.trim()).join('\n\n')
+
+        return `WEBVTT\n\n${body}`
     }
 
 

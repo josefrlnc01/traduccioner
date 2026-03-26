@@ -31,6 +31,19 @@ export class DocumentController {
         }
     }
 
+    static createVTT = async (req: Request, res: Response) => {
+        try {
+            const {segments} = req.body
+
+            const vtt = DocumentService.generateVtt(segments)
+            res.setHeader("Content-Type", "text/plain")
+            res.setHeader("Content-Disposition", "attachment; filename='archivo.vtt'")
+            return res.status(201).send(vtt)
+        } catch (error) {
+            return res.status(500).json({error: 'Hubo un error al generar el SRT'})
+        }
+    }
+
 
     static createTXT = async (req: Request, res: Response) => {
         try {
@@ -49,5 +62,8 @@ export class DocumentController {
             return res.status(500).json({error: 'Hubo un error al crear el archivo TXT'})
         }
     }
+
+
+
 
 }   
