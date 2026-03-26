@@ -24,7 +24,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const [lang, setLang] = useState('')
     const [selectedLang, setSelectedLang] = useState(false)
 
-    const { generatePdf, generateSrt, generateTxt, generateVtt, generateDocX } = useDocumentAction()
+    const { generatePdf, generateSrt, generateTxt, generateVtt, generateDocX, generateJson } = useDocumentAction()
     const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
@@ -79,7 +79,15 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         generateDocX.mutate(formData)
     }
 
-    
+    const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: youtubeVideoText.title
+        }
+        generateDocX.mutate(formData)
+    }
+
+
 
     const formattedYoutubeVideoText = youtubeVideoText
         .segments
@@ -109,7 +117,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
 
-         {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
+            {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
             <aside className='w-full md:w-3/4  h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
                 <header className='flex justify-between items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
@@ -140,33 +148,41 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             SRT
                         </button>
                         <button
-                        onClick={() => handleGenerateTranscriptionTxt(youtubeVideoText.segments)}
-                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
-                    >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h8M8 17h5M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        TXT
-                    </button>
-                    <button
-                        onClick={() => handleGenerateTranscriptionVtt(youtubeVideoText.segments)}
-                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
-                    >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 3h4M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        VTT
-                    </button>
-                    <button
-                        onClick={() => handleGenerateTranscriptionDocX(youtubeVideoText.segments)}
-                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
-                    >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        DOCX
-                    </button>
-
+                            onClick={() => handleGenerateTranscriptionTxt(youtubeVideoText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h8M8 17h5M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            TXT
+                        </button>
+                        <button
+                            onClick={() => handleGenerateTranscriptionVtt(youtubeVideoText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 3h4M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            VTT
+                        </button>
+                        <button
+                            onClick={() => handleGenerateTranscriptionDocX(youtubeVideoText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            DOCX
+                        </button>
+                        <button
+                            onClick={() => handleGenerateTranscriptionJson(youtubeVideoText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            JSON
+                        </button>
 
                         <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={mutation} />
 
