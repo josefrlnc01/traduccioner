@@ -36,8 +36,10 @@ export class DocumentController {
         try {
             const { segments } = req.body
 
-            const vtt = DocumentService.generateVtt(segments)
-            res.setHeader("Content-Type", "text/plain")
+            const vtt = await DocumentService.generateVtt(segments)
+
+            console.log('vtt', vtt)
+            res.setHeader("Content-Type", "text/vtt; charset=utf-8")
             res.setHeader("Content-Disposition", "attachment; filename=archivo.vtt")
             return res.status(201).send(vtt)
         } catch (error) {

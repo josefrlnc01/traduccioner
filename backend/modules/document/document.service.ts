@@ -28,14 +28,14 @@ export class DocumentService {
         return segments.map((segment, i) => {
             const start = formatSRTTime(segment.start)
             const end = formatSRTTime(segment.end)
-            return `${i + 1}\n${start} ---> ${end}\n ${segment.text.trim()}\n`
-        }).join('\n')
+            return `${i + 1}\n${start} --> ${end}\n${segment.text.trim()}`
+        }).join('\n\n')
     }
 
 
     static generateVtt = async (segments: { start: number, end: number, text: string }[]) => {
         const body = segments.map(s => `
-            ${formatVTTTime(s.start)} ---> ${formatVTTTime(s.end)}
+            ${formatVTTTime(s.start)} --> ${formatVTTTime(s.end)}
             ${s.text}
             `.trim()).join('\n\n')
 
