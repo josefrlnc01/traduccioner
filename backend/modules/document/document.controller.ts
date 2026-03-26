@@ -75,7 +75,7 @@ export class DocumentController {
             )
 
             res.setHeader("Content-Disposition",
-                "attachment; filename='archivo.docx'")
+                "attachment; filename=archivo.docx")
 
             return res.status(201).send(buffer)
         } catch (error) {

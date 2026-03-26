@@ -55,11 +55,17 @@ export class DocumentService {
     static generateDocX = async (segments:{start:number, end: number, text:string}[]) => {
         const paragraphs = segments.map(seg => 
             new Paragraph({
+                spacing: {after: 200},
                 children: [
-                    new TextRun(`${formatTime(Number(seg.start.toFixed(2)))} ${Number(seg.end.toFixed(2))}`),
+                    new TextRun({
+                        text: `${formatTime((seg.start))} `,
+                        color: '666666',
+                        font: 'Courier New'
+                    }),
                     new TextRun({
                         text: seg.text,
-                        bold: true
+                        bold: true,
+                        size: 24
                     })
                 ]
 
