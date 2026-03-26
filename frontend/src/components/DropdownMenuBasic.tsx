@@ -21,6 +21,7 @@ type DropdownProps = {
     mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown> | null
 }
 export function DropdownMenuBasic({ id,  setIsOpen, mutation }: DropdownProps) {
+    console.log('id', id)
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFN = useMutation({

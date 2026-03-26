@@ -16,6 +16,7 @@ import { DropdownMenuBasic } from '@/components/DropdownMenuBasic'
 import SummarySection from './SummarySection'
 import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
+import EditFileDialog from './EditFileDialog'
 
 
 
@@ -26,7 +27,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const { generatePdf, generateSrt, generateTxt, generateVtt, generateDocX } = useDocumentAction()
     const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
-    const { setIsOpen } = useEditFile()
+    const { isOpen, setIsOpen } = useEditFile()
 
     if (mutation.isError) {
         return (
@@ -108,7 +109,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
 
-
+         {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
             <aside className='w-full md:w-3/4  h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
                 <header className='flex justify-between items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>

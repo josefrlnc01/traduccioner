@@ -34,8 +34,6 @@ export default function SavedsView() {
     })
 
 
-    console.log(data)
-
    
 
     if (error) {
@@ -47,12 +45,18 @@ export default function SavedsView() {
     }
 
     if (data) {
+        const file = data.file[0]
+        
+        console.log('file', file)
+        if (!file) return
+
+        console.log('savedsview', file)
         return (
             <>
-                {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data[0].title} />}
+                {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={file.title} />}
                 <Header />
                 <section className='w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20'>
-                    <SavedFile data={data.file} setIsOpen={setIsOpen} user={data.user} id={id!}/>
+                    <SavedFile data={file} setIsOpen={setIsOpen} user={data.user} id={id!}/>
                 </section>
                 <Footer />
             </>

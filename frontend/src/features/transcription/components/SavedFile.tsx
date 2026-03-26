@@ -31,7 +31,7 @@ export type SavedFile = {
 }
 
 type SavedFileProps = {
-    data: SavedFile[]
+    data: SavedFile
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     user: User
     id: string
@@ -57,7 +57,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
         const formData = {
             segments,
-            title: data[0].title
+            title: data.title
         }
         generateSrt.mutate(formData)
     }
@@ -69,7 +69,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const handleGenerateTranscriptionVtt = (segments: { start: number, end: number, text: string }[]) => {
         const formData = {
             segments,
-            title: data[0].title
+            title: data.title
         }
         generateVtt.mutate(formData)
     }
@@ -77,7 +77,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const handleGenerateTranscriptionDocX = (segments: { start: number, end: number, text: string }[]) => {
         const formData = {
             segments,
-            title: data[0].title
+            title: data.title
         }
         generateDocX.mutate(formData)
     }
@@ -85,7 +85,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
         const formData = {
             segments,
-            title: data[0].title
+            title: data.title
         }
         generateJson.mutate(formData)
     }
@@ -96,16 +96,16 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     }
 
     const handleTranslate = () => {
-        if (data[0].origin === 'file') {
+        if (data.origin === 'file') {
             const formData = {
                 lang,
-                fileText: data[0].segments
+                fileText: data.segments
             }
             generateFileTranslation.mutate(formData)
         } else {
             const formData = {
                 lang,
-                youtubeVideoText: data[0].segments
+                youtubeVideoText: data.segments
             }
             generateYoutubeTranslation.mutate(formData)
         }
@@ -113,7 +113,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
 
     console.log(translation)
 
-    const formattedFileText = data[0].segments.map(s => `${formatTime(Number(s.start.toFixed(2)))}:${formatTime(Number(s.end.toFixed(2)))} ${s.text}`).join('\n')
+    const formattedFileText = data.segments.map(s => `${formatTime(Number(s.start.toFixed(2)))}:${formatTime(Number(s.end.toFixed(2)))} ${s.text}`).join('\n')
 
     return (
         <aside className='w-full md:w-3/4 lg:w-2/4 h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
@@ -121,7 +121,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
             <header className='flex justify-between items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                 <div className='grow-0 flex items-center gap-4'>
                     <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
-                        {data[0].title}
+                        {data.title}
                         <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                     </h2>
 
@@ -137,7 +137,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         PDF
                     </button>
                     <button
-                        onClick={() => handleGenerateTranscriptionSrt(data[0].segments)}
+                        onClick={() => handleGenerateTranscriptionSrt(data.segments)}
                         className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,7 +146,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         SRT
                     </button>
                     <button
-                        onClick={() => handleGenerateTranscriptionTxt(data[0].segments)}
+                        onClick={() => handleGenerateTranscriptionTxt(data.segments)}
                         className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         TXT
                     </button>
                     <button
-                        onClick={() => handleGenerateTranscriptionVtt(data[0].segments)}
+                        onClick={() => handleGenerateTranscriptionVtt(data.segments)}
                         className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +164,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         VTT
                     </button>
                     <button
-                        onClick={() => handleGenerateTranscriptionDocX(data[0].segments)}
+                        onClick={() => handleGenerateTranscriptionDocX(data.segments)}
                         className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,7 +174,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                     </button>
 
                     <button
-                        onClick={() => handleGenerateTranscriptionJson(data[0].segments)}
+                        onClick={() => handleGenerateTranscriptionJson(data.segments)}
                         className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
                     >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,7 +183,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         JSON
                     </button>
 
-                    <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} mutation={null} />
+                    <DropdownMenuBasic id={data.fileId} setIsOpen={setIsOpen} mutation={null} />
 
                     <button onClick={() => navigate('/')} className='p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -240,7 +240,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         variants={container}
                         initial='hidden'
                         animate='show'>
-                        {(translation.length === 0 && youtubeTranslation.length === 0) && data[0].segments.map((s, i) => (
+                        {(translation.length === 0 && youtubeTranslation.length === 0) && data.segments.map((s, i) => (
                             <motion.p
                                 key={i}
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}

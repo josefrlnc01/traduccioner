@@ -19,6 +19,7 @@ type EditFileDialogProps = {
     title: string
 }
 export default function EditFileDialog({isOpen, setIsOpen, id, title}: EditFileDialogProps) {
+    const [newTitle, setNewTitle] = useState(title)
     const queryClient = useQueryClient()
     const editTitleFN = useMutation({
         mutationFn:editTitle,
@@ -30,7 +31,7 @@ export default function EditFileDialog({isOpen, setIsOpen, id, title}: EditFileD
             toast.error(error.message)
         }
     }) 
-    const [newTitle, setNewTitle] = useState('')
+    
     const handleTitle = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setNewTitle(e.target.value)
     }
@@ -43,6 +44,8 @@ export default function EditFileDialog({isOpen, setIsOpen, id, title}: EditFileD
         editTitleFN.mutate(formData)
         setIsOpen(false)
     }
+
+    console.log('isopen', isOpen)
   return (
     <>
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -53,7 +56,7 @@ export default function EditFileDialog({isOpen, setIsOpen, id, title}: EditFileD
         <DialogHeader>
             <DialogTitle>Nuevo título</DialogTitle>
             <DialogDescription>
-                <input onChange={handleTitle} type='text' value={title} className='w-full p-2'/>
+                <input onChange={handleTitle} type='text' value={newTitle} className='w-full p-2'/>
             </DialogDescription>
         </DialogHeader>
         <DialogFooter>
