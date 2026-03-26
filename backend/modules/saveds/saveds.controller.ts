@@ -30,8 +30,6 @@ export class SavedsController {
         try {
             const { id } = req.params as { id: string }
             const user = req.user
-            console.log('user', user)
-            console.log('id', id)
             const file = await SavedsService.getFile(id)
             return res.status(200).json({file, user})
         } catch (error) {

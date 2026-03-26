@@ -48,7 +48,8 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
         generateTxt,
         generateVtt,
         generateDocX,
-        generateJson } = useDocumentAction()
+        generateJson,
+        generateCsv } = useDocumentAction()
 
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
@@ -88,6 +89,14 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
             title: data.title
         }
         generateJson.mutate(formData)
+    }
+
+    const handleGenerateTranscriptionCsv =  (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: data.title
+        }
+        generateCsv.mutate(formData)
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -171,6 +180,15 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
                         DOCX
+                    </button>
+                    <button
+                        onClick={() => handleGenerateTranscriptionCsv(data.segments)}
+                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                    >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        CSV
                     </button>
 
                     <button

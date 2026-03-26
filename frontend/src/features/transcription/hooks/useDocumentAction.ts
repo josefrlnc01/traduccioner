@@ -1,4 +1,4 @@
-import { generateDOCX, generateJSON, generatePDF, generateSRT, generateTXT, generateVTT } from "@/features/document/api/documentApi"
+import { generateCSV, generateDOCX, generateJSON, generatePDF, generateSRT, generateTXT, generateVTT } from "@/features/document/api/documentApi"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
@@ -45,5 +45,12 @@ export const useDocumentAction = () => {
         }
     })
 
-    return  {generatePdf, generateSrt, generateTxt, generateVtt, generateDocX, generateJson}
+    const generateCsv = useMutation({
+        mutationFn: generateCSV,
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
+    return  {generatePdf, generateSrt, generateTxt, generateVtt, generateDocX, generateJson, generateCsv}
 }

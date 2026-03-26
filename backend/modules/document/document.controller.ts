@@ -107,4 +107,24 @@ export class DocumentController {
     }
 
 
+    static createCSV = async (req: Request, res: Response) => {
+        try {
+            console.log('inicio')
+            const {segments} = req.body
+            console.log(req.body)
+            const csv = await DocumentService.generateCsv(segments)
+            console.log('csv', csv)
+            res.setHeader("Content-Type", "text/csv")
+            res.setHeader("Content-Disposition", 'attachment; filename="archivo.csv"')
+            return res.send(csv)
+        } catch (error) {
+            console.error(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al crear el archivo CSV'})
+        }
+    }
+
+
 }   

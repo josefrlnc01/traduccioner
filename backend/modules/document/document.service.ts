@@ -3,6 +3,9 @@ import pdf from 'html-pdf'
 import fs from 'node:fs/promises'
 import { formatSRTTime, formatTime, formatVTTTime } from "../../shared/utils/time.js"
 import { Document, Packer, Paragraph, TextRun } from "docx"
+import {stringify} from 'csv-stringify/sync'
+import assert from "node:assert"
+import fsSync from 'node:fs'
 
 export class DocumentService {
     static generatePdf = async (text: string) => {
@@ -85,7 +88,7 @@ export class DocumentService {
     }
 
 
-    static generateJson = async (segments:{start:number, end:number, text:string}[]) => {
+    static generateJson = async (segments:{start: number, end: number, text: string}[]) => {
         const document = segments.map(s => {
             const start = s.start
             const end = s.end
@@ -98,5 +101,16 @@ export class DocumentService {
 
         const jsonDocument = JSON.stringify(document, null, 2)
         return jsonDocument
+    }
+
+
+    static generateCsv = async (segments:{start: number, end: number, text: string }[]) => {
+        const rows = segments.map(s => [formatTime(s.start), formatTime(s.end), s.text ])
+        const data = stringify([
+            ["start", "end", "text"],
+            ...rows
+        ])
+        fsSync.writeFileSync('transcription.csv', data)
+        return data
     }
 }

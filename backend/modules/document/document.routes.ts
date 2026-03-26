@@ -10,5 +10,6 @@ documentRoute.post('/create-vtt', authenticate, DocumentController.createVTT)
 documentRoute.post('/create-txt', authenticate, DocumentController.createTXT)
 documentRoute.post('/create-json', authenticate, DocumentController.createJSON)
 documentRoute.post('/create-docx', authenticate, DocumentController.createDOCX)
+documentRoute.post('/create-csv', authenticate, DocumentController.createCSV)
 
 

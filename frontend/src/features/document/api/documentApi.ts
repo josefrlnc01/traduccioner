@@ -168,3 +168,28 @@ export async function generateJSON({segments, title}: DocumentProps) {
     }
 }
 
+
+export async function generateCSV({segments, title}: DocumentProps) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${baseUrl}/document/create-csv`, {segments}, {
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            },
+            withCredentials: true,
+            responseType: 'blob'
+        })
+
+        const url = URL.createObjectURL(data)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${title.replace('.mp4', '')}.csv`
+        a.click()
+    } catch (error) {
+        console.error(error)
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
