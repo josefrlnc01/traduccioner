@@ -228,7 +228,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                             JSON
                         </button>
 
-                        <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} />
+                        <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={mutation.data.fileText} />
 
 
                     </div>
