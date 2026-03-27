@@ -113,41 +113,42 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                     <div className='flex flex-col flex-1 border-r border-slate-700/50'>
                         <div className='px-5 py-3 border-b border-slate-700/30 flex items-center justify-between gap-4'>
                             <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
-                            <div className="flex items-center justify-center gap-2">
-                                <div className='relative'>
-                                    <select
-                                        onChange={handleSelect}
-                                        defaultValue=''
-                                        className="flex-1 bg-slate-800 text-slate-300 appearance-none text-xs px-2 py-1.5 rounded-lg border border-slate-700 focus:outline-none hover:bg-slate-900/90 focus:border-blue-500 cursor-pointer duration-200 transition-colors ease"
-                                    >
-                                        <option value="" className='text-sm' disabled>Traducir a...</option>
-                                        {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                            <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                        ))}
-                                        {user.suscription === 'free' && freeUserLanguages.map(lang => (
-                                            <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                        ))}
+                            {(user.suscription === 'pro' || user.suscription === 'business') &&
+                                <>
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className='relative'>
+                                            <select
+                                                onChange={handleSelect}
+                                                defaultValue=''
+                                                className="flex-1 bg-slate-800 text-slate-300 appearance-none text-xs px-2 py-1.5 rounded-lg border border-slate-700 focus:outline-none hover:bg-slate-900/90 focus:border-blue-500 cursor-pointer duration-200 transition-colors ease"
+                                            >
+                                                <option value="" className='text-sm' disabled>Traducir a...</option>
+                                                {languages.map(lang => (
+                                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                                ))}
 
-                                    </select>
+                                            </select>
 
-                                </div>
+                                        </div>
 
 
-                                <button
-                                    onClick={handleTranslate}
-                                    disabled={!selectedLang || isTranslating}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
-                                >
-                                    {isTranslating ? (
-                                        <>
-                                            <Spinner className="size-3" />
-                                            Traduciendo
-                                        </>
-                                    ) : (
-                                        'Traducir'
-                                    )}
-                                </button>
-                            </div>
+                                        <button
+                                            onClick={handleTranslate}
+                                            disabled={!selectedLang || isTranslating}
+                                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                                        >
+                                            {isTranslating ? (
+                                                <>
+                                                    <Spinner className="size-3" />
+                                                    Traduciendo
+                                                </>
+                                            ) : (
+                                                'Traducir'
+                                            )}
+                                        </button>
+                                    </div>
+                                </>
+                            }
                         </div>
                         <motion.div
                             className='grow bg-slate-800/40 p-4 md:p-8'
