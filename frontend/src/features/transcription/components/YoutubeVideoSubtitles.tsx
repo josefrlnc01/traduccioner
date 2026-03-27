@@ -70,7 +70,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         <>
 
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
-            <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 grow h-auto md:grow-0 md:h-96 md:min-h-96 md:max-h-96 flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+            <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
             
                         <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                             <div className='grow-0 flex items-center gap-4 min-w-0'>
