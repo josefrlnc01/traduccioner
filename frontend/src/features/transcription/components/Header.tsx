@@ -42,7 +42,7 @@ export default function Header() {
       </div>
 
       
-      <div className="flex justify-center items-center hover:scale-105 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
+      <div className="flex justify-center items-center hover:scale-110 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Menu className="w-5 h-5 text-slate-400 cursor-pointer " />
