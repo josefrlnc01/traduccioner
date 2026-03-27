@@ -48,15 +48,7 @@ export default function SavedsList() {
   const filtereds = filteredsFile.concat(filteredsYoutube)
   return (
     <aside className='w-full relative mt-0 lg:w-2/4 md:w-3/4 p-2 md:p-0 m-auto flex flex-col justify-center items-center mb-10'>
-      <div className="w-full mb-6">
-  
-        <input
-          value={inputValue}
-          onChange={handleInputValue}
-          placeholder="Buscar archivo..."
-          className="w-full pl-9 pr-3 py-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-400 focus:outline-none focus:border-blue-500"
-        />
-      </div>
+
       <div className='w-full flex flex-col gap-4'>
         {filtereds.length === 0 &&
           <>
@@ -79,6 +71,15 @@ export default function SavedsList() {
           </>}
         {filtereds.length > 0 &&
           <>
+            <div className="w-full mb-6">
+
+              <input
+                value={inputValue}
+                onChange={handleInputValue}
+                placeholder="Buscar archivo..."
+                className="w-full pl-9 pr-3 py-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-400 focus:outline-none focus:border-blue-500"
+              />
+            </div>
             {filtereds.map(file => (
               <button key={file._id}>
                 <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
