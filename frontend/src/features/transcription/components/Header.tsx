@@ -26,7 +26,10 @@ export default function Header() {
 
 
   const deleteAccount = useMutation({
-    mutationFn: deleteUser
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      navigate('/landing-page')
+    }
   })
   const handleDelete = () => {
     deleteAccount.mutate()
