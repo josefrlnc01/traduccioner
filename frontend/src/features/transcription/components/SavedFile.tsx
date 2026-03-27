@@ -103,7 +103,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                                 <select
                                     onChange={handleSelect}
                                     defaultValue=''
-                                    className="flex-1 bg-slate-800 text-slate-300 text-xs px-2 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500"
+                                    className="flex-1 bg-slate-800 text-slate-300 appearance-none text-xs px-2 py-1.5 rounded-lg border border-slate-700 focus:outline-none hover:bg-slate-900/90 focus:border-blue-500 cursor-pointer duration-200 transition-colors ease"
                                 >
                                     <option value="" className='text-sm' disabled>Traducir a...</option>
                                     {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
@@ -114,7 +114,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                                     ))}
 
                                 </select>
-
+                                    
                             </div>
 
 

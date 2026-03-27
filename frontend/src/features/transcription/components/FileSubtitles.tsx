@@ -89,7 +89,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
     return (
         <>
-        
+
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.fileText.fileId} title={mutation.data?.fileText.title} />}
 
             <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4   flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
@@ -118,7 +118,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                                     <select
                                         onChange={handleSelect}
                                         defaultValue=''
-                                        className="bg-slate-800 text-slate-300 text-sm text-start  px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                        className="flex-1 bg-slate-800 text-slate-300 appearance-none text-xs px-2 py-1.5 rounded-lg border border-slate-700 focus:outline-none hover:bg-slate-900/90 focus:border-blue-500 cursor-pointer duration-200 transition-colors ease"
                                     >
                                         <option value="" className='text-sm' disabled>Traducir a...</option>
                                         {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
@@ -216,6 +216,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                     )}
                 </div>
             </aside>
-       </>
+        </>
     )
 }
