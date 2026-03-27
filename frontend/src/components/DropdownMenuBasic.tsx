@@ -134,7 +134,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                     </svg>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white">
+            <DropdownMenuContent className="bg-white grid grid-cols-2">
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>Archivo</DropdownMenuLabel>
                     <DropdownMenuItem
