@@ -1,7 +1,7 @@
 import { DropdownMenuBasic } from '@/components/DropdownMenuBasic'
 import { motion } from 'motion/react'
 import { useNavigate } from 'react-router'
-import { container, item } from '../stores/motion'
+import { savedsContainer, item } from '../stores/motion'
 import { formatTime } from '@/shared/utils/minutes'
 import { useMutation } from '@tanstack/react-query'
 import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
@@ -142,7 +142,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                     </div>
                     <motion.div
                         className='grow bg-slate-800/40 p-4 md:p-8'
-                        variants={container}
+                        variants={savedsContainer}
                         initial='hidden'
                         animate='show'>
                         {(translation.length === 0 && youtubeTranslation.length === 0) && data.segments.map((s, i) => (
