@@ -30,7 +30,7 @@ export default function SavedsList() {
     const files: Saveds = data.files
     const youtubeFiles: Saveds = data.youtubeFiles
     return (
-    <aside className='w-full min-w-full p-4 md:p-0 md:w-3/4 md:min-w-3/4 lg:1/2 lg:min-w-1/2 m-auto flex flex-col justify-center items-center mb-10'>
+    <aside className='w-full relative mt-0 lg:w-2/4 md:w-3/4 m-auto flex flex-col justify-center items-center mb-10'>
       <div className='w-full flex flex-col gap-4'>
         {files.map(file => (
           <button key={file._id}>

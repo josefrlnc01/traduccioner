@@ -156,7 +156,7 @@ export default function Form() {
                     </span>
                 </div>}
 
-                <aside className="w-full relative mt-0 lg:w-3/4 md:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
+                <aside className="w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
 
                     <form className="w-full flex flex-col  lg:p-2 gap-6">
 
@@ -166,10 +166,10 @@ export default function Form() {
                                 onDragOver={handleDragOver}
                                 className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
                                 <img src={InputIcon} />
-                                <label className="text-2xl font-bold">Sube tu archivo</label>
-                                <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
+                                <label className="text-md md:text-2xl font-bold">Sube tu archivo</label>
+                                <p className="text-sm md:text-xl text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
                                 <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
-                                <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500  transition-colors ease duration-300 cursor-pointer">
+                                <label htmlFor="fileUpload" className="w-full text-md md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500  transition-colors ease duration-300 cursor-pointer">
                                     {fileInputValue ? 'Actualizar archivo' : 'Seleccionar archivo'}
                                 </label>
 
