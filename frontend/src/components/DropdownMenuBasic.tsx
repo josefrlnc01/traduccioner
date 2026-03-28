@@ -12,14 +12,12 @@ import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/r
 import { deleteSaved } from "@/features/transcription/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
-import { useState } from "react"
 import type { PromiseFile, PromiseLink } from "@/features/transcription/api/transcriptionApi"
 import type { MutationProps } from "@/features/transcription/components/Form"
 import { useDocumentAction } from "@/features/transcription/hooks/useDocumentAction"
 import type { SavedFile } from "@/features/transcription/components/SavedFile"
-import { formatTime } from "@/shared/utils/minutes"
 import type { User } from "@/features/transcription/types/user.types"
-import { disabled } from "node_modules/@base-ui/react/esm/utils/reason-parts"
+
 
 type DropdownProps = {
     id: string,
@@ -117,7 +115,6 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
         setIsOpen(true)
     }
     console.log('user', user)
-    const formattedText = data.segments.map(s => `${formatTime(s.start)}:${formatTime(s.end)} ${s.text}`).join('\n')
 
     return (
         <DropdownMenu>
