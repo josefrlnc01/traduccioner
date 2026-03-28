@@ -14,7 +14,8 @@ export const corsMiddleware = () => cors({
     credentials:true,
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         const ACCEPTED_ORIGINS:string[] | undefined = [
-        frontendUrl
+        frontendUrl,
+        getRequiredEnv('FRONTEND_URL_WWW')
     ]
     if (process.env.NODE_ENV === 'production' && ACCEPTED_ORIGINS.length === 0) {
         console.warn('Faltan las variables de produccion por definir')
