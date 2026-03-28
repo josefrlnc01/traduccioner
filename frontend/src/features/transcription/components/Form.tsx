@@ -159,7 +159,7 @@ export default function Form() {
                                 onDragOver={handleDragOver}
                                 className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
                                 <img src={InputIcon} />
-                                <label className="text-md md:text-2xl font-bold">Sube tu archivo</label>
+                                <label className="text-lg md:text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-sm md:text-xl text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
                                 <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
                                 <label htmlFor="fileUpload" className="w-full text-md md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500  transition-colors ease duration-300 cursor-pointer">
