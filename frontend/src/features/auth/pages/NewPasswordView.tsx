@@ -1,10 +1,10 @@
-import { useState } from "react"
+/*import { useState } from "react"
 import NewPasswordToken from "../components/NewPasswordToken"
 import NewPasswordFormComponent from "../components/NewPasswordFormComponent"
 
 export default function NewPasswordView() {
     const [token, setToken] = useState('')
-    const [isValidToken, setIsValidToken] = useState(false)
+    //const [isValidToken, setIsValidToken] = useState(false)
 
     return (
         <>
@@ -22,4 +22,4 @@ export default function NewPasswordView() {
             </aside>
         </>
     )
-}
+}*/
