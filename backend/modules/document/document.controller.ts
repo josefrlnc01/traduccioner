@@ -12,10 +12,17 @@ export class DocumentController {
             res.setHeader("Content-Disposition", 'attachment; filename="archivo.pdf"')
             return res.status(201).send(buffer)
         } catch (error) {
-            if (error instanceof AppError) {
-                return res.status(error.statusCode).json({ error: error.message })
-            }
-            return res.status(500).json({ error: 'Hubo un error al generar el pdf' })
+            console.error('PDF generation error:', error)
+
+    if (error instanceof AppError) {
+        return res.status(error.statusCode).json({ error: error.message })
+    }
+
+    if (error instanceof Error) {
+        return res.status(500).json({ error: error.message })
+    }
+
+    return res.status(500).json({ error: 'Hubo un error al generar el pdf' })
         }
     }
 
