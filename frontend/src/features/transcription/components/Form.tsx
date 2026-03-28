@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
@@ -23,21 +23,30 @@ export default function Form() {
         Error,
         MutationProps
     >({
-        mutationFn: ({ link,  formData }) => sendLink(link,  formData),
+        mutationFn: ({ link, formData }) => sendLink(link, formData),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({queryKey: ['allSaveds']})
+            queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             setUsedMinues(data?.usedMinutes!)
-            setTimeout(() => {
-                resultRef.current?.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                })
-            }, 100)
         }
     })
-    
+
+    useEffect(() => {
+        if (!mutation.data) return
+        requestAnimationFrame(() => {
+            const element =
+                document.getElementById('file-result') ??
+                document.getElementById('yt-result')
+
+            element?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            })
+        })
+
+    }, [mutation.data])
+
     const suscription = suscriptionStore.get()
-    
+
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
 
@@ -86,7 +95,7 @@ export default function Form() {
 
             <section className="p-2 lg:p-8 relative grow flex flex-col justify-center items-center mb-15">
 
-                
+
                 {suscription === 'free' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6 mt-4">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
@@ -175,7 +184,7 @@ export default function Form() {
                                     className="hidden" />
 
                             </div>}
-                            {(!fileInputValue && !inputValue) && <span className="text-center text-sm md:text-xl text-gray-300 ">O</span>}
+                        {(!fileInputValue && !inputValue) && <span className="text-center text-sm md:text-xl text-gray-300 ">O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
                             {!fileInputValue &&
                                 <div className="w-full flex flex-col justify-around gap-2">
@@ -191,8 +200,8 @@ export default function Form() {
 
                                 </div>}
                         </div>
-                        {(changed && fileInputValue) && 
-                        <span className="text-sm text-shadow-white font-semibold text-center">Archivo preparado</span>}
+                        {(changed && fileInputValue) &&
+                            <span className="text-sm text-shadow-white font-semibold text-center">Archivo preparado</span>}
                         <button
                             type="submit"
                             onClick={handleForm}
@@ -203,14 +212,14 @@ export default function Form() {
                     </form>
 
                 </aside>
-                <div ref={resultRef}>
-                    <SubtitlesView
+
+                <SubtitlesView
                     mutation={mutation}
                     inputValue={inputValue}
                     fileInputValue={fileInputValue}
                 />
-                </div>
-                
+
+
             </section>
         </>
     )
