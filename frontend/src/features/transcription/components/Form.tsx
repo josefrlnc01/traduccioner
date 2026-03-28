@@ -3,7 +3,6 @@ import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcripti
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { minutesStore } from "@/shared/stores/minutes.store";
 import { formatMinutes } from "@/shared/utils/minutes";
 import { suscriptionStore } from "@/shared/stores/user-suscription.store";
 
