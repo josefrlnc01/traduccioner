@@ -149,7 +149,7 @@ export default function Form() {
                     </span>
                 </div>}
 
-                <aside className="w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
+                <aside className="w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-white bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
 
                     <form className="w-full flex flex-col  lg:p-2 gap-6">
 

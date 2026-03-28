@@ -3,6 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
 import { deleteUser } from "@/features/user/userApi"
+import { useTheme } from "@/shared/hooks/useTheme"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { LogOut, Menu } from "lucide-react"
@@ -10,6 +11,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 export default function Header() {
+
+
   const { data } = useAuth()
   const [isOpenForDelete, setIsOpenForDelete] = useState(false)
   const queryClient = useQueryClient()
@@ -46,7 +49,7 @@ export default function Header() {
         <h1 className="font-bold text-4xl text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
 
-
+      
       <div className="flex justify-center  items-center hover:scale-110 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
         <DropdownMenu>
           <DropdownMenuTrigger>
