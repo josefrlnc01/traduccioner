@@ -12,7 +12,7 @@ export class DocumentService {
                 ${text}
                 </aside>`
 
-        if (!text) {
+        if (!segments?.length) {
             throw new AppError('No hay contenido con el que generar el pdf', 400)
         }
 

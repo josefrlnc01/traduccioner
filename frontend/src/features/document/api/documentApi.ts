@@ -12,7 +12,7 @@ type DocumentProps = {
 }
 
 
-export async function generatePDF({segments, title}: DocumentProps) {
+export async function generatePDF({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
         const { data } = await axios.post(`${baseUrl}/document/create-pdf`, { segments }, {
@@ -33,7 +33,13 @@ export async function generatePDF({segments, title}: DocumentProps) {
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             if (error.response.data instanceof Blob) {
-                throw new Error('Hubo un error al generar el pdf')
+                const text = await error.response.data.text()
+                try {
+                    const parsed = JSON.parse(text)
+                    throw new Error(parsed.error || 'Hubo un error al generar el pdf')
+                } catch {
+                    throw new Error(text || 'Hubo un error al generar el pdf')
+                }
             }
             throw new Error(error.response.data.error)
         }
@@ -41,7 +47,7 @@ export async function generatePDF({segments, title}: DocumentProps) {
 }
 
 
-export async function generateSRT({segments, title}: DocumentProps) {
+export async function generateSRT({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
         const { data } = await axios.post(`${baseUrl}/document/create-srt`, { segments }, {
@@ -67,7 +73,7 @@ export async function generateSRT({segments, title}: DocumentProps) {
     }
 }
 
-export async function generateVTT({segments, title}: DocumentProps) {
+export async function generateVTT({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
         const { data } = await axios.post(`${baseUrl}/document/create-vtt`, { segments }, {
@@ -93,7 +99,7 @@ export async function generateVTT({segments, title}: DocumentProps) {
 }
 
 
-export async function generateTXT({segments, title}: DocumentProps) {
+export async function generateTXT({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
         const { data } = await axios.post(`${baseUrl}/document/create-txt`, { segments }, {
@@ -121,12 +127,12 @@ export async function generateTXT({segments, title}: DocumentProps) {
 
 
 
-export async function generateDOCX({segments, title}: DocumentProps) {
+export async function generateDOCX({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
-        const {data} = await axios.post(`${baseUrl}/document/create-docx`, {segments}, {
+        const { data } = await axios.post(`${baseUrl}/document/create-docx`, { segments }, {
             headers: {
-                "Authorization" : `Bearer ${accessToken}`
+                "Authorization": `Bearer ${accessToken}`
             },
             withCredentials: true,
             responseType: 'blob'
@@ -146,12 +152,12 @@ export async function generateDOCX({segments, title}: DocumentProps) {
 
 
 
-export async function generateJSON({segments, title}: DocumentProps) {
+export async function generateJSON({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
-        const {data} = await axios.post(`${baseUrl}/document/create-json`, {segments}, {
+        const { data } = await axios.post(`${baseUrl}/document/create-json`, { segments }, {
             headers: {
-                "Authorization" : `Bearer ${accessToken}`
+                "Authorization": `Bearer ${accessToken}`
             },
             withCredentials: true,
             responseType: 'blob'
@@ -171,12 +177,12 @@ export async function generateJSON({segments, title}: DocumentProps) {
 }
 
 
-export async function generateCSV({segments, title}: DocumentProps) {
+export async function generateCSV({ segments, title }: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
-        const {data} = await axios.post(`${baseUrl}/document/create-csv`, {segments}, {
+        const { data } = await axios.post(`${baseUrl}/document/create-csv`, { segments }, {
             headers: {
-                "Authorization" : `Bearer ${accessToken}`
+                "Authorization": `Bearer ${accessToken}`
             },
             withCredentials: true,
             responseType: 'blob'
