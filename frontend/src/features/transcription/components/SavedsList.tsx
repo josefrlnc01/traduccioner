@@ -47,16 +47,16 @@ export default function SavedsList() {
   const filteredsYoutube = youtubeFiles.filter(file => file.title.toLowerCase().includes(inputValue))
   const filtereds = filteredsFile.concat(filteredsYoutube)
   return (
-    <aside className='w-full relative mt-0 lg:w-2/4 md:w-3/4 p-2 md:p-0 m-auto flex flex-col justify-center items-center mb-10'>
-
+    <aside className='w-full relative mt-0 bg-slate-800/30 lg:w-2/4 md:w-3/4 p-6 rounded-md  m-auto flex flex-col justify-center items-center mb-10'>
+      <div className='flex flex-col gap-2 justify-center items-center mb-6'>
+        <h2 className='font-bold text-md md:text-xl lg:text-2xl'>Archivos transcritos</h2>
+      <span className='text-xs md:text-lg text-gray-600'>Pulsa sobre uno para acceder a su contenido</span>
+      </div>
       <div className='w-full flex flex-col gap-4'>
         
         {filtereds.length === 0  &&
           <>
-          <div className="w-full mb-6">
-
-              
-            </div>
+      
             {files.map(file => (
               <button key={file._id}>
                 <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
