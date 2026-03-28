@@ -4,16 +4,11 @@ import { formatSRTTime, formatTime, formatVTTTime } from "../../shared/utils/tim
 import { Document, Packer, Paragraph, TextRun } from "docx"
 import {stringify} from 'csv-stringify/sync'
 import fsSync from 'node:fs'
-import blobstream from 'blob-stream'
 
 
 export class DocumentService {
     static generatePdf = async (segments:{start: number, end:number, text: string}[]) => {
         const text = segments.map(s => `${formatTime(s.start)}:${formatTime(s.end)} ${s.text}`)
-        const contenido = `<aside>
-                ${text}
-                </aside>`
-        
         if (!segments?.length) {
             throw new AppError('No hay contenido con el que generar el pdf', 400)
         }
