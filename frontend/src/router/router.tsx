@@ -10,7 +10,7 @@ import LandingLayout from "@/pages/landing/layout/LandingLayout"
 import LandingPage from "@/pages/landing/LandingPage"
 import SavedsView from "@/features/transcription/pages/SavedsView"
 import ForgotPasswordView from "@/features/auth/pages/ForgotPasswordView"
-import NewPasswordView from "@/features/auth/pages/NewPasswordView"
+//import NewPasswordView from "@/features/auth/pages/NewPasswordView"
 
 
 export default function Router() {
@@ -30,7 +30,6 @@ export default function Router() {
               <Route path="/auth/login" element={<LoginView/>}/>
               <Route path="/auth/register" element={<RegisterView/>}/>
               <Route path="/auth/request-code" element={<ResendTokenView/>}/>
-              <Route path="/auth/new-password" element={<NewPasswordView/>}/>
               <Route path="/auth/forgot-password" element={<ForgotPasswordView/>}/>
             </Route>
         </Routes>
