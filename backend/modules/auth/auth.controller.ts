@@ -83,7 +83,7 @@ export class AuthController {
             }
             const decodedToken = await admin.auth().verifyIdToken(googleToken)
             const email = decodedToken?.email
-            const name = decodedToken.name
+            const name = decodedToken.name ?? decodedToken.email?.split('@')[0]
             if (!email || !name) return res.status(400).json({ error: 'Nombre o email no encontrados' })
             const { refreshToken, accessToken, user, newUser } = await AuthService.authJWTGoogle({ email, name, decodedToken })
             if (newUser) {
@@ -97,6 +97,9 @@ export class AuthController {
             console.error('Google auth error:', error)
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({ error: error.message })
+            }
+            if (error instanceof Error) {
+                return res.status(500).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error al autenticar la cuenta con google' })
         }
