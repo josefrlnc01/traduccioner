@@ -32,7 +32,7 @@ export default function RegisterView() {
             toast.error(error.message)
         },
         onSuccess: () => {
-            navigate('/')
+            navigate('/dashboard')
         }
     })
 
@@ -96,6 +96,7 @@ export default function RegisterView() {
                         <label className="text-sm font-semibold text-zinc-300 ml-1">Nombre</label>
                         <input
                             type="text"
+                            id="name"
                             {...register('name', {
                                 required: 'El campo nombre es necesario'
                             })}
@@ -115,6 +116,7 @@ export default function RegisterView() {
                         <label className="text-sm font-semibold text-zinc-300 ml-1">Email</label>
                         <input
                             type="email"
+                            id="email"
                             {...register('email', {
                                 required: 'El campo email es obligatorio'
                             })}
@@ -134,6 +136,7 @@ export default function RegisterView() {
                         <label className="text-sm font-semibold text-zinc-300 ml-1">Contraseña</label>
                         <input
                             type="password"
+                            id="password"
                             {...register('password', {
                                 required: 'El campo de contraseña es obligatorio'
                             })}
@@ -153,6 +156,7 @@ export default function RegisterView() {
                         <label className="text-sm font-semibold text-zinc-300 ml-1">Repite la contraseña</label>
                         <input
                             type="password"
+                            id="password_confirmation"
                             {...register('password_confirmation', {
                                 required: 'El campo de confirmación de contraseña es obligatorio'
                             })}

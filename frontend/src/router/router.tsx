@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router"
 import AppLayout from "../features/transcription/layout/AppLayout"
 import MainView from "../features/transcription/pages/MainView"
 import AuthLayout from "../features/auth/layout/AuthLayout"
@@ -18,7 +18,8 @@ export default function Router() {
     <BrowserRouter>
         <Routes>
             <Route element={<AppLayout/>}>
-                <Route path="/" element={<MainView/>} index/>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/dashboard" element={<MainView/>} index/>
                 <Route path="/saveds/:id" element={<SavedsView/>}/>
             </Route>
             <Route element={<LandingLayout/>}>

@@ -110,7 +110,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
 
     const handleDelete = () => {
         deleteFN.mutate(id)
-        navigate('/')
+        navigate('/dashboard')
     }
 
     const handleEdit = () => {

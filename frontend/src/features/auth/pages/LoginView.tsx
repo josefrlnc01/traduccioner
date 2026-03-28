@@ -22,7 +22,7 @@ export default function LoginView() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['user']})
-            navigate('/')
+            navigate('/dashboard')
         }
     })
 
@@ -32,12 +32,11 @@ export default function LoginView() {
             toast.error(error.message)
         },
         onSuccess: (data) => {
-            navigate('/')
+            navigate('/dashboard')
         }
     })
 
     const handleLoginGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
         loginGoogle.mutate()
     }
 
@@ -73,7 +72,6 @@ export default function LoginView() {
                     </div>
 
                     <button
-                        type='submit'
                         onClick={handleLoginGoogle}
                         className='w-full py-3 rounded-xl
                     bg-white text-gray-800
