@@ -84,7 +84,7 @@ export async function generateVTT({segments, title}: DocumentProps) {
         a.click()
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.errror)
+            throw new Error(error.response.data.error)
         }
     }
 }

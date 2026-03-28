@@ -1,10 +1,8 @@
 import { AppError } from "../errors/AppError.js"
 import pdf from 'html-pdf'
-import fs from 'node:fs/promises'
 import { formatSRTTime, formatTime, formatVTTTime } from "../../shared/utils/time.js"
 import { Document, Packer, Paragraph, TextRun } from "docx"
 import {stringify} from 'csv-stringify/sync'
-import assert from "node:assert"
 import fsSync from 'node:fs'
 
 export class DocumentService {
@@ -19,9 +17,9 @@ export class DocumentService {
         }
 
         return new Promise((resolve, reject) => {
-            pdf.create(contenido).toFile('document.pdf', (err, res) => {
+            pdf.create(contenido).toBuffer((err, buffer) => {
                 if (err) return reject(err)
-                const buffer = fs.readFile(res.filename)
+                if (!buffer) return reject(new Error('No se pudo generar el buffer del PDF'))
                 resolve(buffer)
             })
         })
