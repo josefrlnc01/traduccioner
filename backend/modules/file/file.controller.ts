@@ -37,34 +37,6 @@ export class FileController {
         }
     }
 
-    static saveTranscription = async (req: Request, res: Response) => {
-        try {
-            const data = fileTranscriptionSchema.parse(req.body)
-            const user = req.user
-            
-            return res.status(201).send('Transcripción guardada correctamente')
-        } catch (error) {
-            if (error instanceof AppError) {
-                return res.status(error.statusCode).json({error: error.message})
-            }
-            return res.status(500).json({ error: 'Hubo un error al guardar la transcripción' })
-        }
-    }
-
-
-    static saveTranslation = async (req: Request, res: Response) => {
-        try {
-            const data = fileTranslationSchema.parse(req.body)
-            const user = req.user
-            await FileService.insertTranslation({data, user})
-            return res.status(201).send('Traducción guardada correctamente')
-        } catch (error) {
-            if (error instanceof AppError) {
-                return res.status(error.statusCode).json({error: error.message})
-            }
-            return res.status(500).json({ error: 'Hubo un error al guardar la traducción' })
-        }
-    }
 }
 
 
