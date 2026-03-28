@@ -35,7 +35,6 @@ export async function sendLink(link: string | null,  formData: FormData | null):
 
 
         if (link !== null) {
-            console.log('inicio de consulta')
             const response = await fetch(`${urlBackend}/yt-video`, {
                 method: 'POST',
                 body: JSON.stringify({ videoLink: link }),

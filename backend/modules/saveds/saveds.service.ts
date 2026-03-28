@@ -55,7 +55,6 @@ export class SavedsService {
                 fileId: id
             })
             if (file.length === 0) {
-                console.log('yt file')
                 const youtubeFile = await YoutubeVideo.find({
                     fileId: id
                 })

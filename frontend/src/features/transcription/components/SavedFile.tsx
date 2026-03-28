@@ -62,10 +62,6 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
         }
     }
 
-    console.log(translation)
-
-    console.log(user.suscription)
-
     return (
         <>
         {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data.title} />}

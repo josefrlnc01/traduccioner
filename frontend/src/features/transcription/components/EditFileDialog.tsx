@@ -45,7 +45,6 @@ export default function EditFileDialog({ isOpen, setIsOpen, id, title }: EditFil
         setIsOpen(false)
     }
 
-    console.log('isopen', isOpen)
     return (
         <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>

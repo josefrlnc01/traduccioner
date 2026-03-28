@@ -78,14 +78,12 @@ export class SavedsController {
         try {
             const { id } = req.params as { id: string }
             const file = await SavedsService.getFile(id)
-            console.log('id', id)
     
             const textSegments = file[0].segments.map(s => {
                 return {
                     text: s.text
                 }
             })
-            console.log('segments', textSegments)
             const stream = await generateSummary(textSegments)
             res.setHeader('Content-Type', 'text/event-stream')
             res.setHeader('Cache-Control', 'no-cache')

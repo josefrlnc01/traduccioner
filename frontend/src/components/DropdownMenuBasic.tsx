@@ -27,7 +27,6 @@ type DropdownProps = {
     user: User
 }
 export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: DropdownProps) {
-    console.log('id', id)
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFN = useMutation({
@@ -114,7 +113,6 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
     const handleEdit = () => {
         setIsOpen(true)
     }
-    console.log('user', user)
 
     return (
         <DropdownMenu>

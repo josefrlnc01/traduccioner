@@ -20,7 +20,6 @@ type TranslateYoutubeTextProps = {
 
 export async function translateText ({lang, fileText}: TranslateTextProps) {
     try {
-        console.log('consulta iniciada')
         const {data} = await axios.post(`${urlBackend}/translation/${lang}`, {fileText})
 
         return data
@@ -34,7 +33,6 @@ export async function translateText ({lang, fileText}: TranslateTextProps) {
 
 export async function translateYoutubeText ({lang, youtubeVideoText}: TranslateYoutubeTextProps) {
     try {
-        console.log('petición iniciada')
         const {data} = await axios.post(`${urlBackend}/translation/${lang}/youtube`, {youtubeVideoText})
 
         return data

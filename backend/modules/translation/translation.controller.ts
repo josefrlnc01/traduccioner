@@ -5,10 +5,7 @@ import { TranslationService } from "./translation.service.js";
 export class TranslationController {
     static getTranslation = async (req: Request, res: Response) => {
         try {
-            console.log('iniciando traduccion normal')
             const {lang} = req.params as {lang: string}
-            console.log('lang', lang)
-            console.log('body', req.body)
             const {fileText} = req.body
             const translatedFile = await TranslationService.translateText(lang, fileText)
             return res.send(translatedFile)
@@ -24,7 +21,6 @@ export class TranslationController {
 
     static getYoutubeTranslation = async (req: Request, res: Response) => {
         try {
-            console.log('iniciando traducción de youtube')
             const {lang} = req.params as {lang: string}
             const {youtubeVideoText} = req.body
             const translatedFile = await TranslationService.translateText(lang, youtubeVideoText)

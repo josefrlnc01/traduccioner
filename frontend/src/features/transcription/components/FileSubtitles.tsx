@@ -55,7 +55,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         mutation={mutation}
         inputValue={inputValue}
         fileInputValue={fileInputValue} />
-    console.log(mutation.data)
     const fileText = mutation.data.fileText
     const user = mutation.data.user
 
@@ -67,9 +66,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
 
     const handleTranslate = () => {
-        console.log('iniciando traducción')
-        console.log('lang', lang)
-        console.log('segments', fileText.segments)
         const formData = {
             lang,
             fileText: fileText.segments

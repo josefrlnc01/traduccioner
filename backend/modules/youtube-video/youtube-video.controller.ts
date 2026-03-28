@@ -8,7 +8,6 @@ import { AppError } from "../errors/AppError.js";
 
 export class YoutubeVideoController {
     static init = async (req: Request, res: Response) => {
-        console.log('iniciando petición')
         const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
         req.socket.remoteAddress || 'unknown').trim()
         const { videoLink }: RequestProps = req.body
@@ -45,7 +44,6 @@ export class YoutubeVideoController {
             }
             const { youtubeVideoText, usedMinutes, title, audioDuration } = data
             const savedYoutubeFile = await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
-            console.log('youtube file saved', savedYoutubeFile )
             return res.json({ youtubeVideoText: savedYoutubeFile, usedMinutes, user })
         } catch (err) {
             if (err instanceof AppError) {

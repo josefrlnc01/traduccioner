@@ -40,7 +40,7 @@ export default function Header() {
     deleteAccount.mutate()
   }
 
-  console.log
+
 
   return (
     <header className='w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center'>

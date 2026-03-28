@@ -6,8 +6,6 @@ export const useSummary = () => {
     const [summary, setSummary] = useState('')
     const [isLoading, setIsLoading] = useState(false)
      const handleGenerateIaSummary = async (id:string) => {
-        
-        console.log('peticion iniciada, id:', id)
         const urlBackend = import.meta.env.VITE_API_URL
         const accessToken = tokenStore.get()
         setIsLoading(true)

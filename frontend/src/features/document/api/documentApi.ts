@@ -146,7 +146,6 @@ export async function generateDOCX({segments, title}: DocumentProps) {
 export async function generateJSON({segments, title}: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
-        console.log('petición iniciada')
         const {data} = await axios.post(`${baseUrl}/document/create-json`, {segments}, {
             headers: {
                 "Authorization" : `Bearer ${accessToken}`

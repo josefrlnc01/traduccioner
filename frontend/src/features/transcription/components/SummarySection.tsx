@@ -1,4 +1,3 @@
-
 import { motion } from 'motion/react'
 export type SummaryProps = {
     summary: string,
@@ -8,7 +7,7 @@ export type SummaryProps = {
 }
 
 export default function SummarySection({ summary, isLoading, handleGenerateIaSummary, id }: SummaryProps) {
-    console.log(isLoading)
+
 
     return (
         <div className='flex flex-col w-full lg:w-72 shrink-0'>

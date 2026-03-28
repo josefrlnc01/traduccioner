@@ -18,7 +18,6 @@ export default function Form() {
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
-    console.log(inputValue)
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,
@@ -80,7 +79,6 @@ export default function Form() {
         event.preventDefault()
     }
 
-    console.log(suscription)
     return (
         <>
 

@@ -37,7 +37,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         inputValue={inputValue}
         fileInputValue={fileInputValue}
     />
-    console.log(mutation.data)
     const youtubeVideoText = mutation.data.youtubeVideoText
     const user = mutation.data.user
 
@@ -49,7 +48,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
 
     const handleTranslate = () => {
-        console.log('handle translate')
         const formData = {
             lang,
             youtubeVideoText: youtubeVideoText.segments
@@ -57,8 +55,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         generateYoutubeTranslation.mutate(formData)
         setIsTranslating(true)
     }
-
-    console.log('is translating', isTranslating)
 
 
     return (

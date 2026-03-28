@@ -8,9 +8,6 @@ import { Spinner } from '@/components/ui/spinner'
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
     const { data, isError, isLoading } = useAuth()
-    console.log('error', isError)
-    console.log('loading', isLoading)
-    console.log('data', data)
     if (isLoading) {
         return (
             <aside className="p-4 min-h-screen max-w-screen h-screen bg-[#101622] flex flex-col gap-3 items-center text-white justify-center">

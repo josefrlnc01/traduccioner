@@ -10,7 +10,6 @@ import SavedFile from '../components/SavedFile'
 export default function SavedsView() {
     const params = useParams()
     const id = params.id
-        console.log(id)
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),
@@ -27,11 +26,8 @@ export default function SavedsView() {
 
     if (data) {
         const file = data.file[0]
-        
-        console.log('file', file)
         if (!file) return
 
-        console.log('savedsview', file)
         return (
             <>
                 
