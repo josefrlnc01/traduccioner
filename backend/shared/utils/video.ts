@@ -17,6 +17,14 @@ export function getVideoMinutes(data:string){
 
 //Conversión de formatos de audio/video a audio.mp3
 export async function convertVideoToAudio (file: Express.Multer.File): Promise<string> {
+    const ffmpegPath = process.env.NODE_ENV === 'production'
+        ? process.env.FFMPEG_PATH
+        : process.env.FFMPEG_PATH_LOCAL ?? process.env.FFMPEG_PATH
+
+    if (ffmpegPath) {
+        ffmpeg.setFfmpegPath(ffmpegPath)
+    }
+
     const finalFilePath = file.path.replace(path.extname(file.path), '_converted.mp3')
     return new Promise((resolve, reject) => {
         ffmpeg(file.path)
@@ -27,7 +35,7 @@ export async function convertVideoToAudio (file: Express.Multer.File): Promise<s
             
         })
         .on('error', (err) => {
-            reject(err)
+            reject(new Error(`Error al convertir el archivo con ffmpeg: ${err.message}`))
         })
         .saveToFile(finalFilePath)
     })

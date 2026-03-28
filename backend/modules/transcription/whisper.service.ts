@@ -11,6 +11,10 @@ export type TranscriptionFormatt = {
 
 export async function transcribeWhisperAudio(filePath: string): Promise<TranscriptionFormatt[]> {
     try {
+        if (!process.env.OPENAI_API_KEY) {
+            throw new AppError('Falta configurar OPENAI_API_KEY en el backend', 500)
+        }
+
         const openAi = new OpenAi()
 
         const transcription = await openAi.audio.transcriptions.create({
@@ -59,6 +63,14 @@ export async function transcribeWhisperAudio(filePath: string): Promise<Transcri
 
     } catch (error) {
         console.error(error)
-        throw new Error('Hubo un erro al transcribir el audio')
+        if (error instanceof AppError) {
+            throw error
+        }
+
+        if (error instanceof Error) {
+            throw new Error(`Hubo un error al transcribir el audio: ${error.message}`)
+        }
+
+        throw new Error('Hubo un error al transcribir el audio')
     }
 }

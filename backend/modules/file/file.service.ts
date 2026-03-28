@@ -95,6 +95,10 @@ export class FileService {
             return { fileText, usedMinutes: quota?.usedMinutes }
         } catch (error) {
             if (error instanceof AppError) throw error
+            if (error instanceof Error) {
+                throw new Error(error.message)
+            }
+
             throw new Error('Hubo un error al transcribir el audio')
         }
     }

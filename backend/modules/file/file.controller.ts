@@ -29,8 +29,12 @@ export class FileController {
             
             return res.status(200).json({ fileText: savedFile, usedMinutes, user})
         } catch (error) {
+            console.error('File transcription error:', error)
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({error: error.message})
+            }
+            if (error instanceof Error) {
+                return res.status(500).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })
         }
