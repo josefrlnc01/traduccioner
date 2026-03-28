@@ -3,7 +3,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
 import { deleteUser } from "@/features/user/userApi"
-import { useTheme } from "@/shared/hooks/useTheme"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { LogOut, Menu } from "lucide-react"
