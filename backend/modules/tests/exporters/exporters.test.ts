@@ -31,4 +31,15 @@ describe('DocumentService', () => {
         expect(vtt).toContain('WEBVTT')
         expect(vtt).toContain('00:00:00.000 --> 00:00:05.000')
     })
+
+    it('generateDocX genera un Buffer', async () => {
+        const buffer = await DocumentService.generateDocX(segments)
+        expect(Buffer.isBuffer(buffer)).toBe(true)
+        expect(buffer.length).toBeGreaterThan(0)
+    })
+
+    it('generate PDF genera un buffer', async () => {
+        const buffer = await DocumentService.generatePdf(segments)
+        expect(Buffer.isBuffer(buffer)).toBe(true)
+    })
 })
