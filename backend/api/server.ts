@@ -12,6 +12,7 @@ import { savedsRoute } from '../modules/saveds/saveds.routes.js'
 import admin from 'firebase-admin'
 import { userRoutes } from '../modules/user/user.routes.js'
 import { translationRoutes } from '../modules/translation/translation.routes.js'
+import fs from 'node:fs'
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT 
@@ -30,8 +31,23 @@ app.use('/saveds', savedsRoute)
 app.use('/translation', translationRoutes)
 app.use('/user', userRoutes)
 
+const getFirebaseCredential = () => {
+    const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+    if (serviceAccountJson) {
+        return admin.credential.cert(JSON.parse(serviceAccountJson))
+    }
+
+    const serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS
+    if (serviceAccountPath && fs.existsSync(serviceAccountPath)) {
+        const serviceAccountFile = fs.readFileSync(serviceAccountPath, 'utf-8')
+        return admin.credential.cert(JSON.parse(serviceAccountFile))
+    }
+
+    return admin.credential.applicationDefault()
+}
+
 admin.initializeApp({
-    credential: admin.credential.applicationDefault()
+    credential: getFirebaseCredential()
 })
 
 

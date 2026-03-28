@@ -91,6 +91,7 @@ export class AuthController {
             }
 
         } catch (error) {
+            console.error('Google auth error:', error)
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({ error: error.message })
             }
