@@ -12,6 +12,7 @@ import type { User } from '../types/user.types'
 import { useState } from 'react'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
+import { useTheme } from '@/shared/context/ThemeContext'
 
 export type SavedFile = {
     duration: string
@@ -36,6 +37,7 @@ type SavedFileProps = {
 
 
 export default function SavedFile({ data,  user, id }: SavedFileProps) {
+    const {theme} = useTheme()
     const navigate = useNavigate()
     const [showSummary, setShowSummary] = useState(false)
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
@@ -66,9 +68,9 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
         <>
         {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data.title} />}
        
-        <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+        <aside className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
 
-            <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
+            <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-300 border-slate-300/50'}`}>
                 <div className='grow-0 flex items-center gap-4 min-w-0'>
                     <h2 title={data.title} className='text-sm font-semibold text-gray-100 truncate max-w-50 lg:max-w-none'>
                         {data.title}
@@ -132,7 +134,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                         }
                     </div>
                     <motion.div
-                        className='grow bg-slate-800/40 p-4 md:p-8'
+                        className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-slate-300 text-slate-900'} p-4 md:p-8`}
                         variants={savedsContainer}
                         initial='hidden'
                         animate='show'>
@@ -142,7 +144,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
                                 variants={item}
-                                className='text-start text-sm md:text-md wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                className={`text-start text-sm md:text-md wrap-anywhere font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-slate-900'} leading-relaxed`}>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
@@ -152,7 +154,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
                                 variants={item}
-                                className='text-start text-sm wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                               className={`text-start text-sm md:text-md wrap-anywhere font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-slate-900'} leading-relaxed`}>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
@@ -162,7 +164,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
                                 variants={item}
-                                className='text-start text-sm wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                className={`text-start text-sm md:text-md wrap-anywhere font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-slate-900'} leading-relaxed`}>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
