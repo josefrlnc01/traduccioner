@@ -112,7 +112,7 @@ export default function Form() {
                             />
                         </div>
                     </div>
-                    <span className="text-slate-400 text-sm shrink-0">
+                    <span className={`${theme === 'dark' ? 'text-slate-400 ' : 'text-slate-900'} text-sm shrink-0`}>
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 6 min usados
                     </span>
                 </div>}
@@ -131,7 +131,7 @@ export default function Form() {
                             />
                         </div>
                     </div>
-                    <span className="text-slate-400 text-sm shrink-0">
+                    <span className={`${theme === 'dark' ? 'text-slate-400 ' : 'text-slate-900'} text-sm shrink-0`}>
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 3h
                     </span>
                 </div>}
@@ -150,7 +150,7 @@ export default function Form() {
                             />
                         </div>
                     </div>
-                    <span className="text-slate-400 text-sm shrink-0">
+                    <span className={`${theme === 'dark' ? 'text-slate-400 ' : 'text-slate-900'} text-sm shrink-0`}>
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10h
                     </span>
                 </div>}

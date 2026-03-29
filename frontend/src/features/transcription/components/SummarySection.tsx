@@ -11,11 +11,12 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
     const {theme} = useTheme()
 
     return (
-        <div className={`flex flex-col w-full h-full lg:w-72 shrink-0`}>
+        <div className={`flex flex-col w-full  gap-4 justify-between lg:w-72 shrink`}>
             
-            <div className={`px-5 py-3 border-b h-full border-slate-700/30 flex items-center justify-between ${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'}`}>
+            <div className={`px-5 py-3 border-b  grow border-slate-700/30 flex items-center justify-between ${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'}`}>
                 <div>
-                    <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Resumen IA</h3>
+                    
+                    <h3 className={`text-xs font-semibold text-slate-400 uppercase tracking-widest  ${theme === 'dark' ? 'text-inherit' : 'text-slate-800'}`}>Resumen IA</h3>
                     <p className='text-xs text-slate-600 mt-0.5'>Generado por GPT-4o</p>
                 </div>
                 <div className='w-7 h-7 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center'>
@@ -46,7 +47,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
                         animate={{ opacity: 1, y: 0 }}
                         className='border-l-2 border-blue-500/40 pl-3'
                     >
-                        <p className='text-slate-300 text-sm leading-relaxed'>
+                        <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'} text-sm leading-relaxed`}>
                             {summary}
                             {isLoading && (
                                 <span className='inline-block w-0.5 h-3.5 bg-blue-400 ml-0.5 animate-pulse align-middle' />
