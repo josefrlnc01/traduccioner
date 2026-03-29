@@ -6,7 +6,7 @@ const { Translate } = v2
 
 const translate = new Translate({
     projectId: process.env.PROJECT_ID,
-    keyFilename: process.env.FIREBASE_SERVICE_ACCOUNT_JSON  // Assuming the file is in the backend root
+    credentials: process.env.FIREBASE_SERVICE_ACCOUNT_JSON ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON) : undefined
 })
 
 export class TranslationService {
