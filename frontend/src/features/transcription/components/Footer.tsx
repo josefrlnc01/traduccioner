@@ -12,7 +12,7 @@ export default function Footer() {
         <div className='flex items-center gap-6'>
           <Link to='/support' className='hover:text-white transition-colors'>Soporte</Link>
           <Link to='/privacy' className='hover:text-white transition-colors'>Privacidad</Link>
-          <Link to='/landing-page' className='hover:text-white transition-colors'>Inicio</Link>
+          <Link to='/dashboard' className='hover:text-white transition-colors'>Inicio</Link>
         </div>
       </div>
     </footer>
