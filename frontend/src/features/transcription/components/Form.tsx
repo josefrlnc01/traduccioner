@@ -13,7 +13,7 @@ export type MutationProps = {
 }
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
-    const [usedMinutes, setUsedMinues] = useState<number | null>(Number(localStorage.getItem('usedMinutes')) ?? 0)
+    const [usedMinutes, setUsedMinues] = useState<number | null>(Number(localStorage.getItem('usedMinutes')) || 0)
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
@@ -30,7 +30,7 @@ export default function Form() {
             setUsedMinues(data?.usedMinutes!)
         }
     })
-
+    console.log(Number(localStorage.getItem('usedMinutes')))
     useEffect(() => {
         if (!mutation.data) return
         requestAnimationFrame(() => {
