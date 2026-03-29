@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 
 export default function Footer() {
@@ -10,10 +11,9 @@ export default function Footer() {
                     </div>
                     <div>
                         <nav className='flex gap-2 text-md'>
-                            <a className='hover:text-white transition-colors' href=''>Términos</a>
-                            <a className='hover:text-white transition-colors' href=''>Soporte</a>
-                            <a className='hover:text-white transition-colors' href=''>Privacidad</a>
-                            <a className='hover:text-white transition-colors' href=''>Contacto</a>
+                            
+                            <Link to={'/support'} className="hover:text-white transition-colors">Soporte</Link>
+                            <Link to={'/privacy'} className="hover:text-white transition-colors">Privacidad</Link>
                         </nav>
                     </div>
 

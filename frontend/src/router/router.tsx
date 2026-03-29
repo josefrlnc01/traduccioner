@@ -10,6 +10,9 @@ import LandingLayout from "@/pages/landing/layout/LandingLayout"
 import LandingPage from "@/pages/landing/LandingPage"
 import SavedsView from "@/features/transcription/pages/SavedsView"
 import ForgotPasswordView from "@/features/auth/pages/ForgotPasswordView"
+import LegalLayout from "@/pages/legal/layout/LegalLayout"
+import PrivacyView from "@/pages/legal/pages/PrivacyView"
+import SupportView from "@/pages/legal/pages/SupportView"
 //import NewPasswordView from "@/features/auth/pages/NewPasswordView"
 
 
@@ -31,6 +34,11 @@ export default function Router() {
               <Route path="/auth/register" element={<RegisterView/>}/>
               <Route path="/auth/request-code" element={<ResendTokenView/>}/>
               <Route path="/auth/forgot-password" element={<ForgotPasswordView/>}/>
+            </Route>
+
+            <Route element={<LegalLayout/>}>
+              <Route path="/privacy" element={<PrivacyView/>}/>
+              <Route path="/support" element={<SupportView/>}/>
             </Route>
         </Routes>
     </BrowserRouter>
