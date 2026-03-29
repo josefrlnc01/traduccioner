@@ -137,28 +137,31 @@ export class YoutubeVideoService {
 
         const minutes = await getAudioDuration(filepath)
         const formattedAudioDuration = formatMinutes(minutes)
+
+        const quota = await Quota.findOne({ user: user._id, ip })
+        const usedMinutes = Number(quota?.usedMinutes ?? 0)
+        const totalMinutes = Number((usedMinutes + minutes).toFixed(2))
+
+        const planLimits: Record<string, number> = {
+            free: 6,
+            pro: 180,
+            business: 600
+        }
+
+        const limit = planLimits[user.suscription] ?? 0
+
+        if (totalMinutes > limit) {
+            throw new AppError(`No dispones de minutos suficientes para transcribir ${formattedAudioDuration}. Tu plan ${user.suscription} permite ${limit}min.`, 429)
+        }
+
         await Quota.findOneAndUpdate(
             { user: user._id, ip },
             {
-                $inc: { usedMinutes: minutes.toFixed(2) }
+                $set: { usedMinutes: totalMinutes }
             },
             { upsert: true, new: true }
         )
-        const quota = await Quota.findOne({
-            user: user._id, ip
-        })
 
-        if (user.suscription === 'free' && quota?.usedMinutes! > 6) {
-            throw new AppError('No dispones de minutos de transcripción gratuita suficientes', 429)
-        }
-
-        if (user.suscription === 'pro' && quota?.usedMinutes! > 180) {
-            throw new AppError('No dispones de más minutos de transcripción', 429)
-        }
-
-        if (user.suscription === 'business' && quota?.usedMinutes! > 600) {
-            throw new AppError('No dispones de más minutos de transcripción', 429)
-        }
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
 
