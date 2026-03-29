@@ -14,9 +14,12 @@ export class TranslationService {
         try {
             if (!lang) throw new AppError('Debes especificar un lenguaje', 400)
 
+            // Extract the language code if it contains additional parts (e.g., 'pl:1' -> 'pl')
+            const languageCode = lang.split(':')[0]
+
             const translatedSegments = await Promise.all(
                 segments.map(async (s) => {
-                    const [translation] = await translate.translate(s.text, lang)
+                    const [translation] = await translate.translate(s.text, languageCode)
                     return {
                         start: s.start,
                         end: s.end,
