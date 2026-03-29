@@ -2,11 +2,9 @@
 Para acceder a la aplicación y probar todas las funcionalidades 
 el dia de la votación puedes usar esta cuenta con el plan Business activo.
 
-Email
-demo@audwave.app
+Email: demo@audwave.app
 
-Contraseña
-audwave2026
+Contraseña: audwave2026
 
 Para la hackaton de CubePath NodeMailer estará desactivado por falta de tiempo para su implementación final, pero en el flujo final de producción real estará presente para su uso en autenticación del usuario en registro y cambio de contraseña.
 
