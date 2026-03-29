@@ -11,7 +11,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
     const {theme} = useTheme()
 
     return (
-        <div className={`flex flex-col w-full  gap-4 justify-between lg:w-72 shrink`}>
+        <div className={`flex flex-col w-full  gap-4 justify-between lg:w-72 scrollba shrink`}>
             
             <div className={`px-5 py-3 border-b  grow border-slate-700/30 flex items-center justify-between ${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'}`}>
                 <div>
@@ -26,7 +26,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
                 </div>
             </div>
 
-            <div className='flex-1 p-5 flex flex-col gap-4 overflow-y-scroll max-h-4/5'>
+            <div className='flex-1 p-5 flex flex-col gap-4 max-h-4/5'>
                 <button
                     onClick={() => handleGenerateIaSummary(id)}
                     disabled={isLoading}

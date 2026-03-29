@@ -197,7 +197,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                                 <motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
-                                    className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'} px-4 pb-4 h-full min-h-full`}
+                                    className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'} px-4 pb-4 h-full w-full min-h-full`}
                                 >
                                     <SummarySection
                                         summary={summary}
