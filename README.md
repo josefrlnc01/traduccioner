@@ -292,9 +292,14 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 |---|:---:|:---:|:---:|
 | Precio | $0/mes | $6/mes | $15/mes |
 | Minutos de transcripción | 6 min | 3 horas | 10 horas |
-| Idiomas de traducción | — | 4 idiomas | 4 idiomas |
-| Exportación PDF | ❌ | ✅ | ✅ |
-| Exportación SRT/TXT | ❌ | ✅ | ✅ |
+| Idiomas de traducción | — | Sin límite | Sin límite |
+| Exportación PDF |  ✅ | ✅ | ✅ |
+| Exportación CSV |  ✅ | ✅ | ✅ |
+| Exportación SRT/TXT |  ✅ | ✅ | ✅ |
+| Exportación VTT |  ✅ | ✅ | ✅ |
+| Exportación DOCX |  ❌ | ❌ | ✅ |
+| Exportación CSV |  ❌ | ❌ | ✅ |
+| Exportación JSON |  ❌ | ❌ | ✅ |
 | Historial guardado | ✅ | ✅ | ✅ |
 | Resumen IA | ❌ | ❌ | ✅ |
 
@@ -302,12 +307,8 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 
 ## 🗺️ Roadmap
 
-- [ ] Exportación en formato VTT y DOCX
-- [ ] Resumen automático con GPT-4
 - [ ] Detección de múltiples hablantes (diarización)
 - [ ] Integración de pagos con Stripe
-- [ ] API pública para desarrolladores
-- [ ] Extensión de Chrome
 
 ---
 
