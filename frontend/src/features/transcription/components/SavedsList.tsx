@@ -67,7 +67,7 @@ export default function SavedsList() {
 
                   {files.map(file => (
                     <button key={file._id}>
-                      <Link to={`/saveds/${file.fileId}`} className={`${theme === 'dark' ? 'bg-slate-800/70  hover:bg-slate-700/90' : 'bg-slate-300 hover:bg-slate-200'} p-4 md:p-6 gap-2 rounded-md flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer`} key={file._id}>
+                      <Link to={`/saveds/${file.fileId}`} className={`${theme === 'dark' ? 'bg-slate-800/70  hover:bg-slate-700/90' : 'bg-slate-300 hover:bg-slate-400/80'} p-4 md:p-6 gap-2 rounded-md flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer`} key={file._id}>
                         <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
                         <span className='text-white min-w-20 max-w-xs text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-2 pr-2 rounded-2xl'>{file.duration}</span>
                       </Link>
