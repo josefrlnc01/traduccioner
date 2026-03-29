@@ -8,13 +8,16 @@ import Pricing from '../../pages/landing/components/Pricing'
 export default function LandingPage() {
   return (
     <>
-    <Header/>
-    <Hero/>
-    <FeaturesSection/>
-    <HowItWorks/>
-    <Pricing/>
-    <Footer/>
+      <main className='bg-[#101622]'>
+        <Header />
+        <Hero />
+        <FeaturesSection />
+        <HowItWorks />
+        <Pricing />
+        <Footer />
+      </main>
+
     </>
-    
+
   )
 }
