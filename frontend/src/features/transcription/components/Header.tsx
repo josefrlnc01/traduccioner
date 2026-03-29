@@ -43,8 +43,8 @@ export default function Header() {
 
   return (
     <header className={theme === 'dark'
-      ? 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center bg-slate-950 text-white'
-      : 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-200 flex justify-between md:justify-evenly items-center bg-slate-400/40 text-slate-900'}>
+      ? 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center bg-slate-950 text-white grow-0'
+      : 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-200 flex justify-between md:justify-evenly items-center bg-slate-400/40 text-slate-900 grow-0'}>
       <div className="flex items-center gap-2">
         <h1 className="font-bold text-4xl text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>

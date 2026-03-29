@@ -5,7 +5,7 @@ export default function Footer() {
   const {theme} = useTheme()
   return (
    
-    <footer className={`${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-400/40 text-slate-900'} grow-0 w-full px-8 py-4 md:py-8 bg-transparent border-t border-slate-800`}>
+    <footer className={`${theme === 'dark' ? 'bg-transparent' : 'bg-slate-400/40 text-slate-900'} grow-0 w-full px-8 py-4 md:py-8 border-t border-slate-800`}>
       {/* Contenedor interno para manejar el layout flex */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-8">
         
