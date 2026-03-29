@@ -2,6 +2,7 @@
 Para acceder a la aplicación y probar todas las funcionalidades 
 el dia de la votación puedes usar esta cuenta con el plan Business activo.
 
+
 Email: demo@audwave.app
 Contraseña: audwave2026
 
