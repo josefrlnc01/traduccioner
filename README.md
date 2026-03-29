@@ -336,7 +336,7 @@ MIT © 2026 AudWave — José María Sánchez Serna
 
 <div align="center">
 
-Hecho con ❤️ y demasiado café
+Hecho con ❤️
 
 **[⬆ Volver arriba](#-audwave)**
 
