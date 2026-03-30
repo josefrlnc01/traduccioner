@@ -10,11 +10,6 @@ export default function FeaturesSection() {
 
 
     useGSAP(() => {
-        // gsap code here...
-        gsap.to('.box', {
-            scrollTrigger: '.box',
-            opacity: 1
-        });
         gsap.from(".card", {
             scrollTrigger: {
                 trigger: ".box",
@@ -53,7 +48,7 @@ export default function FeaturesSection() {
 
 
     return (
-        <section className='box w-full bg-slate-800/30 min-w-screen p-6 flex flex-col gap-4 justify-center items-center mt-9 grow opacity-0'>
+        <section className='box w-full bg-slate-800/30 min-w-screen p-6 flex flex-col gap-4 justify-center items-center mt-9 grow'>
             <aside className="flex flex-col gap-4">
                 <h3 className='font-bold text-4xl text-white text-center pt-8'>Potencia tu flujo de trabajo</h3>
                 <p className='max-w-2xl mx-auto text-sm md:text-lg text-center text-gray-500 leading-relaxed'>Todo lo que necesitas para transcribir audios profesionalmente.</p>
