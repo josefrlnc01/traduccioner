@@ -291,7 +291,7 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 | | **Básico** | **Pro** | **Business** |
 |---|:---:|:---:|:---:|
 | Precio | $0/mes | $6/mes | $15/mes |
-| Minutos de transcripción | 6 min | 3 horas | 10 horas |
+| Minutos de transcripción | 10 min | 3 horas | 10 horas |
 | Idiomas de traducción | — | Sin límite | Sin límite |
 | Exportación PDF |  ✅ | ✅ | ✅ |
 | Exportación CSV |  ✅ | ✅ | ✅ |

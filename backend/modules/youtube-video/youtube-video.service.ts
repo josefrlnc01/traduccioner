@@ -143,7 +143,7 @@ export class YoutubeVideoService {
         const totalMinutes = Number((usedMinutes + minutes).toFixed(2))
 
         const planLimits: Record<string, number> = {
-            free: 6,
+            free: 10,
             pro: 180,
             business: 600
         }

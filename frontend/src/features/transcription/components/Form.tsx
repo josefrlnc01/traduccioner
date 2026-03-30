@@ -99,7 +99,7 @@ export default function Form() {
                     <div className={`relative w-full ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} rounded-full h-2`}>
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
-                            style={{ width: `${(usedMinutes! / 6) * 100}%` }}
+                            style={{ width: `${(usedMinutes! / 10) * 100}%` }}
                         >
                             <div
                                 className="shimmer absolute inset-y-0 h-full w-1/3"
@@ -111,7 +111,7 @@ export default function Form() {
                         </div>
                     </div>
                     <span className={`${theme === 'dark' ? 'text-slate-400 ' : 'text-slate-900'} text-sm shrink-0`}>
-                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 6 min usados
+                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10 min usados
                     </span>
                 </div>}
                 {suscription === 'pro' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:gap-3 justify-center items-center mb-6 mt-4">
