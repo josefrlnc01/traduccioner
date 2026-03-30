@@ -307,7 +307,7 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 
 ## 🗺️ Roadmap
 
-- [ ] Detección de múltiples hablantes (diarización)
+- [ ] Implementación de cola para procesamiento de archivos pesados
 - [ ] Integración de pagos con Stripe
 
 ---
