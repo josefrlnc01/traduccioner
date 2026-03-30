@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     const { theme } = useTheme()
     if (isLoading) {
         return (
-            <aside className="p-4 min-h-screen max-w-screen h-screen bg-[#101622] flex flex-col gap-3 items-center text-white justify-center">
+            <aside className={`p-4 min-h-screen max-w-screen h-screen ${theme === 'dark' ? 'bg-[#101622]' : 'bg-slate-200'} flex flex-col gap-3 items-center text-white justify-center`}>
                 <Spinner
                     className="size-20"
                 />
