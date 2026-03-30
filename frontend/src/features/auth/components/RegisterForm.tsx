@@ -21,6 +21,7 @@ export default function RegisterForm() {
     const { mutate } = useMutation({
         mutationFn: createAccount,
         onError: (error) => {
+            console.error(error)
             toast.error(error.message)
         },
         onSuccess: (data) => {
