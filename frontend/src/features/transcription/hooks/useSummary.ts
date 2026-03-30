@@ -5,7 +5,7 @@ import { useState } from "react"
 export const useSummary = () => {
     const [summary, setSummary] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-     const handleGenerateIaSummary = async (id:string) => {
+    const handleGenerateIaSummary = async (id: string) => {
         const urlBackend = import.meta.env.VITE_API_URL
         const accessToken = tokenStore.get()
         setIsLoading(true)
@@ -18,7 +18,7 @@ export const useSummary = () => {
                 }
             }
             )
-
+            
             const reader = response.body!.getReader()
             const decoder = new TextDecoder()
 
@@ -49,5 +49,5 @@ export const useSummary = () => {
     }
 
 
-    return {summary, isLoading, handleGenerateIaSummary}
+    return { summary, isLoading, handleGenerateIaSummary }
 }

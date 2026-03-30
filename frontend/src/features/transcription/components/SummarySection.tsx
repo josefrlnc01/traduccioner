@@ -1,11 +1,7 @@
 import { useTheme } from '@/shared/context/ThemeContext'
 import { motion } from 'motion/react'
-export type SummaryProps = {
-    summary: string,
-    isLoading: boolean,
-    handleGenerateIaSummary: (id:string) => Promise<void>,
-    id: string
-}
+import type { SummaryProps } from '../types/summary.types'
+
 
 export default function SummarySection({ summary, isLoading, handleGenerateIaSummary, id }: SummaryProps) {
     const {theme} = useTheme()
