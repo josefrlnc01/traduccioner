@@ -1,14 +1,7 @@
 import { useEffect, useState } from 'react'
 
-const awaitPhrases = [
-    "Preparando audio...",
-    "Analizando el contenido...",
-    "Transcribiendo con Whisper...",
-    "Detectando frases...",
-    "Mejorando el texto con IA...",
-    "Corrigiendo gramática...",
-    "Organizando el contenido...",
-    "Generando el resultado final..."
+const awaitPhrase = [
+    "Analizando archivo, puede tardar un poco...",
 ]
 
 export default function TranscriptionSkeleton() {
@@ -20,15 +13,15 @@ export default function TranscriptionSkeleton() {
             setFade(false)
 
             setTimeout(() => {
-                setIndex((prev) => (prev + 1) % awaitPhrases.length)
+                setIndex((prev) => (prev + 1) % awaitPhrase.length)
                 setFade(true)
             }, 300)
         }, 6000)
 
         return () => clearInterval(interval)
-    }, [awaitPhrases.length])
+    }, [awaitPhrase.length])
 
-    const phrase = awaitPhrases[index]
+    const phrase = awaitPhrase[index]
 
 
     return (
