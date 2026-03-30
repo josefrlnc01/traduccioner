@@ -164,7 +164,7 @@ export default function LoginForm() {
                     hover:scale-[1.02] transition cursor-pointer'
                     />
 
-                    <nav className='mt-6 flex flex-col items-center gap-3'>
+                    <nav className='mt-6 flex flex-col justify-center items-center gap-3'>
                         <p className='text-sm text-zinc-400 transition-colors'>¿No tienes una cuenta aún? <span className="text-indigo-400 font-medium hover:text-indigo-300 cursor-pointer"><Link
                             to={'/auth/register'}
                         >Crea una aquí</Link></span></p>
