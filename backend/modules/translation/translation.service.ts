@@ -1,5 +1,4 @@
 import { v2 } from "@google-cloud/translate"
-import { start } from "node:repl"
 import { AppError } from "../errors/AppError.js"
 
 const { Translate } = v2

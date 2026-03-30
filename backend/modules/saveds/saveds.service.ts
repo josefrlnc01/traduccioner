@@ -1,5 +1,5 @@
 import { AppError } from "../errors/AppError.js"
-import FileModel, { IFileStored } from "../file/file.model.js"
+import FileModel from "../file/file.model.js"
 import { IUser } from "../user/user.model.js"
 import YoutubeVideo from "../youtube-video/youtube-video.model.js"
 

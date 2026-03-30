@@ -1,13 +1,8 @@
 import { Request, Response } from "express";
 import { SavedsService } from "./saveds.service.js";
 import { AppError } from "../errors/AppError.js";
-import { IFileStored } from "../file/file.model.js";
-import { IYoutubeVideo } from "../youtube-video/youtube-video.model.js";
-import { FileService } from "../file/file.service.js";
 import { generateSummary } from "../transcription/summary-ia.service.js";
-interface Params {
-    id: string
-}
+
 export class SavedsController {
     static getSaveds = async (req: Request, res: Response) => {
         try {
