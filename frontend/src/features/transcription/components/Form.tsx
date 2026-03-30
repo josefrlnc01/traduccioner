@@ -7,11 +7,13 @@ import { formatMinutes } from "@/shared/utils/minutes";
 import { suscriptionStore } from "@/shared/stores/user-suscription.store";
 import { useTheme } from "@/shared/context/ThemeContext";
 import type { MutationProps, PromiseFile, PromiseLink } from "../types/subtitles.types";
+import { minutesStore } from "@/shared/stores/minutes.store";
+
 
 
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
-    const [usedMinutes, setUsedMinues] = useState<number | null>(Number(localStorage.getItem('usedMinutes')) || 0)
+    const [usedMinutes, setUsedMinues] = useState<number>(Number(minutesStore.get()))
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
@@ -25,10 +27,14 @@ export default function Form() {
         mutationFn: ({ link, formData }) => sendLink(link, formData),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
-            setUsedMinues(data?.usedMinutes!)
+            console.log('data', data)
+            if(data) {
+                setUsedMinues(data.usedMinutes!)
+            }   
+            console.log("usedMinutes from API:", data?.usedMinutes)
+            
         }
     })
-    console.log(Number(localStorage.getItem('usedMinutes')))
     useEffect(() => {
         if (!mutation.data) return
         requestAnimationFrame(() => {
@@ -43,6 +49,11 @@ export default function Form() {
         })
 
     }, [mutation.data])
+
+    useEffect(() => {
+        const stored = Number(minutesStore.get())
+        if (stored) setUsedMinues(stored)
+    }, [])
 
     const suscription = suscriptionStore.get()
 
@@ -89,7 +100,7 @@ export default function Form() {
         event.preventDefault()
     }
 
-    
+    console.log(usedMinutes)
 
     return (
         <>

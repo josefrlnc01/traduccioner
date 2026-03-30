@@ -1,9 +1,11 @@
 export function formatMinutes(decimal: number): string {
-        const mins = Math.floor(decimal)
-        const secs = Math.floor((decimal % 1) * 60)
-        return secs > 0 ? `${mins}m ${secs}s` : `${mins}min`
-    }
+    const totalSeconds = Math.round(decimal * 60)
 
+    const mins = Math.floor(totalSeconds / 60)
+    const secs = totalSeconds % 60
+
+    return secs > 0 ? `${mins}m ${totalSeconds}s` : `${mins}min`
+}
 
 export function formatTime(seconds: number) {
         const hrs = Math.floor(seconds / 3600)

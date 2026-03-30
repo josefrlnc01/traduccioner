@@ -72,9 +72,11 @@ export class FileService {
                 user: user._id, ip
             })
 
-            const usedMinutes = Number(quota?.usedMinutes ?? 0)
-            const totalMinutes = Number((usedMinutes + minutes).toFixed(2))
+            console.log('usedmins', quota?.usedMinutes)
 
+            const usedMinutes = Number(quota?.usedMinutes ?? 0)
+            const totalMinutes = Number((usedMinutes + minutes))
+            console.log('total mins', totalMinutes)
             const planLimits: Record<string, number> = {
                 free: 10,
                 pro: 180,
@@ -98,7 +100,7 @@ export class FileService {
             const fileText = await transcribeWhisperAudio(finalFilePath)
 
             await fs.unlink(finalFilePath)
-            return { fileText, usedMinutes: quota?.usedMinutes, audioDuration: formattedAudioDuration }
+            return { fileText, usedMinutes: totalMinutes, audioDuration: formattedAudioDuration }
         } catch (error) {
             if (error instanceof AppError) throw error
             if (error instanceof Error) {

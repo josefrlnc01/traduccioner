@@ -3,6 +3,7 @@ import axios, { isAxiosError } from "axios";
 import type { StoredYoutubeVideoTranscription, StoredYoutubeVideoTranslation } from "../types/yt-video.types";
 import type { StoredFileTranscription, StoredFileTranslation } from "../types/file.types";
 import type { PromiseFile, PromiseLink } from "../types/subtitles.types";
+import { minutesStore } from "@/shared/stores/minutes.store";
 
 const urlBackend = import.meta.env.VITE_API_URL
 
@@ -49,8 +50,9 @@ export async function sendLink(link: string | null, formData: FormData | null): 
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-
+            
             const { youtubeVideoText, translatedYoutubeVideo, usedMinutes, user } = data
+            minutesStore.set(usedMinutes)
             return { youtubeVideoText, translatedYoutubeVideo, usedMinutes, user }
         }
 
@@ -80,6 +82,7 @@ export async function sendLink(link: string | null, formData: FormData | null): 
         }
 
         const { fileText, translatedFile, usedMinutes, user } = data
+        minutesStore.set(usedMinutes)
         return { fileText, translatedFile, usedMinutes, user }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')

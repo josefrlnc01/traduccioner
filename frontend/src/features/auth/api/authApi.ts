@@ -4,6 +4,7 @@ import type { ForgotPasswordForm, NewPasswordForm, RegistrationForm, TokenConfir
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@/firebase'
 import { tokenStore } from '@/lib/token.store'
+import { minutesStore } from '@/shared/stores/minutes.store'
 import { suscriptionStore } from '@/shared/stores/user-suscription.store'
 
 
@@ -66,7 +67,7 @@ export async function getUser(accessToken: string) {
 
         if (!response.success) throw new Error('Respuesta inválida del servidor');
         suscriptionStore.set(response.data.user.suscription)
-        localStorage.setItem('usedMinutes', String(response.data?.usedMinutes!))
+        minutesStore.set(response.data?.usedMinutes ?? 0)
         return response.data
     
 }

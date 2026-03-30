@@ -27,8 +27,6 @@ export const corsMiddleware = () =>
             const acceptedOrigins = getAcceptedOrigins()
             const normalizedOrigin = normalizeOrigin(origin)
 
-            console.log('CORS origin:', origin, 'accepted:', acceptedOrigins)
-
             if (!normalizedOrigin) return callback(null, true)
 
             if (acceptedOrigins.includes(normalizedOrigin)) {
