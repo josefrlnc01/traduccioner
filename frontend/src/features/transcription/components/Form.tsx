@@ -162,7 +162,7 @@ export default function Form() {
                             <div id="targ"
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${theme === 'dark' ? 'bg-slate-800/20' : 'bg-blue-50  border-blue-200'} ${!fileInputValue ? 'border-dashed  border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'}  justify-center items-center`}>
+                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${theme === 'dark' ? 'bg-slate-800/20' : 'bg-blue-50  border-blue-200'} ${!fileInputValue ? 'border-dashed  border-slate-700' : 'border-solid border-blue-500/70'}  justify-center items-center`}>
                                 <img src={InputIcon} />
                                 <label className="text-lg md:text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-sm md:text-xl text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>

@@ -27,7 +27,7 @@ type DropdownProps = {
     user: User
 }
 export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: DropdownProps) {
-    const {theme} = useTheme()
+    const { theme } = useTheme()
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFN = useMutation({
@@ -35,7 +35,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             mutation?.reset()
-            
+
             toast.success(data)
         },
         onError: (error) => {
@@ -133,7 +133,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                     </svg>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className={`${theme === 'dark' ? 'bg-slate-900 border border-slate-700/50 ' : 'bg-slate-300 border-slate-50'}shadow-xl shadow-black/40 p-2 min-w-48`}>
+            <DropdownMenuContent className={`${theme === 'dark' ? 'bg-slate-900 border border-slate-700/50 ' : 'bg-white border-blue-500'}shadow-xl shadow-black/40 p-2 min-w-48`}>
 
                 {/* Acciones */}
                 <DropdownMenuGroup>
@@ -179,14 +179,14 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                             </svg>
                             TXT
                         </div>
-                        <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
+                        <span className={`text-xs text-slate-600 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-200'} px-1.5 py-0.5 rounded border border-blue-500/20`}>Free</span>
                     </DropdownMenuItem>
 
                     {/* PRO y BUSINESS */}
                     <>
                         <DropdownMenuItem
                             onClick={() => handleGenerateTranscriptionPdf(data.segments)}
-                           className={`flex items-center gap-2 px-2 py-2 text-sm ${theme === 'dark' ? 'text-slate-300 hover:text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white' : 'text-slate-900 hover:bg-slate-50'}  rounded-lg cursor-pointer transition-colors `}
+                            className={`flex items-center gap-2 px-2 py-2 text-sm ${theme === 'dark' ? 'text-slate-300 hover:text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white' : 'text-slate-900 hover:bg-slate-50'}  rounded-lg cursor-pointer transition-colors `}
                         >
                             <div className="flex items-center gap-2">
                                 <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,7 +194,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                                 </svg>
                                 PDF
                             </div>
-                            <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
+                            <span className={`text-xs text-slate-600 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-200'} px-1.5 py-0.5 rounded border border-blue-500/20`}>Free</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => handleGenerateTranscriptionSrt(data.segments)}
@@ -206,7 +206,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                                 </svg>
                                 SRT
                             </div>
-                            <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
+                            <span className={`text-xs text-slate-600 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-200'} px-1.5 py-0.5 rounded border border-blue-500/20`}>Free</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => handleGenerateTranscriptionVtt(data.segments)}
@@ -218,7 +218,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                                 </svg>
                                 VTT
                             </div>
-                            <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
+                            <span className={`text-xs text-slate-600 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-200'} px-1.5 py-0.5 rounded border border-blue-500/20`}>Free</span>
                         </DropdownMenuItem>
                     </>
 
