@@ -49,6 +49,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                         contextClass[context?.type || "default"] +
                         " relative flex items-center text-white min-w-10 min-h-10 rounded-xl px-6 py-3 mb-2 cursor-pointer shadow-xl border border-slate-700/50 text-white text-sm font-medium overflow-hidden"
                     }
+                    closeButton={false}
                     position='bottom-right'
                     pauseOnHover={false}
                     pauseOnFocusLoss={false}

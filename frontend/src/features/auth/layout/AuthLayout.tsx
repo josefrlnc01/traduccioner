@@ -1,17 +1,33 @@
 import { Outlet } from "react-router"
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+
+//Estilos para react toastify
+const contextClass = {
+    success: "bg-slate-900 border border-green-500/30 text-green-400",
+    error: "bg-slate-900 border border-red-500/30 text-red-400",
+    info: "bg-gray-600",
+    warning: "bg-orange-400",
+    default: "bg-indigo-600",
+    dark: "bg-white-600 font-gray-300",
+};
 
 export default function AuthLayout() {
     return (
         <>
             <main className='bg-gray-800 min-h-screen min-w-screen flex flex-col justify-start items-center lg:block overflow-x-hidden'>
-                    <Outlet />
+                <Outlet />
             </main>
-        <ToastContainer
-        pauseOnFocusLoss={false}
-        pauseOnHover={false}
-        />
+            <ToastContainer
+                toastClassName={(context) =>
+                    contextClass[context?.type || "default"] +
+                    " relative flex items-center text-white min-w-10 min-h-10 rounded-xl px-6 py-3 mb-2 cursor-pointer shadow-xl border border-slate-700/50 text-white text-sm font-medium overflow-hidden"
+                }
+                closeButton={false}
+                position='bottom-right'
+                pauseOnHover={false}
+                pauseOnFocusLoss={false}
+            />
         </>
     )
 }
