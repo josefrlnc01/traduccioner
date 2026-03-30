@@ -151,7 +151,7 @@ export class YoutubeVideoService {
         const limit = planLimits[user.suscription] ?? 0
 
         if (totalMinutes > limit) {
-            throw new AppError(`No dispones de minutos suficientes para transcribir ${formattedAudioDuration}. Tu plan ${user.suscription} permite ${limit}min.`, 429)
+            throw new AppError(`No dispones de minutos de transcripción suficientes`, 429)
         }
 
         await Quota.findOneAndUpdate(

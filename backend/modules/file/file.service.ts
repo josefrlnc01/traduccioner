@@ -68,7 +68,6 @@ export class FileService {
             //Obtención de la ip del dispositivo
             const minutes = await getAudioDuration(finalFilePath)
             const formattedAudioDuration = formatMinutes(minutes)
-            
             const quota = await Quota.findOne({
                 user: user._id, ip
             })
@@ -99,7 +98,7 @@ export class FileService {
             const fileText = await transcribeWhisperAudio(finalFilePath)
 
             await fs.unlink(finalFilePath)
-            return { fileText, usedMinutes: quota?.usedMinutes }
+            return { fileText, usedMinutes: quota?.usedMinutes, audioDuration: formattedAudioDuration }
         } catch (error) {
             if (error instanceof AppError) throw error
             if (error instanceof Error) {

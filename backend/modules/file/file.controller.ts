@@ -20,12 +20,11 @@ export class FileController {
             }
             
             const finalFilePath = await convertVideoToAudio(file)
-            const audioDuration = await getAudioDuration(finalFilePath)
-            const formattedAudioDuration = formatMinutes(audioDuration)
-            const {fileText, usedMinutes}= await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
+            const {fileText, usedMinutes, audioDuration}= await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
+            
             if (!fileText && !usedMinutes) return res.status(400).json({ error: 'Error al obtener transcripción' })
 
-            const savedFile = await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: formattedAudioDuration })
+            const savedFile = await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: audioDuration })
             
             return res.status(200).json({ fileText: savedFile, usedMinutes, user})
         } catch (error) {
