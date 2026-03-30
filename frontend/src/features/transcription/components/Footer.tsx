@@ -10,9 +10,9 @@ export default function Footer() {
           <h2 className='text-lg font-bold self-start'><span>Aud</span><span className="text-blue-500">Wave</span></h2>
         </div>
         <div className='flex items-center gap-6'>
-          <Link to='/support' className='hover:text-white transition-colors'>Soporte</Link>
-          <Link to='/privacy' className='hover:text-white transition-colors'>Privacidad</Link>
-          <Link to='/dashboard' className='hover:text-white transition-colors'>Inicio</Link>
+          <Link to='/support' className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-blue-500'} transition-colors ease`}>Soporte</Link>
+          <Link to='/privacy'className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-blue-500'} transition-colors ease`}>Privacidad</Link>
+          <Link to='/dashboard' className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-blue-500'} transition-colors ease`}>Inicio</Link>
         </div>
       </div>
     </footer>

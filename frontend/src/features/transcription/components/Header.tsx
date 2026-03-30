@@ -48,7 +48,7 @@ export default function Header() {
       ? 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center bg-slate-950 text-white grow-0'
       : 'w-full min-w-full text-center py-4 px-4 md:px-0  flex justify-between md:justify-evenly items-center bg-white border-b border-slate-200 text-slate-900 grow-0'}>
       <div className="flex items-center justify-center gap-2">
-        <h1 className="font-bold text-lg md:text-2xl lg:text-4xl  text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
+        <h1 className={`font-bold text-lg md:text-2xl lg:text-4xl  ${theme === 'dark' ? 'text-white' : 'text-slate-500'}`}>Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
 
 
