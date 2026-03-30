@@ -11,13 +11,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { editTitle } from '../../saveds/api/savedsApi'
 import { toast } from 'react-toastify'
+import type { EditFileDialogProps } from '../types/edit.types'
 
-type EditFileDialogProps = {
-    isOpen: boolean,
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    id: string,
-    title: string
-}
+
 export default function EditFileDialog({ isOpen, setIsOpen, id, title }: EditFileDialogProps) {
     const [newTitle, setNewTitle] = useState(title)
     const queryClient = useQueryClient()

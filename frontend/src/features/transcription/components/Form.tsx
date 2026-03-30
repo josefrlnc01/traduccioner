@@ -6,11 +6,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatMinutes } from "@/shared/utils/minutes";
 import { suscriptionStore } from "@/shared/stores/user-suscription.store";
 import { useTheme } from "@/shared/context/ThemeContext";
+import type { MutationProps } from "../types/subtitles.types";
 
-export type MutationProps = {
-    link: string | null
-    formData: FormData | null
-}
+
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [usedMinutes, setUsedMinues] = useState<number | null>(Number(localStorage.getItem('usedMinutes')) || 0)

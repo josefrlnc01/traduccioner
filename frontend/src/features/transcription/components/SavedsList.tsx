@@ -3,25 +3,9 @@ import { getSaveds } from '../../saveds/api/savedsApi'
 import { Link } from 'react-router'
 import { useState } from 'react'
 import { useTheme } from '@/shared/context/ThemeContext'
+import type { Saveds, SavedsList } from '@/features/saveds/types/saveds.types'
 
-export type Saveds = {
-  _id: string,
-  fileId: string,
-  title: string,
-  segments: {
-    start: number,
-    end: number,
-    text: string
-  }[],
-  duration: string,
-  origin: string,
-  user: string,
-}[]
 
-type SavedsList = {
-  files: Saveds,
-  youtubeFiles: Saveds
-}
 
 export default function SavedsList() {
   const { theme } = useTheme()

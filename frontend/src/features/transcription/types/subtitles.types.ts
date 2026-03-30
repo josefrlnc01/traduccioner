@@ -1,5 +1,5 @@
 import type { UseMutationResult } from "@tanstack/react-query"
-import type { MutationProps } from "../components/Form"
+
 import type { PromiseFile, PromiseLink } from "../api/transcriptionApi"
 
 export type SubtitlesViewProps = {
@@ -13,4 +13,10 @@ export type FileSubtitlesProps = {
     inputValue: string,
     fileInputValue: FormData | null,
 
+}
+
+
+export type MutationProps = {
+    link: string | null
+    formData: FormData | null
 }
