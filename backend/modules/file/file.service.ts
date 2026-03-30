@@ -72,11 +72,8 @@ export class FileService {
                 user: user._id, ip
             })
 
-            console.log('usedmins', quota?.usedMinutes)
-
             const usedMinutes = Number(quota?.usedMinutes ?? 0)
             const totalMinutes = Number((usedMinutes + minutes))
-            console.log('total mins', totalMinutes)
             const planLimits: Record<string, number> = {
                 free: 10,
                 pro: 180,
