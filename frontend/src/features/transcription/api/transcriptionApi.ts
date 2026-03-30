@@ -2,10 +2,7 @@ import { tokenStore } from "@/lib/token.store"
 import axios, { isAxiosError } from "axios";
 import type { StoredYoutubeVideoTranscription, StoredYoutubeVideoTranslation } from "../types/yt-video.types";
 import type { StoredFileTranscription, StoredFileTranslation } from "../types/file.types";
-
 import type { PromiseFile, PromiseLink } from "../types/subtitles.types";
-
-
 
 const urlBackend = import.meta.env.VITE_API_URL
 

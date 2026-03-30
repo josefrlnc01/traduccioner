@@ -12,10 +12,9 @@ import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/r
 import { deleteSaved } from "@/features/saveds/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
-import type { PromiseFile, PromiseLink } from "@/features/transcription/api/transcriptionApi"
-import type { MutationProps } from "@/features/transcription/components/Form"
+import type { MutationProps, PromiseFile, PromiseLink } from "@/features/transcription/types/subtitles.types"
 import { useDocumentAction } from "@/features/transcription/hooks/useDocumentAction"
-import type { SavedFile } from "@/features/transcription/components/SavedFile"
+import type { SavedFile } from "@/features/saveds/types/saveds.types"
 import type { User } from "@/features/transcription/types/user.types"
 import { useTheme } from "@/shared/context/ThemeContext"
 
