@@ -35,7 +35,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
             <>
 
 
-                <main className={`min-w-screen max-w-screen overflow-x-hidden max-h-screen min-h-screen ${theme === 'dark' ? 'bg-[#101622] text-white' : 'bg-slate-300/40  text-slate-900'} `}>
+                <main className={`min-w-screen max-w-screen overflow-x-hidden max-h-screen min-h-screen ${theme === 'dark' ? 'bg-[#101622] text-white' : 'bg-slate-100 text-slate-900'} `}>
 
                     <Outlet />
 

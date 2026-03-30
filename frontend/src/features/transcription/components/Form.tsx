@@ -156,7 +156,7 @@ export default function Form() {
                 </div>}
                 
 
-                <aside className={`w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto min-h-128 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-slate-100'} flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-md backdrop-blur`}>
+                <aside className={`w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto min-h-128 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white shadow-sm border border-slate-200'} flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-md backdrop-blur`}>
 
                     <form className="w-full flex flex-col  lg:p-2 gap-6 min-h-3/4">
 
@@ -164,7 +164,7 @@ export default function Form() {
                             <div id="targ"
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${theme === 'dark' ? 'bg-slate-800/20' : 'bg-slate-400/40 text-slate-900'} ${!fileInputValue ? 'border-dashed  border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'}  justify-center items-center`}>
+                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${theme === 'dark' ? 'bg-slate-800/20' : 'bg-blue-50  border-blue-200'} ${!fileInputValue ? 'border-dashed  border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'}  justify-center items-center`}>
                                 <img src={InputIcon} />
                                 <label className="text-lg md:text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-sm md:text-xl text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
@@ -198,7 +198,7 @@ export default function Form() {
                                         }}
                                         placeholder="Pega tu enlace aquí"
                                         type='text'
-                                        className={`min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-sm text-gray-300 rounded-xl focus:outline-none ${theme === 'dark' ? 'bg-slate-800 hover:bg-slate-800/80' : 'bg-slate-200 hover:bg-slate-200/80 placeholder:text-slate-900'} transition-colors duration-100 ease-in`} />
+                                        className={`min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-sm text-gray-300 rounded-xl focus:outline-none ${theme === 'dark' ? 'bg-slate-800 hover:bg-slate-800/80' : 'bg-slate-200  border-slate-300 text-slate-900 placeholder:text-slate-400'} transition-colors duration-100 ease-in`} />
 
                                 </div>}
                         </div>

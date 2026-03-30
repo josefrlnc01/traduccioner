@@ -50,7 +50,7 @@ export default function SavedsList() {
       <>
       {hasSaveds &&
         <section className='w-full p-2 md:p-0'>
-          <aside className={`w-full relative mt-0 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-slate-100 border border-gray-100 shadow'} lg:w-2/4 md:w-3/4 p-4 rounded-xl  m-auto flex flex-col justify-center items-center mb-10`}>
+          <aside className={`w-full relative mt-0 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white shadow-sm border border-slate-200'} lg:w-2/4 md:w-3/4 p-4 rounded-xl  m-auto flex flex-col justify-center items-center mb-10`}>
             <div className='flex flex-col gap-2 justify-center items-center mb-6'>
               <h2 className='font-bold text-lg md:text-xl lg:text-2xl'>Archivos transcritos</h2>
               <span className='text-sm md:text-lg text-gray-400'>Pulsa sobre uno para acceder a su contenido</span>
