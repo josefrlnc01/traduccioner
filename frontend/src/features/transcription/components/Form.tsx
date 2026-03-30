@@ -27,12 +27,7 @@ export default function Form() {
         mutationFn: ({ link, formData }) => sendLink(link, formData),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
-            console.log('data', data)
-            if(data) {
-                setUsedMinues(data.usedMinutes!)
-            }   
-            console.log("usedMinutes from API:", data?.usedMinutes)
-            
+            setUsedMinues(data?.usedMinutes!)
         }
     })
     useEffect(() => {
@@ -100,7 +95,7 @@ export default function Form() {
         event.preventDefault()
     }
 
-    console.log(usedMinutes)
+    
 
     return (
         <>
