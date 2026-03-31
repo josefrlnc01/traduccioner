@@ -13,8 +13,7 @@ import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
-import { toast } from 'react-toastify'
-import { translateText } from '@/features/translation/translationApi'
+
 
 
 
@@ -66,11 +65,18 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     }
 
     const formattedText = youtubeVideoText.segments.map(s => s.text).join('\n')
-
+    const formattedTranslation = youtubeTranslation.map(s => s.text).join('')
     const handleCopyText = () => {
-        navigator.clipboard.writeText(formattedText)
-        toast.success('Texto copiado')
         setIsCopiyng(true)
+        if (youtubeTranslation.length > 0) {
+            navigator.clipboard.writeText(formattedTranslation)
+        } else {
+            navigator.clipboard.writeText(formattedText)
+        }
+        setTimeout(() => {
+            setIsCopiyng(false)
+        }, 2000)
+        
     }
 
 
@@ -90,19 +96,33 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             title='Copiar texto plano'
                             className={`${isCopiyng ? 'opacity-10' : 'opacity-100'} cursor-pointer`}
                             onClick={handleCopyText}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="w-5 h-5"
-                            >
-                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
+                            {isCopiyng
+                                ? <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#22c55e" 
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="w-5 h-5 text-green-500" 
+                                >
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                : <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="w-5 h-5"
+                                >
+                                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            }
                         </button>
 
                     </div>

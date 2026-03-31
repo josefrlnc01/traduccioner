@@ -18,7 +18,7 @@ import type { SavedFile } from "@/features/saveds/types/saveds.types"
 import type { User } from "@/features/transcription/types/user.types"
 import { useTheme } from "@/shared/context/ThemeContext"
 import type { Translated } from "@/features/transcription/types/translared.types"
-import { useTranslate } from "@/features/translation/hooks/useTranslate"
+
 
 
 type DropdownProps = {
