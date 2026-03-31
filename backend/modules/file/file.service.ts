@@ -37,31 +37,6 @@ export class FileService {
     }
 
 
-    static insertTranslation = async ({ data, user }: InsertFileTranslationProps) => {
-        try {
-            const fileExists = await FileModel.findOne({
-                user: user,
-                translatedFile: data.translatedFile
-            })
-
-            if (fileExists) {
-                throw new AppError('Este documento ya existe', 409)
-            }
-
-            const translation = new FileModel()
-
-            translation.title = data.title
-
-            translation.translatedFile = data.translatedFile
-
-            translation.user = user._id
-            await translation.save()
-        } catch (error: any) {
-            if (error instanceof AppError) throw error
-            throw new Error('Hubo un error al guardar la traducción')
-        }
-    }
-
 
     static getTranscriptionFromAudio = async (finalFilePath: string, user: IUser, ip: string) => {
         try {

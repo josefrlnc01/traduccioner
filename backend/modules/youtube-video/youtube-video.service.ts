@@ -1,12 +1,10 @@
 import path from "node:path";
 import { AppError } from "../errors/AppError.js";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
-import YoutubeVideo from "./youtube-video.model.js";
 import VideoStored from "./youtube-video.model.js";
 import fs from 'node:fs/promises'
-import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-video.types.js";
+import { InsertTranscriptionProps, } from "./youtube-video.types.js";
 import ytDlp from 'yt-dlp-exec'
-import { getVideoMinutes } from "../../shared/utils/video.js";
 import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
 import { IUser } from "../user/user.model.js";
 import Quota from "../quota/quota.schema.js";
@@ -42,30 +40,6 @@ export class YoutubeVideoService {
     }
 
 
-    static insertTranslation = async ({ data, user }: InsertTranslationProps) => {
-        try {
-            //Comprobación de documento existente
-            const fileExists = await YoutubeVideo.findOne({
-                user: user,
-                translatedYoutubeVideo: data.translatedYoutubeVideo
-            })
-
-            if (fileExists) {
-                throw new AppError('Este documento ya está guardado')
-            }
-
-            //Guardado
-            const translation = new YoutubeVideo()
-
-            translation.title = data.title
-            translation.translatedYoutubeVideo = data.translatedYoutubeVideo
-            translation.user = user._id
-            await translation.save()
-        } catch (error: any) {
-            if (error instanceof AppError) throw error
-            throw new Error('Hubo un error al guardar la traducción')
-        }
-    }
 
     static getVideoInfo = async (id: string) => {
         try {

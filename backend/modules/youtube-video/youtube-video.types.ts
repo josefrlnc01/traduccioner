@@ -10,10 +10,7 @@ export type InsertTranscriptionProps = {
     duration: string | null
 }
 
-export type InsertTranslationProps = {
-    data: StoredTranslationSchema,
-    user: IUser
-}
+
 
 
 export type VideoSubtitles = {
