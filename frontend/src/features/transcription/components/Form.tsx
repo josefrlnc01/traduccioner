@@ -193,7 +193,7 @@ export default function Form() {
                         {(!fileInputValue && !inputValue) && <span className={`${theme === 'dark' ? ' text-gray-300' : 'text-slate-950'} text-center text-sm md:text-xl`}>O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
                             {!fileInputValue &&
-                                <div className="w-full flex flex-col justify-around gap-2">
+                                <div className="w-full flex flex-col justify-around gap-2 mb-5">
                                     <label className={`${theme === 'dark' ? ' text-gray-400' : 'text-slate-950'} pl-1 text-sm md:text-xl`}>Introduce un enlace de youtube</label>
                                     <input onChange={handleInput}
                                         onClick={(e) => {
