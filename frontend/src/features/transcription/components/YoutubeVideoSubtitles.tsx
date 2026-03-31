@@ -141,7 +141,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
                                 <>
-                                    <div className="flex items-center justify-end gap-2">
+                                    <div className="flex items-center justify-center md:justify-end gap-2">
 
                                         <select
                                             onChange={handleSelect}

@@ -13,7 +13,7 @@ import { minutesStore } from "@/shared/stores/minutes.store";
 
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
-    const [usedMinutes, setUsedMinues] = useState<number>(Number(minutesStore.get()))
+    const [usedMinutes, setUsedMinues] = useState<number>(Number(minutesStore.get() ?? Number(localStorage.getItem('usedMinutes'))))
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
@@ -28,6 +28,7 @@ export default function Form() {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             setUsedMinues(data?.usedMinutes!)
+            localStorage.setItem('usedMinutes', String(data?.usedMinutes))
         }
     })
     useEffect(() => {

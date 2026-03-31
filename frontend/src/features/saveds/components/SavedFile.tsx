@@ -148,9 +148,6 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
 
                                             </select>
 
-                                       
-
-
                                         <button
                                             onClick={handleTranslate}
                                             disabled={!selectedLang || isTranslating}

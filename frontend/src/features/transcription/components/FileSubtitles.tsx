@@ -123,7 +123,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                                     strokeWidth="2"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    className="w-5 h-5 text-green-500" 
+                                    className="w-5 h-5 text-green-500"
                                 >
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
@@ -159,23 +159,20 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
                                 <>
-                                    <div className="flex items-center justify-end gap-2">
-                                        
-                                            <select
-                                                onChange={handleSelect}
-                                                defaultValue=''
+                                    <div className="flex items-center justify-center md:justify-end gap-2">
 
-                                                className={`appearance-none max-w-2/5 text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
-                                            >
-                                                <option value="" className='text-sm' disabled>Traducir a...</option>
-                                                {languages.map(lang => (
-                                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                                ))}
+                                        <select
+                                            onChange={handleSelect}
+                                            defaultValue=''
 
-                                            </select>
+                                            className={`appearance-none max-w-2/5 text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
+                                        >
+                                            <option value="" className='text-sm' disabled>Traducir a...</option>
+                                            {languages.map(lang => (
+                                                <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                            ))}
 
-                                       
-
+                                        </select>
 
                                         <button
                                             onClick={handleTranslate}
