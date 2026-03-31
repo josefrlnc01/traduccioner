@@ -21,7 +21,7 @@ export default function VideoSection() {
                     <ul className='flex flex-col gap-3'>
                         {[
                             'Timestamps por segmento con Whisper',
-                            'Traducción a 133 idiomas en un click',
+                            'Genera documentos en 133 idiomas con un click',
                             'Exporta en PDF, SRT, VTT, DOCX y más'
                         ].map((item) => (
                             <li key={item} className='flex items-center gap-3 text-sm text-slate-300'>
