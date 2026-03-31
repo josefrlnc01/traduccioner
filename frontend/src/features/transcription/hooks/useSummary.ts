@@ -5,54 +5,83 @@ import { useState } from "react"
 export const useSummary = () => {
     const [summary, setSummary] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+
     const handleGenerateIaSummary = async (id: string) => {
         const urlBackend = import.meta.env.VITE_API_URL
         const accessToken = tokenStore.get()
+
         setIsLoading(true)
         setSummary('')
+
         try {
             const response = await fetch(`${urlBackend}/saveds/${id}/summary`, {
                 method: 'POST',
                 headers: {
-                    "Authorization": `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`
                 }
+            })
+
+            if (!response.ok) {
+                const errorText = await response.text()
+                throw new Error(errorText || 'No se pudo generar el resumen')
             }
-            )
-            //Creación de reader de stream
-            const reader = response.body!.getReader()
-            //Creación decodificador 
+
+            if (!response.body) {
+                throw new Error('El servidor no devolvio un stream valido')
+            }
+
+            const reader = response.body.getReader()
             const decoder = new TextDecoder()
+            let buffer = ''
 
             while (true) {
-                //Lectura de response
                 const { done, value } = await reader.read()
 
-                if (done) break
-                //Decodificación del output de bd
-                const chunk = decoder.decode(value)
+                if (done) {
+                    buffer += decoder.decode()
+                    break
+                }
 
-                //Partición del output en líneas
-                const lines = chunk.split('\n\n').filter(Boolean)
+                buffer += decoder.decode(value, { stream: true })
+                const events = buffer.split('\n\n')
+                buffer = events.pop() ?? ''
 
-                for (const line of lines) {
-                    if (line.startsWith('data: ')) {
-                        //Formateo de la linea, si empieza con data: hola mundo, coger solo hola mundo
+                for (const event of events) {
+                    const lines = event
+                        .split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line.startsWith('data: '))
+
+                    for (const line of lines) {
                         const data = line.replace('data: ', '')
 
-                        if (data === '[DONE]') return
+                        if (data === '[DONE]') {
+                            return
+                        }
+
+                        if (!data) {
+                            continue
+                        }
+
                         const { text } = JSON.parse(data)
                         setSummary(prev => prev + text)
                     }
                 }
-                setIsLoading(false)
             }
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 throw new Error(error.response.data.error)
             }
+
+            if (error instanceof Error) {
+                throw error
+            }
+
+            throw new Error('No se pudo generar el resumen')
+        } finally {
+            setIsLoading(false)
         }
     }
-
 
     return { summary, isLoading, handleGenerateIaSummary }
 }

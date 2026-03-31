@@ -26,7 +26,7 @@ export class SavedsController {
             const { id } = req.params as { id: string }
             const user = req.user
             const file = await SavedsService.getFile(id)
-            return res.status(200).json({file, user})
+            return res.status(200).json({ file, user })
         } catch (error) {
             console.error(error)
             if (error instanceof AppError) {
@@ -73,26 +73,32 @@ export class SavedsController {
         try {
             const { id } = req.params as { id: string }
             const file = await SavedsService.getFile(id)
-    
+
             const textSegments = file[0].segments.map(s => {
                 return {
                     text: s.text
                 }
             })
+
             const stream = await generateSummary(textSegments)
-            res.setHeader('Content-Type', 'text/event-stream')
-            res.setHeader('Cache-Control', 'no-cache')
+
+            req.setTimeout(0)
+            res.setHeader('Content-Type', 'text/event-stream; charset=utf-8')
+            res.setHeader('Cache-Control', 'no-cache, no-transform')
             res.setHeader('Connection', 'keep-alive')
+            res.setHeader('X-Accel-Buffering', 'no')
+            res.flushHeaders()
+            res.write(': connected\n\n')
 
             for await (const chunk of stream) {
                 const text = chunk.choices[0]?.delta.content ?? ''
 
                 if (text) {
-                    res.write(`data: ${JSON.stringify({text})}\n\n`)
+                    res.write(`data: ${JSON.stringify({ text })}\n\n`)
                 }
             }
 
-            res.write(`data: [DONE]\n\n`)
+            res.write('data: [DONE]\n\n')
             res.end()
         } catch (error) {
             console.error(error)
