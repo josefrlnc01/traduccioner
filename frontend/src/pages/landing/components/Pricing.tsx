@@ -22,8 +22,8 @@ export default function Pricing() {
 
     return (
         <section className='pricing-box bg-slate-800/30 w-full min-w-full p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14 md:py-10 lg:py-4 opacity-0'>
-            <aside>
-                <h3 className='text-2xl md:text-4xl text-white font-bold text-center'>Planes diseñados a medida</h3>
+            <aside className="flex flex-col items-center gap-4">
+                <h3 className='text-3xl md:text-4xl text-white font-bold text-center'>Planes diseñados a medida</h3>
                 <p className='max-w-2xl mx-auto text-sm md:text-lg text-gray-500 text-center leading-relaxed'>Escoge lo que mejor se adapte a tus necesidades.</p>
             </aside>
             <aside className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8 w-full md:w-3/4 md:max-w-3/4 lg:w-3/4 ld:max-w-3/4 m-auto p-0 md:p-10 lg:p-14'>

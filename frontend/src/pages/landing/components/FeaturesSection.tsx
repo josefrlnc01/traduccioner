@@ -50,8 +50,8 @@ export default function FeaturesSection() {
     return (
         <section className='box w-full bg-slate-800/30 min-w-screen p-6 flex flex-col gap-4 justify-center items-center mt-9 grow'>
             <aside className="flex flex-col gap-4">
-                <h2 className='font-bold text-2xl md:text-4xl  text-white text-center pt-8'>Potencia tu flujo de trabajo</h2>
-                <p className='max-w-2xl mx-auto text-sm md:text-lg text-center text-gray-500 leading-relaxed'>Todo lo que necesitas para transcribir audios profesionalmente.</p>
+                <h2 className='font-bold text-3xl md:text-4xl  text-white text-center pt-8'>Potencia tu flujo de trabajo</h2>
+                <p className='max-w-2xl mx-auto text-md md:text-lg text-center text-gray-500 leading-relaxed'>Todo lo que necesitas para transcribir audios profesionalmente.</p>
             </aside>
             <aside className='w-full p-0 py-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-6  md:p-10 lg:p-14'>
                 <div className='card p-8 w-full md:w-auto lg:w-auto rounded-custom flex flex-col justify-start items-center bg-[#111827] border border-solid border-[#1f2937] rounded-md'>

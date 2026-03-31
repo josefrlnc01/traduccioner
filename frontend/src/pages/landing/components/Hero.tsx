@@ -17,9 +17,9 @@ export default function Hero() {
         <div className="flex flex-col justify-center items-center gap-5  mb-10">
 
 
-          <h2 className='text-2xl md:text-4xl lg:text-7xl text-center text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
-          <p className='mx-auto text-sm lg:text-xl text-center text-gray-400 leading-relaxed'>Sube tu archivo y obtén su transcripción rápidamente <br/> Realiza una traducción de la transcripción en segundos.</p>
-          <small className="text-xs text-gray-500 text-center">Soporte de MP3, WAV, M4A, FLAC, OGG y otros formatos comunes.</small>
+          <h2 className='text-2xl md:text-3xl lg:text-4xl text-center text-white font-bold tracking-tight mb-6 leading-tight'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
+          <p className='mx-auto text-lg lg:text-xl text-center text-gray-400 leading-relaxed'>Sube tu archivo y obtén su transcripción rápidamente <br/> Realiza una traducción de la transcripción en segundos.</p>
+          <small className="text-md text-gray-500 text-center">Soporte de MP3, WAV, M4A, FLAC, OGG y otros formatos comunes.</small>
         </div>
         <button
           onClick={() => navigate('/auth/register')}
