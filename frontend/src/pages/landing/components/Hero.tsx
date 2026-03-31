@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router"
 
-
 export default function Hero() {
   const navigate = useNavigate()
   return (
@@ -14,8 +13,14 @@ export default function Hero() {
           <span className="flex h-2 w-2 rounded-full bg-[#0d59f2]"></span>
           Impulsado por Whisper v1
         </div>
-        <h2 className='text-4xl text-center lg:text-7xl text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
-        <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 mb-10 leading-relaxed'>Sube tu archivo y obtén su transcripción rápidamente. Soporte de múltiples idiomas, traducción automática.</p>
+
+        <div className="flex flex-col justify-center items-center gap-5  mb-10">
+
+
+          <h2 className='text-4xl text-center lg:text-7xl text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
+          <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 leading-relaxed'>Sube tu archivo y obtén su transcripción rápidamente <br/> Realiza una traducción de la transcripción en segundos.</p>
+          <small className="text-xs text-gray-500">Soporte de MP3, WAV, M4A, FLAC, OGG y otros formatos comunes.</small>
+        </div>
         <button
           onClick={() => navigate('/auth/register')}
           className='pt-2 pb-2 pr-4 pl-4 bg-blue-600 cursor-pointer hover:bg-blue-700 hover:scale-105 rounded-xl font-bold text-lg shadow-xl transition-all duration-200 ease-in-out'>
