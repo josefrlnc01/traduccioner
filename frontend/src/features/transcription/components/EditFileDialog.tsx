@@ -14,14 +14,16 @@ import { toast } from 'react-toastify'
 import type { EditFileDialogProps } from '../types/edit.types'
 
 
-export default function EditFileDialog({ isOpen, setIsOpen, id, title }: EditFileDialogProps) {
+export default function EditFileDialog({ isOpen, setIsOpen, id, title, onTitleUpdated }: EditFileDialogProps) {
     const [newTitle, setNewTitle] = useState(title)
     const queryClient = useQueryClient()
+
     const editTitleFN = useMutation({
         mutationFn: editTitle,
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['saveds'] })
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
+            onTitleUpdated?.(newTitle.trim())
             toast.success(data)
         },
         onError: (error) => {
@@ -34,9 +36,15 @@ export default function EditFileDialog({ isOpen, setIsOpen, id, title }: EditFil
     }
 
     const handleEdit = () => {
+        const trimmedTitle = newTitle.trim()
+        if (!trimmedTitle) {
+            toast.error('El titulo no puede estar vacio')
+            return
+        }
+
         const formData = {
             id,
-            newTitle
+            newTitle: trimmedTitle
         }
         editTitleFN.mutate(formData)
         setIsOpen(false)
