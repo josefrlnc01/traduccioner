@@ -54,7 +54,7 @@ export default function FeaturesSection() {
                 <p className='max-w-2xl mx-auto text-sm md:text-lg text-center text-gray-500 leading-relaxed'>Todo lo que necesitas para transcribir audios profesionalmente.</p>
             </aside>
             <aside className='w-full p-0 py-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-6  md:p-10 lg:p-14'>
-                <div className=' p-8 w-full md:w-auto lg:w-auto rounded-custom flex flex-col justify-start items-center bg-[#111827] border border-solid border-[#1f2937] rounded-md'>
+                <div className='card p-8 w-full md:w-auto lg:w-auto rounded-custom flex flex-col justify-start items-center bg-[#111827] border border-solid border-[#1f2937] rounded-md'>
                     <div className="w-12 h-12 bg-brand-primary/10 rounded-lg flex items-center justify-start self-start mb-6 bg-[#0d59f2]/20 text-[#0d59f2] group-hover:bg-[#0d59f2] group-hover:text-white transition-colors">
                         <svg className="w-6 h-6 m-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
                     </div>
