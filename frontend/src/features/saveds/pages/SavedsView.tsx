@@ -8,8 +8,11 @@ import SavedFile from '../components/SavedFile'
 
 
 export default function SavedsView() {
+    //Obtención del id en los parametros de la request
     const params = useParams()
     const id = params.id
+
+    //Query para retornar archivo guardado en base a comparación de su id
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),

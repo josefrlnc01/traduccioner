@@ -2,6 +2,7 @@ import { generateCSV, generateDOCX, generateJSON, generatePDF, generateSRT, gene
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
+//Mutaciones de generación de documentos
 export const useDocumentAction = () => {
     const generatePdf = useMutation({
         mutationFn: generatePDF,

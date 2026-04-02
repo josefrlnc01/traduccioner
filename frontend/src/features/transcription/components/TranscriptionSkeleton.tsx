@@ -1,14 +1,21 @@
 import { useTheme } from '@/shared/context/ThemeContext'
 import { useEffect, useState } from 'react'
 
+//Frases de espera en transcripción
 const awaitPhrase = [
     "Analizando archivo, puede tardar un poco...", "Transcribiendo audio...", "Procesando texto..."
 ]
 
 export default function TranscriptionSkeleton() {
+    //Tema actual 
+    const { theme } = useTheme()
+    //Índice del array de frases
     const [index, setIndex] = useState(0)
+    //Estado para cambiar estilos del texto
     const [fade, setFade] = useState(true)
-    const {theme} = useTheme()
+    
+
+    //Hook para mostrar frases de espera con fade del texto y espera de 6 segundos entre frase
     useEffect(() => {
         const interval = setInterval(() => {
             setFade(false)
@@ -22,6 +29,7 @@ export default function TranscriptionSkeleton() {
         return () => clearInterval(interval)
     }, [awaitPhrase.length])
 
+    //Frase actual
     const phrase = awaitPhrase[index]
 
 

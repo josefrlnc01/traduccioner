@@ -18,6 +18,7 @@ export default function EditFileDialog({ isOpen, setIsOpen, id, title, onTitleUp
     const [newTitle, setNewTitle] = useState(title)
     const queryClient = useQueryClient()
 
+    //Mutación para edición del título del archivo
     const editTitleFN = useMutation({
         mutationFn: editTitle,
         onSuccess: (data) => {
@@ -31,10 +32,12 @@ export default function EditFileDialog({ isOpen, setIsOpen, id, title, onTitleUp
         }
     })
 
+    //Guardado del valor del título en estado
     const handleTitle = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setNewTitle(e.target.value)
     }
 
+    //Edición del título del archivo
     const handleEdit = () => {
         const trimmedTitle = newTitle.trim()
         if (!trimmedTitle) {

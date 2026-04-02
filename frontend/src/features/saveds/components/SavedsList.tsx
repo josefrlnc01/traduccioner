@@ -9,7 +9,10 @@ import type { Saveds, SavedsList } from '@/features/saveds/types/saveds.types'
 
 export default function SavedsList() {
   const { theme } = useTheme()
+  //Estado para guardar valor del input de búsqueda
   const [inputValue, setInputValue] = useState('')
+
+  //Query de archivos transcritos guardados automáticamente
   const { data } = useQuery<SavedsList>({
     queryFn: getSaveds,
     queryKey: ['allSaveds']
@@ -17,17 +20,22 @@ export default function SavedsList() {
 
   if (!data) return null
 
+  //Obtención y guardado de valores de la query
   const files: Saveds = data.files ?? []
   const youtubeFiles: Saveds = data.youtubeFiles ?? []
 
+  //Guardado del valor del input de búsqueda
   const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setInputValue(value)
   }
 
+  //Filtrado de archivos en base a coincidencia con el valor del input en su título
   const filteredsFile = files.filter(file => file.title.toLowerCase().includes(inputValue.toLowerCase()))
   const filteredsYoutube = youtubeFiles.filter(file => file.title.toLowerCase().includes(inputValue.toLowerCase()))
   const filtereds = filteredsFile.concat(filteredsYoutube)
+  
+  //Comprobación de valores encontrados existentes
   const hasSaveds = files.length > 0 || youtubeFiles.length > 0
   return (
     
