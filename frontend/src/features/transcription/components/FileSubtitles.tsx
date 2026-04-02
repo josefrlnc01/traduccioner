@@ -17,13 +17,20 @@ import { useTheme } from '@/shared/context/ThemeContext'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
+    //Tema de colroes actual
     const { theme } = useTheme()
-    const { summary, handleGenerateIaSummary } = useSummary()
-    const { isLoading } = useSummary()
+    //Hook que maneja estados y resumen de gpt-4-mini
+    const { summary, handleGenerateIaSummary, isLoading } = useSummary()
+    //Hook para control de modal de edición
     const { isOpen, setIsOpen } = useEditFile()
+    //Estado para comprobar si se ha copiado el texto plano
     const [isCopiyng, setIsCopiyng] = useState(false)
+    //Estado para controlar aparición de componente de resumen
     const [showSummary, setShowSummary] = useState(false)
+    //Estado para guardar valor del nuevo título del archivo
     const [editedTitle, setEditedTitle] = useState<string | null>(null)
+
+    //Hook que maneja estados y valores de traducción activa
     const { translation,
         isTranslating,
         setIsTranslating,
@@ -33,8 +40,9 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         lang,
         setLang } = useTranslate()
 
-    if (mutation.isError) {
 
+
+    if (mutation.isError) {
         return (
             <aside className="p-4 text-red-400 md:text-center">
                 {mutation.error.message}
@@ -52,24 +60,25 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         )
     }
 
-
     if (!mutation.data) return null
 
     if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles
         mutation={mutation}
         inputValue={inputValue}
         fileInputValue={fileInputValue} />
+
+    //Obtención de valores de la petición de transcripción
     const fileText = mutation.data.fileText
     const user = mutation.data.user
     const displayTitle = editedTitle ?? fileText.title
 
-
+    //Guardado del valor del input de lenguage
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
         setLang(e.target.value)
     }
 
-
+    //Traducción del texto con segmentos
     const handleTranslate = () => {
         const formData = {
             lang,
@@ -80,8 +89,11 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
     }
 
+    //Formateo del texto de transcripción para copiar en portapapeles
     const formattedText = fileText.segments.map(s => s.text).join('\n')
     const formattedTranslation = translation.map(s => s.text).join('')
+
+    //Copiado del texto de transcripción en el portapapeles 
     const handleCopyText = () => {
         setIsCopiyng(true)
         if (translation.length > 0) {
@@ -92,7 +104,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         setTimeout(() => {
             setIsCopiyng(false)
         }, 2000)
-
     }
 
 

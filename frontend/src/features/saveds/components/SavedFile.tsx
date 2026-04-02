@@ -17,20 +17,41 @@ import type { SavedFileProps } from '../types/saveds.types'
 
 
 export default function SavedFile({ data, user, id }: SavedFileProps) {
+    //Tema de colroes actual
     const { theme } = useTheme()
     const navigate = useNavigate()
+    //Estado para comprobar si se ha copiado el texto plano
     const [isCopiyng, setIsCopiyng] = useState(false)
+    //Estado para controlar aparición de componente de resumen
     const [showSummary, setShowSummary] = useState(false)
+    //Hook que maneja estados y resumen de gpt-4-mini
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
-    const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
+    //Hook para control de modal de edición
+    const { isOpen, setIsOpen } = useEditFile()
+    //Estado para guardar valor del nuevo título del archivo
+    const [editedTitle, setEditedTitle] = useState<string | null>(null)
+
+    //Hook que maneja estados y valores de traducción activa
+    const { translation, 
+        youtubeTranslation, 
+        generateFileTranslation, 
+        generateYoutubeTranslation, 
+        isTranslating, 
+        selectedLang, 
+        setSelectedLang, 
+        setLang, 
+        lang } = useTranslate()
+
+
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
         setLang(e.target.value)
     }
-    const { isOpen, setIsOpen } = useEditFile()
-    const [editedTitle, setEditedTitle] = useState<string | null>(null)
+    
+    //Obtención del título en base a si hay en valor de estado o si hay de la query
     const displayTitle = editedTitle ?? data.title
 
+     //Traducción del texto con segmentos
     const handleTranslate = () => {
         if (data.origin === 'file') {
             const formData = {
@@ -47,9 +68,13 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
         }
     }
 
+
+    //Formateo del texto de transcripción para copiar en portapapeles
     const formattedText = data.segments.map(s => s.text).join('\n')
     const formattedFileTranslation = translation.map(s => s.text).join('')
     const formattedYoutubeTranslation = youtubeTranslation.map(s => s.text).join('')
+
+    //Copiado del texto de transcripción en el portapapeles 
     const handleCopyText = () => {
         setIsCopiyng(true)
         if (youtubeTranslation.length > 0 && translation.length === 0) {

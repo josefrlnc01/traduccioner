@@ -18,15 +18,28 @@ import { useTheme } from '@/shared/context/ThemeContext'
 
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
+    //Tema de colores actual
     const { theme } = useTheme()
-    const [lang, setLang] = useState('')
-    const [selectedLang, setSelectedLang] = useState(false)
+    //Estado para comprobar si se ha copiado el texto plano
     const [isCopiyng, setIsCopiyng] = useState(false)
+    //Estado para guardar valor del nuevo título del archivo
     const [editedTitle, setEditedTitle] = useState<string | null>(null)
-    const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
+    //Hook que maneja estados y resumen de gpt-4-mini
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
+    //Hook para control de modal de edición
     const { isOpen, setIsOpen } = useEditFile()
+    //Estado para controlar aparición de componente de resumen
     const [showSummary, setShowSummary] = useState(false)
+
+    //Hook que maneja estados y valores de traducción activa
+    const { youtubeTranslation,
+        generateYoutubeTranslation,
+        isTranslating,
+        setIsTranslating,
+        selectedLang,
+        setSelectedLang,
+        lang,
+        setLang } = useTranslate()
 
     if (mutation.isError) {
         return (
@@ -43,17 +56,19 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         inputValue={inputValue}
         fileInputValue={fileInputValue}
     />
+
+    //Obtención de valores de la petición de transcripción
     const youtubeVideoText = mutation.data.youtubeVideoText
     const user = mutation.data.user
     const displayTitle = editedTitle ?? youtubeVideoText.title
 
-
+    //Guardado del valor del input de lenguage
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
         setLang(e.target.value)
     }
 
-
+    //Traducción del texto con segmentos
     const handleTranslate = () => {
         const formData = {
             lang,
@@ -64,8 +79,11 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     }
 
+    //Formateo del texto de transcripción para copiar en portapapeles
     const formattedText = youtubeVideoText.segments.map(s => s.text).join('\n')
     const formattedTranslation = youtubeTranslation.map(s => s.text).join('')
+
+    //Copiado del texto de transcripción en el portapapeles 
     const handleCopyText = () => {
         setIsCopiyng(true)
         if (youtubeTranslation.length > 0) {

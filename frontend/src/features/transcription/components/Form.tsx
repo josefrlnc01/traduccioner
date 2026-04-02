@@ -31,6 +31,8 @@ export default function Form() {
             localStorage.setItem('usedMinutes', String(data?.usedMinutes))
         }
     })
+
+    //Movimiento de scroll hacia el elemento de transcripción cuando se realiza una 
     useEffect(() => {
         if (!mutation.data) return
         requestAnimationFrame(() => {
@@ -46,16 +48,19 @@ export default function Form() {
 
     }, [mutation.data])
 
+    //Obtención de minutos usados al montar componente
     useEffect(() => {
         const stored = Number(minutesStore.get())
         if (stored) setUsedMinues(stored)
     }, [])
 
+    //Tipo de suscripción del usuario
     const suscription = suscriptionStore.get()
 
+    /*Condicional para ejecutar una petición de transcripción 
+    de archivo de usuario o de youtube en vase a elementos del dom seleccionados*/
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-
         if (!inputValue && formData) {
             mutation.mutate({ link: null, formData })
             setFileInputValue(null)
@@ -67,10 +72,12 @@ export default function Form() {
         setChanged(false)
     }
 
+    //Guardado de valor del input tipo texto
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
 
+    //Guardado del valor del input tipo archivo 
     const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         const file = e.currentTarget.files?.[0]
         if (!file) return
