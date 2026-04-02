@@ -33,7 +33,6 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user,  transl
     const { theme } = useTheme()
     const queryClient = useQueryClient()
     const navigate = useNavigate()
-    console.log('translating', translation)
     const deleteFN = useMutation({
         mutationFn: deleteSaved,
         onSuccess: (data) => {

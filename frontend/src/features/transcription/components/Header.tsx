@@ -42,8 +42,6 @@ export default function Header() {
   }
 
 
-  console.log(data.user.suscription)
-
 
 
   return (

@@ -32,8 +32,7 @@ export default function Form() {
             setUsedMinues(data?.usedMinutes!)
         }
     })
-    console.log('store minutos', minutesStore.get())
-    console.log('local storage minutos', Number(localStorage.getItem('usedMinutes')))
+    
     //Movimiento de scroll hacia el elemento de transcripción cuando se realiza una 
     useEffect(() => {
         if (!mutation.data) return
@@ -54,7 +53,7 @@ export default function Form() {
     useEffect(() => {
         const stored = Number(minutesStore.get())
         if (stored) setUsedMinues(stored)
-    }, [])
+    }, [usedMinutes])
 
     //Tipo de suscripción del usuario
     const suscription = suscriptionStore.get()

@@ -18,7 +18,7 @@ export async function createAccount(formData: RegistrationForm) {
     } catch (error) {
         
         if (isAxiosError(error) && error.response) {
-            console.log(error.response)
+
             throw new Error(error.response.data.error)
         }
     }

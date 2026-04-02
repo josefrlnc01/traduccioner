@@ -16,8 +16,6 @@ function Root() {
   })
 
   useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
-    console.log('prefersDark', prefersDark)
     const html = document.documentElement
     html.classList.remove('light', 'dark')
     html.classList.add(theme)
