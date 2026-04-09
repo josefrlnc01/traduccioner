@@ -105,10 +105,10 @@ export default function ProductDisplay() {
                 <aside className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8 w-full md:w-3/4 lg:w-3/4 m-auto p-0 md:p-10 lg:p-14'>
 
                     {/* PLAN BÁSICO */}
-                    <div className={`pricing-card p-8 rounded-2xl flex flex-col h-full border-2 transition-all hover:scale-[1.02] 
+                    <div className={`pricing-card p-8 rounded-2xl flex flex-col h-full border-2 transition-all hover:scale-[1.02] hover:border-[#0d59f2] 
             ${theme === 'dark'
-                            ? 'bg-slate-800/40 border-transparent hover:border-[#0d59f2]'
-                            : 'bg-white border-slate-200 shadow-sm hover:border-[#0d59f2]'}`}>
+                            ? 'bg-slate-800/40 border-transparent'
+                            : 'bg-white border-slate-200 shadow-sm'}`}>
                         <div className="mb-8">
                             <h3 className="text-lg font-bold text-gray-400 uppercase tracking-widest">Básico</h3>
                             <div className="mt-4 flex items-baseline">
@@ -126,12 +126,12 @@ export default function ProductDisplay() {
                         </ul>
                     </div>
 
-                    {/* PLAN PRO (RECOMENDADO) */}
-                    <div className={`pricing-card relative p-8 rounded-2xl flex flex-col h-full border-2 scale-105 z-10 transition-all
+                    {/* PLAN PRO */}
+                    <div className={`pricing-card relative p-8 rounded-2xl flex flex-col h-full z-10 border-2 hover:border-[#0d59f2] hover:scale-[1.02] transition-all 
             ${theme === 'dark'
-                            ? 'bg-slate-800/60 border-[#0d59f2] shadow-2xl shadow-blue-900/20'
-                            : 'bg-white border-[#0d59f2] shadow-xl shadow-blue-500/10'}`}>
-                        <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-xs font-bold bg-[#0d59f2] text-white rounded-full py-1 px-4 shadow-lg">RECOMENDADO</span>
+                            ? 'bg-slate-800/60  shadow-2xl shadow-blue-900/20 border-transparent'
+                            : 'bg-white shadow-xl border-slate-200 shadow-blue-500/10'}`}>
+                    
                         <div className="mb-8">
                             <h3 className="text-lg font-bold uppercase text-[#0d59f2] tracking-widest">PRO</h3>
                             <div className="mt-4 flex items-baseline">
