@@ -31,6 +31,7 @@ export class AuthController {
             await AuthService.createUser(data)
             return res.status(201).send('Usuario creado correctamente, revisa tu correo para confirmar tu cuenta')
         } catch (error) {
+            console.error(error)
             if (error instanceof ZodError) {
                 return res.status(400).json({
                     errors: error.issues.map(isue => ({

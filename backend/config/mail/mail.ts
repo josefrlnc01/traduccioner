@@ -10,7 +10,7 @@ const frontendUrl = isProd ? process.env.FRONTEND_URL ?? process.env.FRONTEND_UR
 export class AuthEmail {
     static sendEmail = async (user : IEmail ) => {
         await transport.sendMail({
-                from: 'Audwave',
+                from: 'josefrlnc01@gmail.com',
                 to : user.email,
                 subject : 'AudWave-- Confirma tu cuenta',
                 text : 'AudWave-- Confirma tu cuenta',
@@ -25,7 +25,7 @@ export class AuthEmail {
 
     static sendPasswordResetToken = async (user : IEmail ) => {
         await transport.sendMail({
-                from: 'AudWave',
+                from: 'josefrlnc01@gmail.com',
                 to : user.email,
                 subject : 'AudWave-- Cambia tu contraseña',
                 text : 'AudWave-- Confirma el numero',

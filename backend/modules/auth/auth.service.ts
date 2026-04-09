@@ -39,6 +39,7 @@ export class AuthService {
 
             return { user, token }
         } catch (error) {
+            console.error('error service', error)
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al crear el usuario')
         }
