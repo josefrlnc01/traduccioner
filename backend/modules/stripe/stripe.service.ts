@@ -5,7 +5,8 @@ import { AppError } from "../errors/AppError.js";
 import StripeEvent from "./stripe.model.js";
 
 const isProd = process.env.NODE_ENV === 'production'
-const stripe = new Stripe(isProd ? getRequiredEnv('STRIPE_SECRET_KEY') : getRequiredEnv('STRIPE_SECRET_KEY_DEV'))
+const stripeKey = isProd ? getRequiredEnv('STRIPE_SECRET_KEY') : getRequiredEnv('STRIPE_SECRET_KEY_DEV')
+const stripe = new Stripe(stripeKey)
 
 type WebhookPayload = string | Buffer;
 type CheckoutResult = Stripe.Checkout.Session | { url: null, updated: true }

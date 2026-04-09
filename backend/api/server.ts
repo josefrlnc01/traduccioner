@@ -16,7 +16,6 @@ import { userRoutes } from '../modules/user/user.routes.js'
 import { translationRoutes } from '../modules/translation/translation.routes.js'
 import fs from 'node:fs'
 import timeout from 'connect-timeout'
-import { getRequiredEnv } from '../shared/utils/variables.js'
 import { stripeRoutes } from '../modules/stripe/stripe.routes.js';
 import { StripeController } from '../modules/stripe/stripe.controller.js';
 
