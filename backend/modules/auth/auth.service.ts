@@ -212,7 +212,7 @@ export class AuthService {
             }
         } catch (error) {
             if (error instanceof AppError) throw error
-            throw new Error('Hubo un error en la autencticación con google')
+            throw new Error('Hubo un error en la autenticación con google')
         }
     }
     static generateTokenForPassword = async (email: string) => {

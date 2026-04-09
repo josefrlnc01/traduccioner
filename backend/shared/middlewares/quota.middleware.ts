@@ -17,15 +17,15 @@ export const checkQuota = async (req: Request, res: Response, next: NextFunction
 
 
 
-        if (quota && user.suscription === 'free'  && quota.usedMinutes >= 6) {
+        if (quota && user.subscription === 'free'  && quota.usedMinutes >= 6) {
             return res.status(429).json({error: `No dispones de minutos de transcripción gratuita suficientes.`})
         }
 
-        if (quota && user.suscription === 'pro' && quota.usedMinutes >= 180) {
+        if (quota && user.subscription === 'pro' && quota.usedMinutes >= 180) {
             return res.status(429).json({error: `No dispones de minutos de transcripción suficientes.`})
         }
 
-        if (quota && user.suscription === 'business' && quota.usedMinutes >= 600) {
+        if (quota && user.subscription === 'business' && quota.usedMinutes >= 600) {
             return res.status(429).json({error: `Ya has gastado todos los minutos de transcripción.`})
         }
 

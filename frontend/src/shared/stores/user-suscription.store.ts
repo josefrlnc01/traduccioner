@@ -1,8 +1,8 @@
-let suscription: string | null = null
+let subscription: string | null = null
 
-export const suscriptionStore = {
-    get: () => suscription,
+export const subscriptionStore = {
+    get: () => subscription,
     set: (sus:string) => {
-        suscription = sus
+        subscription = sus
     }
 }

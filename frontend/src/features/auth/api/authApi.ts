@@ -5,7 +5,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@/firebase'
 import { tokenStore } from '@/lib/token.store'
 import { minutesStore } from '@/shared/stores/minutes.store'
-import { suscriptionStore } from '@/shared/stores/user-suscription.store'
+import { subscriptionStore } from '@/shared/stores/user-suscription.store'
 
 
 const baseUrl = import.meta.env.VITE_API_URL
@@ -67,7 +67,7 @@ export async function getUser(accessToken: string) {
         const response = userReqSchema.safeParse(data)
 
         if (!response.success) throw new Error('Respuesta inválida del servidor');
-        suscriptionStore.set(response.data.user.suscription)
+        subscriptionStore.set(response.data.user.subscription)
         minutesStore.set(response.data?.usedMinutes ?? 0)
         return response.data
     

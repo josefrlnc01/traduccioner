@@ -298,7 +298,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user,  transl
                         </DropdownMenuLabel>
                         <DropdownMenuItem
                             onClick={() => handleGenerateTranscriptionDocX(data.segments)}
-                            disabled={user.suscription !== 'business'}
+                            disabled={user.subscription !== 'business'}
                             className={`flex items-center gap-2 px-2 py-2 text-sm ${theme === 'dark' ? 'text-slate-300 hover:text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white' : 'text-slate-900 hover:bg-slate-50'}  rounded-lg cursor-pointer transition-colors `}
                         >
                             <div className="flex items-center gap-2">
@@ -311,7 +311,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user,  transl
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => handleGenerateTranscriptionJson(data.segments)}
-                            disabled={user.suscription !== 'business'}
+                            disabled={user.subscription !== 'business'}
                             className={`flex items-center gap-2 px-2 py-2 text-sm ${theme === 'dark' ? 'text-slate-300 hover:text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white' : 'text-slate-900 hover:bg-slate-50'}  rounded-lg cursor-pointer transition-colors `}
                         >
                             <div className="flex items-center gap-2">
@@ -324,7 +324,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user,  transl
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => handleGenerateTranscriptionCsv(data.segments)}
-                            disabled={user.suscription !== 'business'}
+                            disabled={user.subscription !== 'business'}
                             className={`flex items-center gap-2 px-2 py-2 text-sm ${theme === 'dark' ? 'text-slate-300 hover:text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white' : 'text-slate-900 hover:bg-slate-50'}  rounded-lg cursor-pointer transition-colors `}
                         >
                             <div className="flex items-center gap-2">

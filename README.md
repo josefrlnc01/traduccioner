@@ -190,7 +190,7 @@ PORT=4000
 NODE_ENV=development
 
 # Base de datos
-MONGO_URI=mongodb://localhost:27017/audwave
+URI=mongodb://localhost:27017/audwave
 
 # JWT
 ACCESS_TOKEN_SECRET=tu_access_token_secret_muy_seguro

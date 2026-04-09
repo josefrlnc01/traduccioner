@@ -9,7 +9,7 @@ describe("checkQuota middleware", () => {
 
     beforeEach(() => {
         req = {
-            user: { _id: "user123", suscription: "free" },
+            user: { _id: "user123", subscription: "free" },
             headers: {},
             socket: { remoteAddress: "127.0.0.1" }
         }
@@ -44,7 +44,7 @@ describe("checkQuota middleware", () => {
     })
 
     it("debe permitir al usuario pro si no excede la cuota", async () => {
-        req.user.suscription = "pro"
+        req.user.subscription = "pro"
         vi.spyOn(Quota, "findOne").mockResolvedValue({
             usedMinutes: 178
         } as any)
@@ -55,7 +55,7 @@ describe("checkQuota middleware", () => {
     })
 
     it("debe permitir al usuario business si no excede la cuota", async () => {
-        req.user.suscription = "business"
+        req.user.subscription = "business"
         vi.spyOn(Quota, "findOne").mockResolvedValue({
             usedMinutes: 590
         } as any)

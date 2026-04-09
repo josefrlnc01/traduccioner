@@ -122,7 +122,7 @@ export class YoutubeVideoService {
             business: 600
         }
 
-        const limit = planLimits[user.suscription] ?? 0
+        const limit = planLimits[user.subscription] ?? 0
 
         if (totalMinutes > limit) {
             throw new AppError(`No dispones de minutos de transcripción suficientes`, 429)

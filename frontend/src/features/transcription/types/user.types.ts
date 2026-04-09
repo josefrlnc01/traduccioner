@@ -1,6 +1,6 @@
 export type User = {
     _id: () => string,
-    suscription: string,
+    subscription: string,
     name: string,
     email: string
 }

@@ -7,7 +7,7 @@ export type PromiseLink = {
     usedMinutes: number,
     user: {
         _id: () => string,
-        suscription: string,
+        subscription: string,
         name: string,
         email: string
     }
@@ -19,7 +19,7 @@ export type PromiseFile = {
     usedMinutes: number,
     user: {
         _id: () => string,
-        suscription: string,
+        subscription: string,
         name: string,
         email: string
     }

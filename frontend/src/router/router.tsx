@@ -13,6 +13,8 @@ import ForgotPasswordView from "@/features/auth/pages/ForgotPasswordView"
 import LegalLayout from "@/pages/legal/layout/LegalLayout"
 import PrivacyView from "@/pages/legal/pages/PrivacyView"
 import SupportView from "@/pages/legal/pages/SupportView"
+import PaymentView from "@/shared/stripe/pages/PaymentView"
+import PayLayout from "@/shared/stripe/layout/PayLayout"
 //import NewPasswordView from "@/features/auth/pages/NewPasswordView"
 
 
@@ -39,6 +41,10 @@ export default function Router() {
             <Route element={<LegalLayout/>}>
               <Route path="/privacy" element={<PrivacyView/>}/>
               <Route path="/support" element={<SupportView/>}/>
+            </Route>
+
+            <Route element={<PayLayout/>}>
+              <Route path="/payment" element={<PaymentView/>}/>
             </Route>
         </Routes>
     </BrowserRouter>

@@ -12,7 +12,6 @@ import { useNavigate } from "react-router"
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme()
-
   const { data } = useAuth()
   const [isOpenForDelete, setIsOpenForDelete] = useState(false)
   const queryClient = useQueryClient()
@@ -49,13 +48,14 @@ export default function Header() {
       ? 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center bg-slate-950 text-white grow-0'
       : 'w-full min-w-full text-center py-4 px-4 md:px-0  flex justify-between md:justify-evenly items-center bg-white border-b border-slate-200 text-slate-900 grow-0'}>
       <div className="flex items-center justify-center gap-2">
-        <h1 
-        onClick={() => navigate('/dashboard')}
-        className={`font-bold text-lg md:text-2xl lg:text-4xl  ${theme === 'dark' ? 'text-white' : 'text-slate-500'} cursor-pointer`}>Aud<span className="text-blue-600/80">Wave</span></h1>
+        <h1
+          onClick={() => navigate('/dashboard')}
+          className={`font-bold text-lg md:text-2xl lg:text-4xl  ${theme === 'dark' ? 'text-white' : 'text-slate-500'} cursor-pointer`}>Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
 
 
       <div className="flex justify-center items-center gap-4 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
+
         <button
           onClick={toggleTheme}
           className={`relative w-16 h-8 flex items-center rounded-full p-1 transition-all duration-300 cursor-pointer
@@ -87,7 +87,17 @@ export default function Header() {
             </DropdownMenuLabel>
             <DropdownMenuItem className="text-slate-400 text-sm flex items-center gap-3">
               {data.user.name}
-              <small className="px-3 py-1 bg-slate-700 text-blue-500 rounded-xl">{data.user.suscription}</small>
+              <small className="px-3 py-1 bg-slate-700 text-blue-500 rounded-xl">{data.user.subscription}</small>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuLabel className={`text-xs font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
+              Suscripción
+            </DropdownMenuLabel>
+            <DropdownMenuItem 
+            onClick={() => navigate('/payment')}
+            className=" text-slate-300 hover:bg-blue-500 transition-colors ease-in duration-100 cursor-pointer hover:text-white">
+              Actualizar plan
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuLabel className={`text-xs font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>

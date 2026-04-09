@@ -157,7 +157,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-white border-slate-200'}  flex items-center justify-between gap-4`}>
                             <h3 className={`text-xs font-semibold  ${theme === 'dark' ? 'text-slate-400' : 'text-slate-800'} uppercase tracking-widest`}>Transcripción</h3>
 
-                            {(user.suscription === 'pro' || user.suscription === 'business') &&
+                            {(user.subscription === 'pro' || user.subscription === 'business') &&
                                 <>
                                     <div className="flex items-center justify-center md:justify-end gap-2">
 
@@ -221,7 +221,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         </motion.div>
                     </div>
 
-                    {user.suscription === 'business' && (
+                    {user.subscription === 'business' && (
                         <div className={`border-t ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-100 border-slate-200'}`}>
                             <button
                                 onClick={() => setShowSummary(!showSummary)}

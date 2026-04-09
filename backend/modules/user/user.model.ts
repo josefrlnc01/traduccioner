@@ -4,7 +4,9 @@ export interface IUser extends Document {
     name: string,
     email: string,
     password: string | null,
-    suscription: string,
+    subscription: string,
+    stripeCustomerId: string | null,
+    stripeSubscriptionId: string | null,
     provider: string,
     confirmed: boolean
 }
@@ -24,10 +26,18 @@ export const userSchema: Schema = new Schema({
         type: String,
         required: false
     },
-    suscription: {
+    subscription: {
         type: String,
         enum: ['free', 'pro', 'business'],
         default: 'free'
+    },
+    stripeCustomerId: {
+        type: String,
+        required: false
+    },
+    stripeSubscriptionId: {
+        type: String,
+        required: false
     },
     provider: {
         type: String,

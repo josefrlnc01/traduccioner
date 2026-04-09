@@ -1,3 +1,5 @@
+import dns from 'dns';
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 import express from 'express'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -14,6 +16,9 @@ import { userRoutes } from '../modules/user/user.routes.js'
 import { translationRoutes } from '../modules/translation/translation.routes.js'
 import fs from 'node:fs'
 import timeout from 'connect-timeout'
+import { getRequiredEnv } from '../shared/utils/variables.js'
+import { stripeRoutes } from '../modules/stripe/stripe.routes.js';
+import { StripeController } from '../modules/stripe/stripe.controller.js';
 
 
 await connectToDb()
@@ -23,6 +28,7 @@ const port = process.env.PORT
 const app = express()
 app.use(cookieParser())
 app.use(corsMiddleware())
+app.post('/stripe/webhook', express.raw({ type: 'application/json' }), StripeController.createWebHook)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
 app.use(timeout('300s'))
@@ -36,6 +42,7 @@ app.use('/file', fileRoute)
 app.use('/document', documentRoute)
 app.use('/saveds', savedsRoute)
 app.use('/translation', translationRoutes)
+app.use('/stripe',stripeRoutes)
 app.use('/user', userRoutes)
 
 const getFirebaseCredential = () => {
@@ -62,4 +69,3 @@ app.listen(port, () => {
     console.log(`Servidor corriendo en ${port}`);
 });
 export default app
-

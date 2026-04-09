@@ -57,7 +57,7 @@ describe("authenticate middleware", () => {
             select: vi.fn().mockResolvedValue({
                 name: "jose maria",
                 email: "jose@frlnc01@gmail.com",
-                suscription: "free"
+                subscription: "free"
             })
         } as any)
 
