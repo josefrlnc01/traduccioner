@@ -29,7 +29,6 @@ export default function Pricing() {
         if (!accessToken) {
             navigate('/auth/register')
         } else {
-            console.log('acc', accessToken)
             const res = await fetch(`${urlBackend}/stripe/create-checkout-session`, {
             method: 'POST',
             headers: {
