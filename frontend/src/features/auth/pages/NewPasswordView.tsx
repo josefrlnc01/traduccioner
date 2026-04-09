@@ -1,10 +1,10 @@
-/*import { useState } from "react"
+import { useState } from "react"
 import NewPasswordToken from "../components/NewPasswordToken"
 import NewPasswordFormComponent from "../components/NewPasswordFormComponent"
 
 export default function NewPasswordView() {
     const [token, setToken] = useState('')
-    //const [isValidToken, setIsValidToken] = useState(false)
+    const [isValidToken, setIsValidToken] = useState(false)
 
     return (
         <>
@@ -14,12 +14,16 @@ export default function NewPasswordView() {
                     Ingresa el código que recibiste {''}
                     <span className=" text-blue-600 font-bold"> por email</span>
                 </p>
-
-                
+                {!isValidToken ?
+                    <NewPasswordToken
+                        token={token}
+                        setToken={setToken}
+                        setIsValidToken={setIsValidToken} />
+                    :
                     <NewPasswordFormComponent
-                        token={token}/>
-                    
+                        token={token}
+                    />}
             </aside>
         </>
     )
-}*/
+}

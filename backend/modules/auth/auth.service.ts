@@ -25,25 +25,19 @@ export class AuthService {
                 throw new AppError('Es necesario introducir una contraseña', 400)
             }
             user.password = await hashPassword(user.password)
-            if (process.env.AUTO_CONFIRM === 'true') {
-                user.confirmed = true
-                await user.save()
-                return user
-            } else {
-                const token = new Token()
-                token.token = generate6DigitsToken()
-                token.user = user._id
 
-                await AuthEmail.sendEmail({
-                    name: user.name,
-                    email: user.email,
-                    token: token.token
-                })
-                await Promise.all([user.save(), token.save()])
+            const token = new Token()
+            token.token = generate6DigitsToken()
+            token.user = user._id
 
-                return { user, token }
-            }
+            await AuthEmail.sendEmail({
+                name: user.name,
+                email: user.email,
+                token: token.token
+            })
+            await Promise.all([user.save(), token.save()])
 
+            return { user, token }
         } catch (error) {
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al crear el usuario')
@@ -179,36 +173,18 @@ export class AuthService {
                 newUser.name = name
                 newUser.email = email
                 newUser.provider = 'google'
-                if (process.env.AUTO_CONFIRM === 'true') {
-                    newUser.confirmed = true
-                    await newUser.save()
+                const token = new Token()
+                token.token = generate6DigitsToken()
+                token.user = newUser._id
+                AuthEmail.sendEmail({
+                    email: newUser.email,
+                    name: newUser.name,
+                    token: token.token
+                })
+                await Promise.all([newUser.save(), token.save()])
+                return { newUser }
 
-                    const refreshToken = jwt.sign({ id: newUser._id }, refreshTokenKey, {
-                        expiresIn: '90d'
-                    })
 
-                    const accessToken = jwt.sign({ id: newUser._id }, accessTokenKey, {
-                        expiresIn: '10m'
-                    })
-
-                    const refreshTokenInBd = new RefreshToken({ token: refreshToken })
-                    refreshTokenInBd.user = newUser._id
-                    await refreshTokenInBd.save()
-
-                    return { refreshToken, accessToken, user: newUser }
-                } else {
-                    const token = new Token()
-                    token.token = generate6DigitsToken()
-                    token.user = newUser._id
-                    AuthEmail.sendEmail({
-                        email: newUser.email,
-                        name: newUser.name,
-                        token: token.token
-                    })
-                    await Promise.all([newUser.save(), token.save()])
-                    return { newUser }
-                }
-                
             }
         } catch (error) {
             if (error instanceof AppError) throw error

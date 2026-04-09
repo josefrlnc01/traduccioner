@@ -87,7 +87,7 @@ export class AuthController {
             if (!email || !name) return res.status(400).json({ error: 'Nombre o email no encontrados' })
             const { refreshToken, accessToken, user, newUser } = await AuthService.authJWTGoogle({ email, name, decodedToken })
             if (newUser) {
-                return res.status(201).send('Usuario creado correctamente')
+                return res.status(201).send('Usuario creado correctamente, revisa tu correo para confirmar la cuenta')
             } else if (user) {
                 res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
                 return res.status(200).send({ success: 'Iniciando sesión', accessToken })
