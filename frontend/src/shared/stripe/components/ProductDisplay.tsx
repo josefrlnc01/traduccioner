@@ -2,6 +2,7 @@ import { tokenStore } from "@/lib/token.store"
 import { toast } from "react-toastify"
 import Header from "@/features/transcription/components/Header"
 import Footer from "@/features/transcription/components/Footer"
+import { subscriptionStore } from "@/shared/stores/user-suscription.store"
 
 
 
@@ -9,6 +10,7 @@ import Footer from "@/features/transcription/components/Footer"
 export default function ProductDisplay() {
     const urlBackend = import.meta.env.VITE_API_URL
     
+    const subscription = subscriptionStore.get()
     const handleCheckout = async (price_id: string) => {
         const accessToken = tokenStore.get()
 
@@ -49,26 +51,26 @@ export default function ProductDisplay() {
         })
 
         const data = await response.json()
-        console.log(data)
         if (data.success) {
             toast.success(data.message)
         } else {
-            console.log(data)
             toast.error(data.error)
         }
         
     }
+
+    console.log(subscription)
 
     return (
         <>
 
         <Header/>
             <section className=' bg-slate-800/30 w-full min-w-full  p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14 md:py-10 lg:py-4'>
-                <button
+                {subscription !== 'free' && <button
                     className='mx-auto bg-blue-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-500 transition-colors ease-in-out'
                     onClick={handleDelete} type="submit">
                     Cancelar suscripción
-                </button>
+                </button>}
                 <aside className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8 w-full md:w-3/4 md:max-w-3/4 lg:w-3/4 ld:max-w-3/4 m-auto p-0 md:p-10 lg:p-14'>
                 
                     <div className="pricing-card p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-[1.02]  hover:border-[#0d59f2] transition-all opacity-100">
