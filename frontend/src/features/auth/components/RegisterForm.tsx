@@ -59,6 +59,8 @@ export default function RegisterForm() {
 
     return (
         <form className="max-w-md 
+                min-h-5/6
+                max-h-5/6
                 mx-auto 
                 space-y-6 
                 p-8  
@@ -66,7 +68,9 @@ export default function RegisterForm() {
                 border border-slate-700
                 rounded-2xl
                 backdrop-blur
-                shadow-xl" onSubmit={handleSubmit(handleRegister)}>
+                shadow-xl" 
+                
+                onSubmit={handleSubmit(handleRegister)}>
 
             <div className="text-center mb-8 flex flex-col justify-center items-center gap-4">
 
@@ -107,7 +111,7 @@ export default function RegisterForm() {
                     type="text"
                     id="name"
                     {...register('name', {
-                        required: 'El campo nombre es necesario'
+                        required: 'El campo nombre es obligatorio'
                     })}
                     className="w-full px-4 py-3 rounded-xl
                         bg-slate-900/60
@@ -158,9 +162,7 @@ export default function RegisterForm() {
                             required: 'El campo contraseña es obligatorio'
                         })}
                     />
-                    {errors.password && (
-                        <ErrorMessage>{errors.password.message}</ErrorMessage>
-                    )}
+                    
                     <button
                         type="button"
                         onClick={() => setShow(!show)}
@@ -169,6 +171,9 @@ export default function RegisterForm() {
                         {show ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                 </div>
+                {errors.password && (
+                        <ErrorMessage>{errors.password.message}</ErrorMessage>
+                    )}
             </div>
 
             <div className="flex flex-col gap-3">
@@ -187,9 +192,7 @@ export default function RegisterForm() {
                         focus:ring-2 focus:ring-blue-500/30
                         outline-none
                         transition text-white" />
-                    {errors && (
-                        <ErrorMessage>{errors.password_confirmation?.message}</ErrorMessage>
-                    )}
+                    
 
                     <button
                         type="button"
@@ -199,6 +202,9 @@ export default function RegisterForm() {
                         {show ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                 </div>
+                {errors && (
+                        <ErrorMessage>{errors.password_confirmation?.message}</ErrorMessage>
+                    )}
             </div>
             <input type="submit" className="w-full py-3 rounded-xl
                     bg-linear-to-r from-blue-500 to-indigo-500
