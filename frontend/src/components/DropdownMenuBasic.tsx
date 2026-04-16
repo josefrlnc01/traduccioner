@@ -8,11 +8,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteSaved } from "@/features/saveds/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
-import type { MutationProps, PromiseFile, PromiseLink } from "@/features/transcription/types/subtitles.types"
+import type { TranscriptionMutation } from "@/features/transcription/types/subtitles.types"
 import { useDocumentAction } from "@/features/transcription/hooks/useDocumentAction"
 import type { SavedFile } from "@/features/saveds/types/saveds.types"
 import type { User } from "@/features/transcription/types/user.types"
@@ -24,7 +24,7 @@ import type { Translated } from "@/features/transcription/types/translared.types
 type DropdownProps = {
     id: string,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-    mutation: UseMutationResult<PromiseLink | PromiseFile | undefined, Error, MutationProps, unknown> | null,
+    mutation: TranscriptionMutation | null,
     data: SavedFile,
     user: User,
     translation: Translated

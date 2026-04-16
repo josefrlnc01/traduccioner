@@ -6,3 +6,4 @@ import { checkQuota } from "../../shared/middlewares/quota.middleware.js";
 export const youtubeVideoRoute = Router()
 
 youtubeVideoRoute.post('/', authenticate, checkQuota, YoutubeVideoController.init)
+youtubeVideoRoute.post('/:jobId', authenticate, checkQuota, YoutubeVideoController.getJobStatus)

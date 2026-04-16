@@ -17,6 +17,7 @@ import fs from 'node:fs'
 import timeout from 'connect-timeout'
 import { stripeRoutes } from '../modules/stripe/stripe.routes.js';
 import { StripeController } from '../modules/stripe/stripe.controller.js';
+import '../workers/transcription.worker.js'
 
 
 await connectToDb()

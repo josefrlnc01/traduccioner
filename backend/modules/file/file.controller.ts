@@ -4,6 +4,9 @@ import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
 import { AppError } from "../errors/AppError.js";
 import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
+import { fileTranscriptionQueue } from "../../config/queue.js";
+import { title } from "node:process";
+import { error } from "node:console";
 
 
 
@@ -19,14 +22,14 @@ export class FileController {
                 return res.status(400).json({ error: 'No se recibio ningun archivo en el campo audio' })
             }
             
-            const finalFilePath = await convertVideoToAudio(file)
-            const {fileText, usedMinutes, audioDuration}= await FileService.getTranscriptionFromAudio(finalFilePath, user, ip)
+            const job = await fileTranscriptionQueue.add('fileTranscription', {
+                file,
+                user,
+                ip,
+                title: file.originalname
+            })
             
-            if (!fileText && !usedMinutes) return res.status(400).json({ error: 'Error al obtener transcripción' })
-
-            const savedFile = await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: audioDuration })
-            
-            return res.status(200).json({ fileText: savedFile, usedMinutes, user})
+            return res.status(200).json({ jobId: job.id})
         } catch (error) {
             console.error('File transcription error:', error)
             if (error instanceof AppError) {
@@ -37,6 +40,34 @@ export class FileController {
             }
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })
         }
+    }
+
+
+    static getJobStatus = async (req: Request, res: Response) => {
+        const {jobId} = req.params as {jobId: string}
+        const job = await fileTranscriptionQueue.getJob(jobId)
+
+        if (!job) {
+            return res.status(404).json({error: 'Job no encontrado'})
+        }
+
+        const state = await job.getState()
+        console.log('state', state)
+        if (state === 'completed') {
+            return res.status(200).json({
+                status: 'completed',
+                data: job.returnvalue
+            })
+        }
+
+        if (state === 'failed') {
+            return res.status(200).json({
+                status: 'failed',
+                error: job.failedReason
+            })
+        }
+
+        return res.status(200).json({status : state})
     }
 
 }

@@ -8,3 +8,4 @@ import { upload } from "./multer/multer.config.js";
 export const fileRoute = Router()
 
 fileRoute.post('/', authenticate, checkQuota, upload.single('audio'), FileController.init)
+fileRoute.post('/:jobId', authenticate, checkQuota, FileController.getJobStatus)

@@ -24,7 +24,7 @@ export default function SubtitlesView({ mutation, inputValue, fileInputValue }: 
 
     if (!mutation.data) return null
 
-    if (!("translatedYoutubeVideo" in mutation.data)) {
+    if (('savedFile' in mutation.data)) {
         return (
             <FileSubtitles
                 mutation={mutation}

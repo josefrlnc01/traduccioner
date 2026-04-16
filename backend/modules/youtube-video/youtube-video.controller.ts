@@ -5,6 +5,7 @@ import { RequestProps, DataOfId } from "./youtube-video.types.js";
 import fs from "node:fs/promises"
 import getVideoId from "get-video-id";
 import { AppError } from "../errors/AppError.js";
+import { youtubeTranscriptionQueue } from "../../config/queue.js";
 
 export class YoutubeVideoController {
     static init = async (req: Request, res: Response) => {
@@ -19,7 +20,6 @@ export class YoutubeVideoController {
         //Obtención de id del video de youtube
         const dataOfId: DataOfId = getVideoId(videoLink)
         const id = dataOfId.id
-
         if (!id || typeof id === 'undefined' || typeof id !== 'string') {
             const error = new Error('No se pudo procesar el id correctamente')
             return res.status(400).json({ error: error.message })
@@ -29,20 +29,46 @@ export class YoutubeVideoController {
 
         try {
             //Obtención de transcripción del vídeo ya convertido en audio
-            const data = await YoutubeVideoService.getTranscriptionFromAudio(user, ip)
-            if (!data) {
-                const error = new Error('No se pudo obtener la transcripción del vídeo')
-                return res.status(400).json({ error: error.message })
-            }
-            const { youtubeVideoText, usedMinutes, title, audioDuration } = data
-            const savedYoutubeFile = await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
-            return res.json({ youtubeVideoText: savedYoutubeFile, usedMinutes, user })
+
+            const job = await youtubeTranscriptionQueue.add('youtubeTranscription', {
+                user,
+                ip
+
+            })
+            
+            return res.json({jobId : job.id})
         } catch (err) {
             if (err instanceof AppError) {
                 return res.status(err.statusCode).json({ error: err.message })
             }
             console.error('Error processing video:', err)
             return res.status(500).json({ error: 'Failed to process video' })
+        }
+    }
+
+
+    static getJobStatus = async (req: Request, res: Response) => {
+        try {
+            const {jobId} = req.params as {jobId : string}
+            const job = await youtubeTranscriptionQueue.getJob(jobId)
+
+            if (!job) {
+                return res.status(400).json({error: 'No se encontró el job'})
+            }
+
+            const state = await job.getState()
+
+            if (state === 'completed') {
+                return res.status(200).json({status: 'completed', data: job.returnvalue})
+            }
+
+            if (state === 'failed') {
+                return res.status(200).json({status: 'faided', error: job.failedReason})
+            }
+
+            return res.status(200).json({status: state})
+        } catch (error) {
+            return res.status(500).json({error: 'Hubo un error en la obtención del status'})
         }
     }
 

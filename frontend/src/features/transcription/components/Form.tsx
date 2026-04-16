@@ -1,38 +1,34 @@
 import { useEffect, useState } from "react";
-import { sendLink } from "../api/transcriptionApi";
+import { checkFileJobStatus, checkYoutubeJobStatus, sendLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatMinutes } from "@/shared/utils/minutes";
 import { subscriptionStore } from "@/shared/stores/user-suscription.store";
 import { useTheme } from "@/shared/context/ThemeContext";
-import type { MutationProps, PromiseFile, PromiseLink } from "../types/subtitles.types";
+import type { TranscriptionResult } from "../types/subtitles.types";
 import { minutesStore } from "@/shared/stores/minutes.store";
 
 
 
 export default function Form() {
-    const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState<string | null>(null)
     const [usedMinutes, setUsedMinues] = useState<number>(Number(minutesStore.get()))
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
-    const {theme} = useTheme()
+    const { theme } = useTheme()
 
     //Mutación de función principal de transcripción
-    const mutation = useMutation<
-        PromiseLink | PromiseFile | undefined,
-        Error,
-        MutationProps
-    >({
-        mutationFn: ({ link, formData }) => sendLink(link, formData),
+    const mutation = useMutation<TranscriptionResult | undefined, Error, void>({
+        mutationFn: startTranscription,
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
-            setUsedMinues(data?.usedMinutes!)
+            console.log(data)
         }
     })
-    
+
     //Movimiento de scroll hacia el elemento de transcripción cuando se realiza una 
     useEffect(() => {
         if (!mutation.data) return
@@ -63,13 +59,13 @@ export default function Form() {
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (!inputValue && formData) {
-            mutation.mutate({ link: null, formData })
+            mutation.mutate()
             setFileInputValue(null)
             setChanged(false)
             return
         }
-        mutation.mutate({ link: inputValue, formData: null })
-        setInputValue('')
+        mutation.mutate()
+        setInputValue(null)
         setChanged(false)
     }
 
@@ -102,6 +98,51 @@ export default function Form() {
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
+    }
+
+    
+    async function startTranscription(): Promise<TranscriptionResult | undefined> {
+        let jobId: string
+        let clipOrigin: string
+        if (inputValue !== null) {
+            console.log('input value', inputValue)
+            jobId = await sendLink(inputValue, null)
+            clipOrigin = 'youtube'
+        } else {
+            jobId = await sendLink(null, formData)
+            clipOrigin = 'file'
+        }
+
+        return new Promise<TranscriptionResult | undefined>((resolve) => {
+            const interval = setInterval(async () => {
+                if (clipOrigin && clipOrigin === 'file') {
+                    const fileResult = await checkFileJobStatus(jobId)
+
+                if (fileResult?.status === 'completed' && 'data' in fileResult) {
+                    clearInterval(interval)
+                    resolve(fileResult.data)
+                }
+
+                if (fileResult?.status === 'failed') {
+                    clearInterval(interval)
+                    resolve(undefined)
+                }
+                } else {
+                    const youtubeResult = await checkYoutubeJobStatus(jobId)
+
+                    if (youtubeResult?.status === 'completed' && 'data' in youtubeResult) {
+                        clearInterval(interval)
+                        resolve(youtubeResult.data)
+                    }
+
+                    if (youtubeResult?.status === 'failed') {
+                        clearInterval(interval)
+                        resolve(undefined)
+                    }
+                }
+                
+            }, 3000)
+        })
     }
 
     
@@ -167,7 +208,7 @@ export default function Form() {
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10h
                     </span>
                 </div>}
-                
+
 
                 <aside className={`w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto min-h-128 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white shadow-sm border border-slate-200'} flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-md backdrop-blur`}>
 

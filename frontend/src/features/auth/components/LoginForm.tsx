@@ -33,14 +33,14 @@ export default function LoginForm() {
             toast.error(error.message)
         },
         onSuccess: (data) => {
-            console.log(data)
-            if (data.success.startsWith('Usuario creado')) {
+            if ('success' in data) {
+                navigate('/dashboard')
+            }
+            if (data.startsWith('Usuario creado')) {
                 toast.success(data)
                 setTimeout(() => {
                     navigate('/auth/login')
                 }, 800)
-            } else {
-                navigate('/dashboard')
             }
         }
     })

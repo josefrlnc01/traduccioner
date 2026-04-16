@@ -13,6 +13,8 @@ import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
+import SubtitlesView from '../pages/SubtitlesView'
+import YoutubeVideoSubtitles from './YoutubeVideoSubtitles'
 
 
 
@@ -62,14 +64,16 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
     if (!mutation.data) return null
 
-    if (("translatedYoutubeVideo" in mutation.data)) return <Subtitles
+    if (('savedYoutubeFile' in mutation.data)) return <YoutubeVideoSubtitles
         mutation={mutation}
         inputValue={inputValue}
         fileInputValue={fileInputValue} />
 
     //Obtención de valores de la petición de transcripción
-    const fileText = mutation.data.fileText
+    const fileText = mutation.data.savedFile
     const user = mutation.data.user
+
+    console.log('mutation data', mutation.data)
     const displayTitle = editedTitle ?? fileText.title
 
     //Guardado del valor del input de lenguage
@@ -110,7 +114,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     return (
         <>
 
-            {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.fileText.fileId} title={displayTitle} onTitleUpdated={setEditedTitle} />}
+            {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.savedFile.fileId} title={displayTitle} onTitleUpdated={setEditedTitle} />}
 
 
             <aside id='file-result' className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
